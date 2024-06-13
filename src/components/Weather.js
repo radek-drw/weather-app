@@ -9,7 +9,7 @@ const Weather = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=cork&appid=${apiKey}&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?q=donegal&appid=${apiKey}&units=metric`
         );
         setWeatherData(response.data);
       } catch (error) {
