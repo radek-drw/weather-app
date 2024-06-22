@@ -1,4 +1,4 @@
 export const theme = {
-  darkBackground: "#444",
+  darkBackground: "#282c34",
   fontFamily: "Montserrat, sans-serif",
 };
