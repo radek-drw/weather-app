@@ -5,6 +5,7 @@ import { theme, GlobalStyle } from "./styles/index";
 import { ThemeProvider } from "styled-components";
 
 import Navbar from "./components/Navbar";
+import WeatherData from "./components/WeatherData/WeatherData";
 
 const AppContainer = styled.div`
   width: 70vw;
@@ -20,6 +21,7 @@ const App = () => {
         <GlobalStyle />
         <AppContainer>
           <Navbar />
+          <WeatherData />
         </AppContainer>
       </ThemeProvider>
     </>
