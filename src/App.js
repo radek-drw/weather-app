@@ -9,9 +9,8 @@ import WeatherData from "./components/WeatherData/WeatherData";
 
 const AppContainer = styled.div`
   width: 70vw;
-  height: 80vh;
-  border: 1px solid white;
-  padding: 1rem 2rem;
+  border: 1px solid green;
+  padding: 1.5rem 2.5rem;
 `;
 
 const App = () => {
