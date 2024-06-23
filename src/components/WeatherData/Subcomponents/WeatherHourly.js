@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const HourlyCard = styled.div``;
+const HourlyCard = styled.div`
+  flex-basis: 65%;
+`;
 
 const Title = styled.h3``;
 
@@ -25,35 +27,35 @@ const WeatherHourly = () => {
         <HourlyItem>
           <TimeLabel>12:00</TimeLabel>
           {/* icon here */}
-          <TemperatureValue>26C</TemperatureValue>
+          <TemperatureValue>26&deg;C</TemperatureValue>
           <WindSpeedIndicator>{/* icon here */}</WindSpeedIndicator>
           <WindSpeedLabel>3km/h</WindSpeedLabel>
         </HourlyItem>
         <HourlyItem>
           <TimeLabel>15:00</TimeLabel>
           {/* icon here */}
-          <TemperatureValue>27C</TemperatureValue>
+          <TemperatureValue>27&deg;C</TemperatureValue>
           <WindSpeedIndicator>{/* icon here */}</WindSpeedIndicator>
           <WindSpeedLabel>2km/h</WindSpeedLabel>
         </HourlyItem>
         <HourlyItem>
           <TimeLabel>18:00</TimeLabel>
           {/* icon here */}
-          <TemperatureValue>27C</TemperatureValue>
+          <TemperatureValue>27&deg;C</TemperatureValue>
           <WindSpeedIndicator>{/* icon here */}</WindSpeedIndicator>
           <WindSpeedLabel>2km/h</WindSpeedLabel>
         </HourlyItem>
         <HourlyItem>
           <TimeLabel>21:00</TimeLabel>
           {/* icon here */}
-          <TemperatureValue>25C</TemperatureValue>
+          <TemperatureValue>25&deg;C</TemperatureValue>
           <WindSpeedIndicator>{/* icon here */}</WindSpeedIndicator>
           <WindSpeedLabel>3km/h</WindSpeedLabel>
         </HourlyItem>
         <HourlyItem>
           <TimeLabel>00:00</TimeLabel>
           {/* icon here */}
-          <TemperatureValue>22C</TemperatureValue>
+          <TemperatureValue>22&deg;C</TemperatureValue>
           <WindSpeedIndicator>{/* icon here */}</WindSpeedIndicator>
           <WindSpeedLabel>3km/h</WindSpeedLabel>
         </HourlyItem>

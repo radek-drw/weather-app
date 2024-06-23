@@ -1,19 +1,42 @@
 import React from "react";
 import styled from "styled-components";
 
-const DetailsCard = styled.div``;
+import sunriseImg from "../../../assets/images/sunrise.svg";
 
-const Panel = styled.div``;
+const DetailsCard = styled.div`
+  flex-basis: 65%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Panel = styled.div`
+  flex-basis: 33%;
+  text-align: center;
+`;
 
 const TempContainer = styled.div``;
 
-const CurrentTemp = styled.div``;
+const CurrentTemp = styled.div`
+  font-size: 3.5rem;
+`;
 
-const FeelsLikeTemp = styled.div``;
+const FeelsLikeTemp = styled.div`
+  color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-size: 1.6rem;
+    margin: 5px;
+  }
+`;
 
 const Twilight = styled.div``;
 
-const SunriseSunset = styled.div``;
+const SunriseSunset = styled.div`
+  background-color: cadetblue;
+  border-bottom: 1px solid white;
+`;
 
 const Time = styled.div``;
 
@@ -27,21 +50,21 @@ const WeatherDetails = () => {
       {/* PANEL LEFT */}
       <Panel>
         <TempContainer>
-          <CurrentTemp>24C</CurrentTemp>
+          <CurrentTemp>24&deg;C</CurrentTemp>
           <FeelsLikeTemp>
-            Feels like: <span>22C</span>
+            Feels like: <span>22&deg;C</span>
           </FeelsLikeTemp>
         </TempContainer>
         <Twilight>
           <SunriseSunset>
-            {/* sunrise icon here */}
+            <img src={sunriseImg} alt="Sunrise" />
             <p>Sunrise</p>
-            <Time>08:37 AM</Time>
+            <Time>06:37</Time>
           </SunriseSunset>
           <SunriseSunset>
             {/* sunset icon here */}
             <p>Sunset</p>
-            <Time>09:40 PM</Time>
+            <Time>21:40</Time>
           </SunriseSunset>
         </Twilight>
       </Panel>

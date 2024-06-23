@@ -2,16 +2,36 @@ import React from "react";
 import styled from "styled-components";
 
 const CityCard = styled.div`
-  border: 1px solid white;
+  flex-basis: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
 `;
 
-const CityName = styled.h1``;
+const CityName = styled.h1`
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #fff;
+`;
 
-const CityDetails = styled.div``;
+const CityDetails = styled.div`
+  text-align: center;
+`;
 
-const CityTime = styled.span``;
+const CityTime = styled.div`
+  font-size: 4rem;
+  color: #00aaff; /* Light blue color for time */
+  margin-bottom: 0.5rem;
+`;
 
-const CityDate = styled.span``;
+const CityDate = styled.div`
+  color: #ccc;
+`;
 
 const WeatherCurrentCity = () => {
   return (
