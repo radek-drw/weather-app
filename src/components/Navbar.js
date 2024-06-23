@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMagnifyingGlass,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+// import { Search, MapPin } from "feather-icons-react";
+import { LuMapPin } from "react-icons/lu";
+import { CiSearch } from "react-icons/ci";
 
 const Nav = styled.nav`
   display: flex;
@@ -32,11 +29,16 @@ const InputContainer = styled.div`
   max-width: 350px;
   border-radius: 5px;
   background-color: ${(props) => props.theme.darkBackground};
-  box-shadow: 0 0 10px ${(props) => props.theme.boxShadow};
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
+  &:focus-within {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  }
 `;
 
-const IconMagnifyingGlass = styled(FontAwesomeIcon)`
+const SearchIcon = styled(CiSearch)`
   position: absolute;
   top: 50%;
   left: 10px;
@@ -48,7 +50,7 @@ const IconMagnifyingGlass = styled(FontAwesomeIcon)`
 
 const SearchInput = styled.input`
   position: absolute;
-  width: 100%;
+  width: calc(100% - 30px);
   top: 0;
   height: 100%;
   left: 30px;
@@ -57,14 +59,19 @@ const SearchInput = styled.input`
   background-color: inherit;
   color: white;
   outline: none;
+  font-size: 1.2rem;
+
   &::placeholder {
-    font-size: 1.2rem;
     color: #ccc;
   }
 `;
 
 const CurrentLocationButton = styled.button`
+  position: relative;
   padding: 0.5rem 1rem;
+  padding-left: 25px;
+  height: 25px;
+  align-self: center;
   background-color: rgb(0, 128, 0);
   color: white;
   border: none;
@@ -72,20 +79,18 @@ const CurrentLocationButton = styled.button`
   cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.3s;
-  padding-left: 25px;
-  position: relative;
   &:hover {
     background-color: rgb(0, 114, 0);
   }
 `;
 
-const IconLocation = styled(FontAwesomeIcon)`
+const LocationIcon = styled(LuMapPin)`
   position: absolute;
   top: 50%;
   left: 6px;
-  width: 15px;
-  height: 15px;
   transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
   color: #ccc;
 `;
 
@@ -97,10 +102,10 @@ const Navbar = () => {
       </DarkModeToggle>
       <InputContainer>
         <SearchInput type="text" placeholder="Search for city..." />
-        <IconMagnifyingGlass icon={faMagnifyingGlass} />
+        <SearchIcon />
       </InputContainer>
       <CurrentLocationButton>
-        <IconLocation icon={faLocationDot} />
+        <LocationIcon />
         Current location
       </CurrentLocationButton>
     </Nav>

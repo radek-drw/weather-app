@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
-import sunriseImg from "../../../assets/images/sunrise.svg";
+import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
+import { FaWind, FaSun } from "react-icons/fa";
 
 const DetailsCard = styled.div`
   flex-basis: 65%;
@@ -12,6 +12,9 @@ const DetailsCard = styled.div`
 const Panel = styled.div`
   flex-basis: 33%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const TempContainer = styled.div``;
@@ -34,11 +37,25 @@ const FeelsLikeTemp = styled.div`
 const Twilight = styled.div``;
 
 const SunriseSunset = styled.div`
-  background-color: cadetblue;
-  border-bottom: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div {
+    text-align: left;
+  }
+  &:first-of-type {
+    margin-bottom: 7px;
+  }
 `;
 
-const Time = styled.div``;
+const SunriseSunsetIcon = styled.div`
+  font-size: 2rem;
+  color: red;
+`;
+
+const SunriseSunsetLabel = styled.p``;
+
+const SunriseSunsetTime = styled.div``;
 
 const SkyCondition = styled.p``;
 
@@ -57,43 +74,50 @@ const WeatherDetails = () => {
         </TempContainer>
         <Twilight>
           <SunriseSunset>
-            <img src={sunriseImg} alt="Sunrise" />
-            <p>Sunrise</p>
-            <Time>06:37</Time>
+            <SunriseSunsetIcon>
+              <WiSunrise />
+            </SunriseSunsetIcon>
+            <div>
+              <SunriseSunsetLabel>Sunrise</SunriseSunsetLabel>
+              <SunriseSunsetTime>06:37</SunriseSunsetTime>
+            </div>
           </SunriseSunset>
           <SunriseSunset>
-            {/* sunset icon here */}
-            <p>Sunset</p>
-            <Time>21:40</Time>
+            <SunriseSunsetIcon>
+              <WiSunset />
+            </SunriseSunsetIcon>
+            <div>
+              <SunriseSunsetLabel>Sunset</SunriseSunsetLabel>
+              <SunriseSunsetTime>21:40</SunriseSunsetTime>
+            </div>
           </SunriseSunset>
         </Twilight>
       </Panel>
 
       {/* PANEL MIDDLE */}
       <Panel>
-        {/* sun icon here */}
-        <SkyCondition>Sunny</SkyCondition>
+        <SkyCondition>
+          {/* sky condition icon here */}
+          Sunny
+        </SkyCondition>
       </Panel>
 
       {/* PANEL RIGHT */}
       <Panel>
         <Metric>
-          {/* humidity icon here */}
-          <span>41%</span>
+          <WiHumidity size={30} /> <span>41%</span>
           <p>Humidity</p>
         </Metric>
         <Metric>
-          {/* wind icon here */}
-          <span>2km/h</span>
+          <FaWind size={30} /> <span>2km/h</span>
           <p>Wind Speed</p>
         </Metric>
         <Metric>
-          {/* pressure icon here */}
-          <span>997hPa</span>
+          <WiBarometer size={30} /> <span>997hPa</span>
           <p>Pressure</p>
         </Metric>
         <Metric>
-          {/* uv icon here */}
+          <FaSun />
           <span>8</span>
           <p>UV</p>
         </Metric>
