@@ -11,6 +11,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   height: 35px;
+  margin-bottom: 20px;
 `;
 
 const DarkModeToggle = styled.div`
@@ -31,7 +32,8 @@ const InputContainer = styled.div`
   max-width: 350px;
   border-radius: 5px;
   background-color: ${(props) => props.theme.darkBackground};
-  box-shadow: 0 0 10px #233;
+  box-shadow: 0 0 10px ${(props) => props.theme.boxShadow};
+  overflow: hidden;
 `;
 
 const IconMagnifyingGlass = styled(FontAwesomeIcon)`
@@ -68,7 +70,7 @@ const CurrentLocationButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   transition: background-color 0.3s;
   padding-left: 25px;
   position: relative;
