@@ -36,7 +36,7 @@ const FeelsLikeTemp = styled.div`
 
 const Twilight = styled.div``;
 
-const SunriseSunset = styled.div`
+const SunriseSunsetWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,8 +49,17 @@ const SunriseSunset = styled.div`
 `;
 
 const SunriseSunsetIcon = styled.div`
-  font-size: 2rem;
-  color: red;
+  margin-right: 8px;
+`;
+
+const SunriseIcon = styled(WiSunrise)`
+  color: #ffd700; /*goldenyellow*/
+  font-size: 40px;
+`;
+
+const SunsetIcon = styled(WiSunset)`
+  color: #ff6347; /*deep red*/
+  font-size: 40px;
 `;
 
 const SunriseSunsetLabel = styled.p``;
@@ -73,24 +82,24 @@ const WeatherDetails = () => {
           </FeelsLikeTemp>
         </TempContainer>
         <Twilight>
-          <SunriseSunset>
+          <SunriseSunsetWrapper>
             <SunriseSunsetIcon>
-              <WiSunrise />
+              <SunriseIcon />
             </SunriseSunsetIcon>
             <div>
               <SunriseSunsetLabel>Sunrise</SunriseSunsetLabel>
               <SunriseSunsetTime>06:37</SunriseSunsetTime>
             </div>
-          </SunriseSunset>
-          <SunriseSunset>
+          </SunriseSunsetWrapper>
+          <SunriseSunsetWrapper>
             <SunriseSunsetIcon>
-              <WiSunset />
+              <SunsetIcon />
             </SunriseSunsetIcon>
             <div>
               <SunriseSunsetLabel>Sunset</SunriseSunsetLabel>
               <SunriseSunsetTime>21:40</SunriseSunsetTime>
             </div>
-          </SunriseSunset>
+          </SunriseSunsetWrapper>
         </Twilight>
       </Panel>
 
@@ -105,19 +114,22 @@ const WeatherDetails = () => {
       {/* PANEL RIGHT */}
       <Panel>
         <Metric>
-          <WiHumidity size={30} /> <span>41%</span>
+          <WiHumidity size={30} />
+          <span>41%</span>
           <p>Humidity</p>
         </Metric>
         <Metric>
-          <FaWind size={30} /> <span>2km/h</span>
+          <FaWind size={30} />
+          <span>2km/h</span>
           <p>Wind Speed</p>
         </Metric>
         <Metric>
-          <WiBarometer size={30} /> <span>997hPa</span>
+          <WiBarometer size={30} />
+          <span>997hPa</span>
           <p>Pressure</p>
         </Metric>
         <Metric>
-          <FaSun />
+          <FaSun size={30} />
           <span>8</span>
           <p>UV</p>
         </Metric>
