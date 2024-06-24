@@ -15,6 +15,10 @@ const Panel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  &:last-of-type {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 `;
 
 const TempContainer = styled.div``;
@@ -68,7 +72,46 @@ const SunriseSunsetTime = styled.div``;
 
 const SkyCondition = styled.p``;
 
-const Metric = styled.div``;
+const Metric = styled.div`
+  flex-basis: 50%;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin: auto 0 0 0;
+    flex-grow: 1; /* Added to push p to the bottom */
+    display: flex;
+    align-items: flex-end;
+  }
+`;
+
+const HumidityIcon = styled(WiHumidity)`
+  height: 40%;
+  font-size: 25px;
+`;
+
+const HumidityValue = styled.div``;
+
+const WindIcon = styled(FaWind)`
+  height: 40%;
+  font-size: 21px;
+`;
+const WindValue = styled.div``;
+
+const BarometerIcon = styled(WiBarometer)`
+  height: 40%;
+  font-size: 28px;
+`;
+const BarometerValue = styled.div``;
+
+const SunIcon = styled(FaSun)`
+  height: 40%;
+  font-size: 24px;
+`;
+const SunValue = styled.div``;
 
 const WeatherDetails = () => {
   return (
@@ -114,23 +157,23 @@ const WeatherDetails = () => {
       {/* PANEL RIGHT */}
       <Panel>
         <Metric>
-          <WiHumidity size={30} />
-          <span>41%</span>
+          <HumidityIcon />
+          <HumidityValue>41%</HumidityValue>
           <p>Humidity</p>
         </Metric>
         <Metric>
-          <FaWind size={30} />
-          <span>2km/h</span>
+          <WindIcon />
+          <WindValue>2km/h</WindValue>
           <p>Wind Speed</p>
         </Metric>
         <Metric>
-          <WiBarometer size={30} />
-          <span>997hPa</span>
+          <BarometerIcon />
+          <BarometerValue>997hPa</BarometerValue>
           <p>Pressure</p>
         </Metric>
         <Metric>
-          <FaSun size={30} />
-          <span>8</span>
+          <SunIcon />
+          <SunValue>8</SunValue>
           <p>UV</p>
         </Metric>
       </Panel>
