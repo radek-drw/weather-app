@@ -1,53 +1,73 @@
 import React from "react";
 import styled from "styled-components";
 
+import { CiCloudSun } from "react-icons/ci";
+
 const FiveDaysCard = styled.div`
   flex-basis: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const Title = styled.h3``;
+const Title = styled.h3`
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 10px;
+`;
 
-const DayContainer = styled.div``;
+const DayContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-const TemperatureValue = styled.span``;
+const WeatherIcon = styled(CiCloudSun)`
+  font-size: 28px;
+  flex-basis: 20%;
+  /* background-color: green; */
+`;
 
-const DayName = styled.span``;
+const TemperatureValue = styled.div`
+  flex-basis: 30%;
+  text-align: center;
+  /* background-color: cadetblue; */
+  font-size: 1.2rem;
+`;
 
-const DateValue = styled.div``;
+const DateValue = styled.div`
+  flex-grow: 1;
+  text-align: center;
+  /* background-color: violet; */
+`;
 
 const Weather5day = () => {
   return (
     <FiveDaysCard>
       <Title>5 Days Forecast</Title>
       <DayContainer>
-        {/* weather icons here */}
+        <WeatherIcon />
         <TemperatureValue>20&deg;C</TemperatureValue>
-        <DayName>Friday</DayName>
-        <DateValue>1 Sep</DateValue>
+        <DateValue>Friday, 1 Sep</DateValue>
       </DayContainer>
       <DayContainer>
-        {/* weather icons here */}
+        <WeatherIcon />
         <TemperatureValue>22&deg;C</TemperatureValue>
-        <DayName>Saturday</DayName>
-        <DateValue>2 Sep</DateValue>
+        <DateValue>Saturday, 2 Sep</DateValue>
       </DayContainer>
       <DayContainer>
-        {/* weather icons here */}
+        <WeatherIcon />
         <TemperatureValue>27&deg;C</TemperatureValue>
-        <DayName>Sunday</DayName>
-        <DateValue>3 Sep</DateValue>
+        <DateValue>Sunday, 3 Sep</DateValue>
       </DayContainer>
       <DayContainer>
-        {/* weather icons here */}
+        <WeatherIcon />
         <TemperatureValue>18&deg;C</TemperatureValue>
-        <DayName>Monday</DayName>
-        <DateValue>4 Sep</DateValue>
+        <DateValue>Monday, 4 Sep</DateValue>
       </DayContainer>
       <DayContainer>
-        {/* weather icons here */}
+        <WeatherIcon />
         <TemperatureValue>16&deg;C</TemperatureValue>
-        <DayName>Tuesday</DayName>
-        <DateValue>5 Sep</DateValue>
+        <DateValue>Tuesday, 5 Sep</DateValue>
       </DayContainer>
     </FiveDaysCard>
   );
