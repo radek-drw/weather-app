@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { FaWind, FaSun } from "react-icons/fa";
 
@@ -74,44 +74,51 @@ const SkyCondition = styled.p``;
 
 const Metric = styled.div`
   flex-basis: 50%;
-  border: 1px solid white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  p {
-    margin: auto 0 0 0;
-    flex-grow: 1; /* Added to push p to the bottom */
-    display: flex;
-    align-items: flex-end;
+  color: #ddd;
+  &:nth-child(1),
+  &:nth-child(2) {
+    margin-bottom: 14px;
   }
 `;
 
-const HumidityIcon = styled(WiHumidity)`
-  height: 40%;
-  font-size: 25px;
+const MetricIconStyles = css`
+  height: 40px;
 `;
 
-const HumidityValue = styled.div``;
+const MetricValue = styled.div`
+  font-size: 1.1rem;
+`;
+
+const MetricLabel = styled.p`
+  font-size: 0.9rem;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+`;
+
+const HumidityIcon = styled(WiHumidity)`
+  ${MetricIconStyles}
+  font-size: 37px;
+`;
 
 const WindIcon = styled(FaWind)`
-  height: 40%;
-  font-size: 21px;
-`;
-const WindValue = styled.div``;
-
-const BarometerIcon = styled(WiBarometer)`
-  height: 40%;
-  font-size: 28px;
-`;
-const BarometerValue = styled.div``;
-
-const SunIcon = styled(FaSun)`
-  height: 40%;
+  ${MetricIconStyles}
   font-size: 24px;
 `;
-const SunValue = styled.div``;
+
+const BarometerIcon = styled(WiBarometer)`
+  ${MetricIconStyles}
+  font-size: 50px;
+`;
+
+const SunIcon = styled(FaSun)`
+  ${MetricIconStyles}
+  font-size: 27px;
+`;
 
 const WeatherDetails = () => {
   return (
@@ -158,23 +165,23 @@ const WeatherDetails = () => {
       <Panel>
         <Metric>
           <HumidityIcon />
-          <HumidityValue>41%</HumidityValue>
-          <p>Humidity</p>
+          <MetricValue>41%</MetricValue>
+          <MetricLabel>Humidity</MetricLabel>
         </Metric>
         <Metric>
           <WindIcon />
-          <WindValue>2km/h</WindValue>
-          <p>Wind Speed</p>
+          <MetricValue>2km/h</MetricValue>
+          <MetricLabel>Wind Speed</MetricLabel>
         </Metric>
         <Metric>
           <BarometerIcon />
-          <BarometerValue>997hPa</BarometerValue>
-          <p>Pressure</p>
+          <MetricValue>997hPa</MetricValue>
+          <MetricLabel>Pressure</MetricLabel>
         </Metric>
         <Metric>
           <SunIcon />
-          <SunValue>8</SunValue>
-          <p>UV</p>
+          <MetricValue>8</MetricValue>
+          <MetricLabel>UV</MetricLabel>
         </Metric>
       </Panel>
     </DetailsCard>
