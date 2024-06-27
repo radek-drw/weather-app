@@ -1,7 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
+
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { FaWind, FaSun } from "react-icons/fa";
+import { PiSunFill } from "react-icons/pi";
 
 const DetailsCard = styled.div`
   flex-basis: 65%;
@@ -15,7 +17,13 @@ const Panel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  &:last-of-type {
+  &:nth-child(2) {
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+    align-items: center;
+  }
+  &:nth-child(3) {
     flex-direction: row;
     flex-wrap: wrap;
   }
@@ -70,7 +78,14 @@ const SunriseSunsetLabel = styled.p``;
 
 const SunriseSunsetTime = styled.div``;
 
-const SkyCondition = styled.p``;
+const SkyCondIcon = styled(PiSunFill)`
+  color: #ffd700;
+  font-size: 8.6rem;
+`;
+
+const SkyCondition = styled.p`
+  font-size: 1.6rem;
+`;
 
 const Metric = styled.div`
   flex-basis: 50%;
@@ -155,10 +170,8 @@ const WeatherDetails = () => {
 
       {/* PANEL MIDDLE */}
       <Panel>
-        <SkyCondition>
-          {/* sky condition icon here */}
-          Sunny
-        </SkyCondition>
+        <SkyCondIcon />
+        <SkyCondition>Sunny</SkyCondition>
       </Panel>
 
       {/* PANEL RIGHT */}
