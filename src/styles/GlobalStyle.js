@@ -20,14 +20,14 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${(props) => props.theme.darkBackground};
+    background-color: #282c34;
     color: #fff;
     height: 100vh;
-    font-family: ${(props) => props.theme.fontFamily};
+    font-family: "Montserrat", sans-serif;
   }
 
   input {
-    font-family: ${(props) => props.theme.fontFamily};
+    font-family: inherit;
   }
 
   h1, h2, h3, h4, h5, h6 {
