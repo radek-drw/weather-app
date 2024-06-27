@@ -1,8 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
-import { theme, GlobalStyle } from "./styles/index";
-import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "./styles/GlobalStyle";
 
 import Navbar from "./components/Navbar";
 import WeatherData from "./components/WeatherData/WeatherData";
@@ -18,13 +17,11 @@ const AppContainer = styled.div`
 const App = () => {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <AppContainer>
-          <Navbar />
-          <WeatherData />
-        </AppContainer>
-      </ThemeProvider>
+      <GlobalStyle />
+      <AppContainer>
+        <Navbar />
+        <WeatherData />
+      </AppContainer>
     </>
   );
 };
