@@ -1,5 +1,7 @@
 import React from "react";
+
 import styled from "styled-components";
+import media from "../styles/media";
 
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
@@ -33,7 +35,6 @@ const InputContainer = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   transition: box-shadow 0.3s ease;
-
   &:focus-within {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   }
@@ -68,31 +69,40 @@ const SearchInput = styled.input`
 `;
 
 const CurrentLocationButton = styled.button`
-  position: relative;
+  display: flex;
+  justify-content: space-between;
   padding: 0.5rem 1rem;
-  padding-left: 25px;
-  height: 25px;
+  min-height: 25px;
   align-self: center;
   background-color: rgb(0, 128, 0);
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.3s;
   &:hover {
     background-color: rgb(0, 114, 0);
   }
+
+  ${media.mobile`
+    background-color: transparent;
+    position: relative;
+    left: -10%;
+  `}
 `;
 
 const LocationIcon = styled(LuMapPin)`
-  position: absolute;
-  top: 50%;
-  left: 6px;
-  transform: translateY(-50%);
   width: 14px;
   height: 14px;
   color: #ccc;
+`;
+
+const LocationLabel = styled.p`
+  margin-left: 5px;
+
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 const Navbar = () => {
@@ -107,7 +117,7 @@ const Navbar = () => {
       </InputContainer>
       <CurrentLocationButton>
         <LocationIcon />
-        Current location
+        <LocationLabel>Current location</LocationLabel>
       </CurrentLocationButton>
     </Nav>
   );
