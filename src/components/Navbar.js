@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import { Search, MapPin } from "feather-icons-react";
+
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
 
@@ -11,7 +11,9 @@ const Nav = styled.nav`
   margin-bottom: 20px;
 `;
 
-const DarkModeToggle = styled.div`
+const DarkModeToggle = styled.button`
+  display: block;
+  border: none;
   width: 7%;
   min-width: 50px;
   max-width: 80px;
@@ -19,7 +21,6 @@ const DarkModeToggle = styled.div`
   align-self: center;
   background-color: #fff;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 const InputContainer = styled.div`
