@@ -11,9 +11,9 @@ const FiveDaysCard = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: 1.6rem;
-  text-align: center;
   margin-bottom: 10px;
+  text-align: center;
+  font-size: 1.6rem;
 `;
 
 const DayContainer = styled.div`
@@ -22,22 +22,19 @@ const DayContainer = styled.div`
 `;
 
 const WeatherIcon = styled(CiCloudSun)`
-  font-size: 28px;
   flex-basis: 20%;
-  /* background-color: green; */
+  font-size: 28px;
 `;
 
 const TemperatureValue = styled.div`
   flex-basis: 30%;
   text-align: center;
-  /* background-color: cadetblue; */
   font-size: 1.2rem;
 `;
 
 const DateValue = styled.div`
   flex-grow: 1;
   text-align: center;
-  /* background-color: violet; */
 `;
 
 const Weather5day = () => {

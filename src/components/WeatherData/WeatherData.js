@@ -1,5 +1,7 @@
 import React from "react";
+
 import styled from "styled-components";
+import media from "../../styles/media";
 
 import WeatherCurrentCity from "./Subcomponents/WeatherCurrentCity";
 import WeatherDetails from "./Subcomponents/WeatherDetails";
@@ -14,9 +16,16 @@ const Main = styled.main`
   height: 420px;
   > * {
     padding: 15px;
+    min-height: 185px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-    min-height: 185px;
+
+    ${media.mobile`
+    flex-basis: 100%;
+    padding: 15px 0;
+    box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.6);
+    border-radius: 0;
+  `}
   }
 `;
 

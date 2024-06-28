@@ -1,4 +1,5 @@
 import React from "react";
+
 import styled from "styled-components";
 
 const CityCard = styled.div`
@@ -7,14 +8,11 @@ const CityCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
 `;
 
 const CityName = styled.h1`
-  text-align: center;
   margin-bottom: 1rem;
+  text-align: center;
   font-size: 2rem;
   color: #fff;
 `;
@@ -24,9 +22,9 @@ const CityDetails = styled.div`
 `;
 
 const CityTime = styled.div`
+  margin-bottom: 0.5rem;
   font-size: 4rem;
   color: #00aaff; /* Light blue color for time */
-  margin-bottom: 0.5rem;
 `;
 
 const CityDate = styled.div`

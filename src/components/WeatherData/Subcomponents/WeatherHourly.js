@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
 import { CiCloudSun } from "react-icons/ci";
 import { CiLocationArrow1 } from "react-icons/ci";
 
@@ -11,9 +10,9 @@ const HourlyCard = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: 1.6rem;
-  text-align: center;
   margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.6rem;
 `;
 
 const HourlyContainer = styled.div`
@@ -23,30 +22,25 @@ const HourlyContainer = styled.div`
 `;
 
 const HourlyItem = styled.div`
+  flex-basis: 18%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 0.5rem;
   background-color: #1e2127;
   border-radius: 15px;
-  padding: 1rem 0.5rem;
-  flex-basis: 18%;
 `;
-
-const TimeLabel = styled.span``;
 
 const SkyCondIcon = styled(CiCloudSun)`
-  font-size: 28px;
   flex-basis: 20%;
+  font-size: 28px;
 `;
-
-const TemperatureValue = styled.span``;
 
 const WindSpeedIndicator = styled(CiLocationArrow1)`
-  font-size: 22px;
   flex-basis: 20%;
+  font-size: 22px;
 `;
-const WindSpeedLabel = styled.span``;
 
 const WeatherHourly = () => {
   return (
@@ -54,39 +48,39 @@ const WeatherHourly = () => {
       <Title>Hourly Forecast</Title>
       <HourlyContainer>
         <HourlyItem>
-          <TimeLabel>12:00</TimeLabel>
+          <span>12:00</span>
           <SkyCondIcon />
-          <TemperatureValue>26&deg;C</TemperatureValue>
+          <span>26&deg;C</span>
           <WindSpeedIndicator />
-          <WindSpeedLabel>3km/h</WindSpeedLabel>
+          <span>3km/h</span>
         </HourlyItem>
         <HourlyItem>
-          <TimeLabel>15:00</TimeLabel>
+          <span>15:00</span>
           <SkyCondIcon />
-          <TemperatureValue>27&deg;C</TemperatureValue>
+          <span>27&deg;C</span>
           <WindSpeedIndicator />
-          <WindSpeedLabel>2km/h</WindSpeedLabel>
+          <span>2km/h</span>
         </HourlyItem>
         <HourlyItem>
-          <TimeLabel>18:00</TimeLabel>
+          <span>18:00</span>
           <SkyCondIcon />
-          <TemperatureValue>27&deg;C</TemperatureValue>
+          <span>27&deg;C</span>
           <WindSpeedIndicator />
-          <WindSpeedLabel>2km/h</WindSpeedLabel>
+          <span>2km/h</span>
         </HourlyItem>
         <HourlyItem>
-          <TimeLabel>21:00</TimeLabel>
+          <span>21:00</span>
           <SkyCondIcon />
-          <TemperatureValue>25&deg;C</TemperatureValue>
+          <span>25&deg;C</span>
           <WindSpeedIndicator />
-          <WindSpeedLabel>3km/h</WindSpeedLabel>
+          <span>3km/h</span>
         </HourlyItem>
         <HourlyItem>
-          <TimeLabel>00:00</TimeLabel>
+          <span>00:00</span>
           <SkyCondIcon />
-          <TemperatureValue>22&deg;C</TemperatureValue>
+          <span>22&deg;C</span>
           <WindSpeedIndicator />
-          <WindSpeedLabel>3km/h</WindSpeedLabel>
+          <span>3km/h</span>
         </HourlyItem>
       </HourlyContainer>
     </HourlyCard>

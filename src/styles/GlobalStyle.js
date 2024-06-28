@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import media from "./media";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -14,6 +15,9 @@ export const GlobalStyle = createGlobalStyle`
 
   html {
     font-size: 10px;
+    ${media.mobile`
+    font-size: 9px;
+  `}
   }
 
   body {
@@ -22,8 +26,12 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     background-color: #282c34;
     color: #fff;
-    height: 100vh;
+    min-height: 100vh;
     font-family: "Montserrat", sans-serif;
+
+    ${media.mobile`
+    display: block;
+  `}
   }
 
   input {

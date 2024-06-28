@@ -1,9 +1,19 @@
 import React from "react";
-import styled, { css } from "styled-components";
+
+import styled, { css, ThemeProvider } from "styled-components";
 
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { FaWind, FaSun } from "react-icons/fa";
 import { PiSunFill } from "react-icons/pi";
+
+const theme = {
+  colors: {
+    sunrise: "#ffd700",
+    sunset: "#ff6347",
+    text: "#ddd",
+    mutedText: "#ccc",
+  },
+};
 
 const DetailsCard = styled.div`
   flex-basis: 65%;
@@ -13,13 +23,11 @@ const DetailsCard = styled.div`
 
 const Panel = styled.div`
   flex-basis: 33%;
-  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: center;
   &:nth-child(2) {
-    flex-direction: column;
-    /* flex-wrap: wrap; */
     justify-content: space-around;
     align-items: center;
   }
@@ -29,24 +37,20 @@ const Panel = styled.div`
   }
 `;
 
-const TempContainer = styled.div``;
-
 const CurrentTemp = styled.div`
   font-size: 3.5rem;
 `;
 
 const FeelsLikeTemp = styled.div`
-  color: #ccc;
+  color: ${(props) => props.theme.colors.mutedText};
   display: flex;
   justify-content: center;
   align-items: center;
   span {
-    font-size: 1.6rem;
     margin: 5px;
+    font-size: 1.6rem;
   }
 `;
-
-const Twilight = styled.div``;
 
 const SunriseSunsetWrapper = styled.div`
   display: flex;
@@ -65,22 +69,18 @@ const SunriseSunsetIcon = styled.div`
 `;
 
 const SunriseIcon = styled(WiSunrise)`
-  color: #ffd700; /*goldenyellow*/
   font-size: 40px;
+  color: ${(props) => props.theme.colors.sunrise};
 `;
 
 const SunsetIcon = styled(WiSunset)`
-  color: #ff6347; /*deep red*/
   font-size: 40px;
+  color: ${(props) => props.theme.colors.sunset};
 `;
 
-const SunriseSunsetLabel = styled.p``;
-
-const SunriseSunsetTime = styled.div``;
-
 const SkyCondIcon = styled(PiSunFill)`
-  color: #ffd700;
   font-size: 8.6rem;
+  color: ${(props) => props.theme.colors.sunrise};
 `;
 
 const SkyCondition = styled.p`
@@ -93,7 +93,7 @@ const Metric = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  color: #ddd;
+  color: ${(props) => props.theme.colors.text};
   &:nth-child(1),
   &:nth-child(2) {
     margin-bottom: 14px;
@@ -109,10 +109,10 @@ const MetricValue = styled.div`
 `;
 
 const MetricLabel = styled.p`
-  font-size: 0.9rem;
-  flex-grow: 1;
   display: flex;
   align-items: flex-end;
+  font-size: 0.9rem;
+  flex-grow: 1;
 `;
 
 const HumidityIcon = styled(WiHumidity)`
@@ -127,77 +127,75 @@ const WindIcon = styled(FaWind)`
 
 const BarometerIcon = styled(WiBarometer)`
   ${MetricIconStyles}
-  font-size: 50px;
+  font-size: 44px;
 `;
 
 const SunIcon = styled(FaSun)`
   ${MetricIconStyles}
-  font-size: 27px;
+  font-size: 25px;
 `;
+
+const IconWithLabel = ({ icon: Icon, label, time }) => (
+  <SunriseSunsetWrapper>
+    <SunriseSunsetIcon>
+      <Icon />
+    </SunriseSunsetIcon>
+    <div>
+      <p>{label}</p>
+      <div>{time}</div>
+    </div>
+  </SunriseSunsetWrapper>
+);
 
 const WeatherDetails = () => {
   return (
-    <DetailsCard>
-      {/* PANEL LEFT */}
-      <Panel>
-        <TempContainer>
-          <CurrentTemp>24&deg;C</CurrentTemp>
-          <FeelsLikeTemp>
-            Feels like: <span>22&deg;C</span>
-          </FeelsLikeTemp>
-        </TempContainer>
-        <Twilight>
-          <SunriseSunsetWrapper>
-            <SunriseSunsetIcon>
-              <SunriseIcon />
-            </SunriseSunsetIcon>
-            <div>
-              <SunriseSunsetLabel>Sunrise</SunriseSunsetLabel>
-              <SunriseSunsetTime>06:37</SunriseSunsetTime>
-            </div>
-          </SunriseSunsetWrapper>
-          <SunriseSunsetWrapper>
-            <SunriseSunsetIcon>
-              <SunsetIcon />
-            </SunriseSunsetIcon>
-            <div>
-              <SunriseSunsetLabel>Sunset</SunriseSunsetLabel>
-              <SunriseSunsetTime>21:40</SunriseSunsetTime>
-            </div>
-          </SunriseSunsetWrapper>
-        </Twilight>
-      </Panel>
+    <ThemeProvider theme={theme}>
+      <DetailsCard>
+        {/* PANEL LEFT */}
+        <Panel>
+          <div>
+            <CurrentTemp>24&deg;C</CurrentTemp>
+            <FeelsLikeTemp>
+              Feels like: <span>22&deg;C</span>
+            </FeelsLikeTemp>
+          </div>
+          <div>
+            <IconWithLabel icon={SunriseIcon} label="Sunrise" time="06:37" />
+            <IconWithLabel icon={SunsetIcon} label="Sunset" time="21:40" />
+          </div>
+        </Panel>
 
-      {/* PANEL MIDDLE */}
-      <Panel>
-        <SkyCondIcon />
-        <SkyCondition>Sunny</SkyCondition>
-      </Panel>
+        {/* PANEL MIDDLE */}
+        <Panel>
+          <SkyCondIcon />
+          <SkyCondition>Sunny</SkyCondition>
+        </Panel>
 
-      {/* PANEL RIGHT */}
-      <Panel>
-        <Metric>
-          <HumidityIcon />
-          <MetricValue>41%</MetricValue>
-          <MetricLabel>Humidity</MetricLabel>
-        </Metric>
-        <Metric>
-          <WindIcon />
-          <MetricValue>2km/h</MetricValue>
-          <MetricLabel>Wind Speed</MetricLabel>
-        </Metric>
-        <Metric>
-          <BarometerIcon />
-          <MetricValue>997hPa</MetricValue>
-          <MetricLabel>Pressure</MetricLabel>
-        </Metric>
-        <Metric>
-          <SunIcon />
-          <MetricValue>8</MetricValue>
-          <MetricLabel>UV</MetricLabel>
-        </Metric>
-      </Panel>
-    </DetailsCard>
+        {/* PANEL RIGHT */}
+        <Panel>
+          <Metric>
+            <HumidityIcon />
+            <MetricValue>41%</MetricValue>
+            <MetricLabel>Humidity</MetricLabel>
+          </Metric>
+          <Metric>
+            <WindIcon />
+            <MetricValue>2km/h</MetricValue>
+            <MetricLabel>Wind Speed</MetricLabel>
+          </Metric>
+          <Metric>
+            <BarometerIcon />
+            <MetricValue>997hPa</MetricValue>
+            <MetricLabel>Pressure</MetricLabel>
+          </Metric>
+          <Metric>
+            <SunIcon />
+            <MetricValue>8</MetricValue>
+            <MetricLabel>UV</MetricLabel>
+          </Metric>
+        </Panel>
+      </DetailsCard>
+    </ThemeProvider>
   );
 };
 
