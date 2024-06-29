@@ -61,7 +61,7 @@ const SearchButton = styled.button`
   color: ${({ theme }) => theme.colors.searchBtnText};
   border: none;
   border-radius: 0 5px 5px 0;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   cursor: pointer;
   transition: background-color 0.3s;
 
