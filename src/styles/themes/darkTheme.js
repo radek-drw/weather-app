@@ -8,5 +8,8 @@ export const darkTheme = {
     searchShadow: "rgba(0, 0, 0, 0.30)",
     searchShadowFocus: "rgba(0, 0, 0, 0.5)",
     iconColor: "#2a2a2a", // Moon color
+    searchBtnBackground: "#dfdfdf",
+    searchBtnText: "#333",
+    searchBtnHover: "#bfbfbf",
   },
 };

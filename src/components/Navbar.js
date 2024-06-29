@@ -15,14 +15,15 @@ const Nav = styled.nav`
   margin-bottom: 20px;
 `;
 
-const InputContainer = styled.div`
+const SearchContainer = styled.div`
   position: relative;
-  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
   min-width: 100px;
   max-width: 350px;
   border-radius: 5px;
   box-shadow: 0 0 10px ${({ theme }) => theme.colors.searchShadow};
-  overflow: hidden;
   transition: box-shadow 0.3s ease;
 
   &:focus-within {
@@ -31,21 +32,14 @@ const InputContainer = styled.div`
 `;
 
 const SearchIcon = styled(CiSearch)`
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  width: 15px;
-  height: 15px;
-  transform: translateY(-50%);
+  align-self: center;
+  flex-basis: 10%;
+  font-size: 2.2rem;
   color: ${({ theme }) => theme.colors.mutedText};
 `;
 
 const SearchInput = styled.input`
-  position: absolute;
-  width: calc(100% - 30px);
-  top: 0;
-  height: 100%;
-  left: 30px;
+  flex-grow: 1;
   padding: 0.5rem;
   border: none;
   background-color: inherit;
@@ -55,6 +49,24 @@ const SearchInput = styled.input`
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.mutedText};
+  }
+`;
+
+const SearchButton = styled.button`
+  position: absolute;
+  left: 100%;
+  height: 100%;
+  padding: 0 1.2rem;
+  background-color: ${({ theme }) => theme.colors.searchBtnBackground};
+  color: ${({ theme }) => theme.colors.searchBtnText};
+  border: none;
+  border-radius: 0 5px 5px 0;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.searchBtnHover};
   }
 `;
 
@@ -100,10 +112,11 @@ const Navbar = () => {
   return (
     <Nav>
       <Toggle />
-      <InputContainer>
-        <SearchInput type="text" placeholder="Search for city..." />
+      <SearchContainer>
         <SearchIcon />
-      </InputContainer>
+        <SearchInput type="text" placeholder="Search for city..." />
+        <SearchButton type="button">Search</SearchButton>
+      </SearchContainer>
       <CurrentLocationButton>
         <LocationIcon />
         <LocationLabel>Current location</LocationLabel>

@@ -8,5 +8,8 @@ export const lightTheme = {
     searchShadow: "rgba(0, 0, 0, 0.15)",
     searchShadowFocus: "rgba(0, 0, 0, 0.3)",
     iconColor: "#ffd700", // Sun color
+    searchBtnBackground: "#48484a",
+    searchBtnText: "#fff",
+    searchBtnHover: "#323235",
   },
 };
