@@ -28,7 +28,7 @@ const HourlyItem = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0.5rem;
-  background-color: #1e2127;
+  background-color: ${({ theme }) => theme.colors.hourlyItemBackground};
   border-radius: 15px;
 `;
 

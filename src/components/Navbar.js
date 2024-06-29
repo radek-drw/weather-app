@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 import media from "../styles/media";
 
+import Toggle from "./WeatherData/Subcomponents/Toggle";
+
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
 
@@ -13,30 +15,17 @@ const Nav = styled.nav`
   margin-bottom: 20px;
 `;
 
-const DarkModeToggle = styled.button`
-  display: block;
-  border: none;
-  width: 7%;
-  min-width: 50px;
-  max-width: 80px;
-  height: 20px;
-  align-self: center;
-  background-color: #fff;
-  border-radius: 10px;
-`;
-
 const InputContainer = styled.div`
   position: relative;
   width: 50%;
   min-width: 100px;
   max-width: 350px;
   border-radius: 5px;
-  background-color: #282c34;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px ${({ theme }) => theme.colors.searchShadow};
   overflow: hidden;
   transition: box-shadow 0.3s ease;
   &:focus-within {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px ${({ theme }) => theme.colors.searchShadowFocus};
   }
 `;
 
@@ -47,7 +36,7 @@ const SearchIcon = styled(CiSearch)`
   width: 15px;
   height: 15px;
   transform: translateY(-50%);
-  color: #ccc;
+  color: ${({ theme }) => theme.colors.mutedText};
 `;
 
 const SearchInput = styled.input`
@@ -59,12 +48,12 @@ const SearchInput = styled.input`
   padding: 0.5rem;
   border: none;
   background-color: inherit;
-  color: white;
+  color: ${({ theme }) => theme.colors.text};
   outline: none;
   font-size: 1.2rem;
 
   &::placeholder {
-    color: #ccc;
+    color: ${({ theme }) => theme.colors.mutedText};
   }
 `;
 
@@ -94,7 +83,7 @@ const CurrentLocationButton = styled.button`
 const LocationIcon = styled(LuMapPin)`
   width: 14px;
   height: 14px;
-  color: #ccc;
+  color: white;
 `;
 
 const LocationLabel = styled.p`
@@ -108,9 +97,7 @@ const LocationLabel = styled.p`
 const Navbar = () => {
   return (
     <Nav>
-      <DarkModeToggle>
-        <div></div>
-      </DarkModeToggle>
+      <Toggle />
       <InputContainer>
         <SearchInput type="text" placeholder="Search for city..." />
         <SearchIcon />

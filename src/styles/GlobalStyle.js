@@ -24,8 +24,8 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #282c34;
-    color: #fff;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
     min-height: 100vh;
     font-family: "Montserrat", sans-serif;
 

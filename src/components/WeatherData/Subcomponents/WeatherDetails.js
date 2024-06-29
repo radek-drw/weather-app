@@ -1,18 +1,14 @@
 import React from "react";
 
-import styled, { css, ThemeProvider } from "styled-components";
+import styled, { css } from "styled-components";
 
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { FaWind, FaSun } from "react-icons/fa";
 import { PiSunFill } from "react-icons/pi";
 
-const theme = {
-  colors: {
-    sunrise: "#ffd700",
-    sunset: "#ff6347",
-    text: "#ddd",
-    mutedText: "#ccc",
-  },
+const twilightColors = {
+  sunrise: "#ffd700",
+  sunset: "#ff6347",
 };
 
 const DetailsCard = styled.div`
@@ -42,7 +38,7 @@ const CurrentTemp = styled.div`
 `;
 
 const FeelsLikeTemp = styled.div`
-  color: ${(props) => props.theme.colors.mutedText};
+  color: ${({ theme }) => theme.colors.mutedText};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,17 +66,17 @@ const SunriseSunsetIcon = styled.div`
 
 const SunriseIcon = styled(WiSunrise)`
   font-size: 40px;
-  color: ${(props) => props.theme.colors.sunrise};
+  color: ${twilightColors.sunrise};
 `;
 
 const SunsetIcon = styled(WiSunset)`
   font-size: 40px;
-  color: ${(props) => props.theme.colors.sunset};
+  color: ${twilightColors.sunset};
 `;
 
 const SkyCondIcon = styled(PiSunFill)`
   font-size: 8.6rem;
-  color: ${(props) => props.theme.colors.sunrise};
+  color: ${twilightColors.sunrise};
 `;
 
 const SkyCondition = styled.p`
@@ -93,7 +89,7 @@ const Metric = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  color: ${(props) => props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.mutedText};
   &:nth-child(1),
   &:nth-child(2) {
     margin-bottom: 14px;
@@ -149,53 +145,51 @@ const IconWithLabel = ({ icon: Icon, label, time }) => (
 
 const WeatherDetails = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <DetailsCard>
-        {/* PANEL LEFT */}
-        <Panel>
-          <div>
-            <CurrentTemp>24&deg;C</CurrentTemp>
-            <FeelsLikeTemp>
-              Feels like: <span>22&deg;C</span>
-            </FeelsLikeTemp>
-          </div>
-          <div>
-            <IconWithLabel icon={SunriseIcon} label="Sunrise" time="06:37" />
-            <IconWithLabel icon={SunsetIcon} label="Sunset" time="21:40" />
-          </div>
-        </Panel>
+    <DetailsCard>
+      {/* PANEL LEFT */}
+      <Panel>
+        <div>
+          <CurrentTemp>24&deg;C</CurrentTemp>
+          <FeelsLikeTemp>
+            Feels like: <span>22&deg;C</span>
+          </FeelsLikeTemp>
+        </div>
+        <div>
+          <IconWithLabel icon={SunriseIcon} label="Sunrise" time="06:37" />
+          <IconWithLabel icon={SunsetIcon} label="Sunset" time="21:40" />
+        </div>
+      </Panel>
 
-        {/* PANEL MIDDLE */}
-        <Panel>
-          <SkyCondIcon />
-          <SkyCondition>Sunny</SkyCondition>
-        </Panel>
+      {/* PANEL MIDDLE */}
+      <Panel>
+        <SkyCondIcon />
+        <SkyCondition>Sunny</SkyCondition>
+      </Panel>
 
-        {/* PANEL RIGHT */}
-        <Panel>
-          <Metric>
-            <HumidityIcon />
-            <MetricValue>41%</MetricValue>
-            <MetricLabel>Humidity</MetricLabel>
-          </Metric>
-          <Metric>
-            <WindIcon />
-            <MetricValue>2km/h</MetricValue>
-            <MetricLabel>Wind Speed</MetricLabel>
-          </Metric>
-          <Metric>
-            <BarometerIcon />
-            <MetricValue>997hPa</MetricValue>
-            <MetricLabel>Pressure</MetricLabel>
-          </Metric>
-          <Metric>
-            <SunIcon />
-            <MetricValue>8</MetricValue>
-            <MetricLabel>UV</MetricLabel>
-          </Metric>
-        </Panel>
-      </DetailsCard>
-    </ThemeProvider>
+      {/* PANEL RIGHT */}
+      <Panel>
+        <Metric>
+          <HumidityIcon />
+          <MetricValue>41%</MetricValue>
+          <MetricLabel>Humidity</MetricLabel>
+        </Metric>
+        <Metric>
+          <WindIcon />
+          <MetricValue>2km/h</MetricValue>
+          <MetricLabel>Wind Speed</MetricLabel>
+        </Metric>
+        <Metric>
+          <BarometerIcon />
+          <MetricValue>997hPa</MetricValue>
+          <MetricLabel>Pressure</MetricLabel>
+        </Metric>
+        <Metric>
+          <SunIcon />
+          <MetricValue>8</MetricValue>
+          <MetricLabel>UV</MetricLabel>
+        </Metric>
+      </Panel>
+    </DetailsCard>
   );
 };
 

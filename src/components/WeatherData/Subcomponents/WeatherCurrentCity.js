@@ -14,7 +14,7 @@ const CityName = styled.h1`
   margin-bottom: 1rem;
   text-align: center;
   font-size: 2rem;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const CityDetails = styled.div`
@@ -28,7 +28,7 @@ const CityTime = styled.div`
 `;
 
 const CityDate = styled.div`
-  color: #ccc;
+  color: ${({ theme }) => theme.colors.mutedText};
 `;
 
 const WeatherCurrentCity = () => {
