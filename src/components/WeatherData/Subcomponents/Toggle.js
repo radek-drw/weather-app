@@ -1,17 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useTheme } from "../../../themeContext";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const ToggleContainer = styled.button`
-  background: ${({ theme }) => theme.colors.background};
-  border: 2px solid black;
+  background: #e3e3e3;
+  border: none;
   border-radius: 20px;
   cursor: pointer;
-  /* display: flex;
-  align-items: center; */
-  /* margin: 0 auto; */
-  /* overflow: hidden; */
-  /* padding: 0.5rem; */
   position: relative;
   width: 6rem;
   height: 2.5rem;
@@ -19,23 +15,30 @@ const ToggleContainer = styled.button`
 `;
 
 const ToggleButton = styled.div`
-  background: red;
-  border-radius: 50%;
-  height: 2rem;
-  width: 2rem;
   position: absolute;
   top: 50%;
   left: ${({ isLight }) => (isLight ? "3px" : "calc(100% - 23px)")};
   transform: translateY(-50%);
-  transition: all 0.2s linear;
+  background: #999;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.iconColor};
+  font-size: 2rem;
+  transition: all 0.3s ease;
 `;
 
 const Toggle = () => {
   const { theme, toggleTheme } = useTheme();
+  const isLight = theme === "light";
 
   return (
     <ToggleContainer onClick={toggleTheme}>
-      <ToggleButton isLight={theme === "light"} />
+      <ToggleButton isLight={isLight}>
+        {isLight ? <FaSun /> : <FaMoon />}
+      </ToggleButton>
     </ToggleContainer>
   );
 };
