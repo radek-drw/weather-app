@@ -1,12 +1,12 @@
 import React from "react";
 
 import styled from "styled-components";
-import media from "../../styles/media";
+import media from "../styles/media";
 
-import WeatherCurrentCity from "./Subcomponents/WeatherCurrentCity";
-import WeatherDetails from "./Subcomponents/WeatherDetails";
-import Weather5day from "./Subcomponents/Weather5day";
-import WeatherHourly from "./Subcomponents/WeatherHourly";
+import WeatherCurrentCity from "./WeatherCurrentCity";
+import WeatherDetails from "./WeatherDetails";
+import Weather5day from "./Weather5day";
+import WeatherHourly from "./WeatherHourly";
 
 const Main = styled.main`
   display: flex;
@@ -29,7 +29,7 @@ const Main = styled.main`
   }
 `;
 
-const WeatherData = () => {
+const WeatherDataContainer = () => {
   return (
     <Main>
       <WeatherCurrentCity />
@@ -40,4 +40,4 @@ const WeatherData = () => {
   );
 };
 
-export default WeatherData;
+export default WeatherDataContainer;

@@ -23,10 +23,12 @@ const Panel = styled.div`
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
+
   &:nth-child(2) {
     justify-content: space-around;
     align-items: center;
   }
+
   &:nth-child(3) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -42,26 +44,26 @@ const FeelsLikeTemp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   span {
     margin: 5px;
     font-size: 1.6rem;
   }
 `;
 
-const SunriseSunsetWrapper = styled.div`
+const SunTwilight = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:first-of-type {
+    margin-bottom: -5px;
+  }
+
   div {
     text-align: left;
+    margin-left: 4px;
   }
-  &:first-of-type {
-    margin-bottom: 7px;
-  }
-`;
-
-const SunriseSunsetIcon = styled.div`
-  margin-right: 8px;
 `;
 
 const SunriseIcon = styled(WiSunrise)`
@@ -79,7 +81,7 @@ const SkyCondIcon = styled(PiSunFill)`
   color: ${twilightColors.sunrise};
 `;
 
-const SkyCondition = styled.p`
+const SkyCondition = styled.h3`
   font-size: 1.6rem;
 `;
 
@@ -89,7 +91,7 @@ const Metric = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  color: ${({ theme }) => theme.colors.mutedText};
+
   &:nth-child(1),
   &:nth-child(2) {
     margin-bottom: 14px;
@@ -131,18 +133,6 @@ const SunIcon = styled(FaSun)`
   font-size: 25px;
 `;
 
-const IconWithLabel = ({ icon: Icon, label, time }) => (
-  <SunriseSunsetWrapper>
-    <SunriseSunsetIcon>
-      <Icon />
-    </SunriseSunsetIcon>
-    <div>
-      <p>{label}</p>
-      <div>{time}</div>
-    </div>
-  </SunriseSunsetWrapper>
-);
-
 const WeatherDetails = () => {
   return (
     <DetailsCard>
@@ -155,8 +145,20 @@ const WeatherDetails = () => {
           </FeelsLikeTemp>
         </div>
         <div>
-          <IconWithLabel icon={SunriseIcon} label="Sunrise" time="06:37" />
-          <IconWithLabel icon={SunsetIcon} label="Sunset" time="21:40" />
+          <SunTwilight>
+            <SunriseIcon />
+            <div>
+              <p>Sunrise</p>
+              <div>06:37</div>
+            </div>
+          </SunTwilight>
+          <SunTwilight>
+            <SunsetIcon />
+            <div>
+              <p>Sunset</p>
+              <div>21:40</div>
+            </div>
+          </SunTwilight>
         </div>
       </Panel>
 

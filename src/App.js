@@ -12,7 +12,7 @@ import { GlobalStyle } from "./styles/GlobalStyle";
 import media from "./styles/media";
 
 import Navbar from "./components/Navbar";
-import WeatherData from "./components/WeatherData/WeatherData";
+import WeatherDataContainer from "./components/WeatherDataContainer";
 
 const AppContainer = styled.div`
   width: 70vw;
@@ -33,7 +33,7 @@ const ThemedApp = () => {
       <GlobalStyle />
       <AppContainer>
         <Navbar />
-        <WeatherData />
+        <WeatherDataContainer />
       </AppContainer>
     </ThemeProvider>
   );

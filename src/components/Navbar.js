@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import media from "../styles/media";
 
-import Toggle from "./WeatherData/Subcomponents/Toggle";
+import Toggle from "./subcomponent/Toggle";
 
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
@@ -24,6 +24,7 @@ const InputContainer = styled.div`
   box-shadow: 0 0 10px ${({ theme }) => theme.colors.searchShadow};
   overflow: hidden;
   transition: box-shadow 0.3s ease;
+
   &:focus-within {
     box-shadow: 0 0 15px ${({ theme }) => theme.colors.searchShadowFocus};
   }
@@ -69,6 +70,7 @@ const CurrentLocationButton = styled.button`
   border-radius: 5px;
   font-size: 1.2rem;
   transition: background-color 0.3s;
+
   &:hover {
     background-color: rgb(0, 114, 0);
   }

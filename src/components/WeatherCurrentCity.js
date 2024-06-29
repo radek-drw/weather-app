@@ -12,13 +12,7 @@ const CityCard = styled.div`
 
 const CityName = styled.h1`
   margin-bottom: 1rem;
-  text-align: center;
   font-size: 2rem;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const CityDetails = styled.div`
-  text-align: center;
 `;
 
 const CityTime = styled.div`
@@ -35,10 +29,8 @@ const WeatherCurrentCity = () => {
   return (
     <CityCard>
       <CityName>Athens</CityName>
-      <CityDetails>
-        <CityTime>09:03</CityTime>
-        <CityDate>Thursday, 31 Aug</CityDate>
-      </CityDetails>
+      <CityTime>09:03</CityTime>
+      <CityDate>Thursday, 31 Aug</CityDate>
     </CityCard>
   );
 };
