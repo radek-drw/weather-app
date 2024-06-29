@@ -8,7 +8,7 @@ import {
 } from "./themeContext";
 import { lightTheme } from "./styles/themes/lightTheme";
 import { darkTheme } from "./styles/themes/darkTheme";
-import { GlobalStyle } from "./styles/globalStyle";
+import { GlobalStyle } from "./styles/GlobalStyle";
 import media from "./styles/media";
 
 import Navbar from "./components/Navbar";
