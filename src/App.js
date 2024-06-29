@@ -5,7 +5,8 @@ import { ThemeProvider } from "styled-components";
 import {
   ThemeProvider as ThemeContextProvider,
   useTheme,
-} from "./themeContext";
+} from "./ThemeContext";
+import { WeatherProvider } from "./WeatherContext";
 import { lightTheme } from "./styles/themes/lightTheme";
 import { darkTheme } from "./styles/themes/darkTheme";
 import { GlobalStyle } from "./styles/GlobalStyle";
@@ -30,11 +31,13 @@ const ThemedApp = () => {
 
   return (
     <ThemeProvider theme={currentTheme}>
-      <GlobalStyle />
-      <AppContainer>
-        <Navbar />
-        <WeatherDataContainer />
-      </AppContainer>
+      <WeatherProvider>
+        <GlobalStyle />
+        <AppContainer>
+          <Navbar />
+          <WeatherDataContainer />
+        </AppContainer>
+      </WeatherProvider>
     </ThemeProvider>
   );
 };
