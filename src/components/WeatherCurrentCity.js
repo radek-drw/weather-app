@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
 
 const CityCard = styled.div`
@@ -8,6 +8,7 @@ const CityCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
 
 const CityName = styled.h1`
@@ -25,12 +26,58 @@ const CityDate = styled.div`
   color: ${({ theme }) => theme.colors.mutedText};
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 1.5rem;
+`;
+
 const WeatherCurrentCity = () => {
+  const { weatherData, error } = useWeather();
+  const [currentTime, setCurrentTime] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    if (weatherData && weatherData.timezone !== undefined) {
+      const fetchTimeData = () => {
+        try {
+          const now = new Date();
+          const utcOffsetInMs = weatherData.timezone * 1000;
+          const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
+          const localTime = new Date(utcTime + utcOffsetInMs);
+
+          setCurrentTime(
+            localTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          );
+          setCurrentDate(
+            localTime.toLocaleDateString("en-GB", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+            })
+          );
+        } catch (error) {
+          console.error("Error calculating local time:", error);
+        }
+      };
+
+      fetchTimeData();
+    }
+  }, [weatherData]);
+
   return (
     <CityCard>
-      <CityName>Athens</CityName>
-      <CityTime>09:03</CityTime>
-      <CityDate>Thursday, 31 Aug</CityDate>
+      {error ? (
+        <ErrorMessage>{error}</ErrorMessage>
+      ) : (
+        <>
+          <CityName>{weatherData.name}</CityName>
+          <CityTime>{currentTime}</CityTime>
+          <CityDate>{currentDate}</CityDate>
+        </>
+      )}
     </CityCard>
   );
 };

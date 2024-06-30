@@ -1,10 +1,8 @@
-import React from "react";
-
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "../styles/media";
-
+import { useWeather } from "../WeatherContext";
 import Toggle from "./subcomponent/Toggle";
-
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
 
@@ -15,7 +13,7 @@ const Nav = styled.nav`
   margin-bottom: 20px;
 `;
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.form`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -25,6 +23,8 @@ const SearchContainer = styled.div`
   border-radius: 5px;
   box-shadow: 0 0 10px ${({ theme }) => theme.colors.searchShadow};
   transition: box-shadow 0.3s ease;
+  border: 1px solid
+    ${({ theme, isValid }) => (isValid ? "transparent" : "#cc0000")};
 
   &:focus-within {
     box-shadow: 0 0 15px ${({ theme }) => theme.colors.searchShadowFocus};
@@ -56,6 +56,7 @@ const SearchButton = styled.button`
   position: absolute;
   left: 100%;
   height: 100%;
+  top: 0;
   padding: 0 1.2rem;
   background-color: ${({ theme }) => theme.colors.searchBtnBackground};
   color: ${({ theme }) => theme.colors.searchBtnText};
@@ -108,14 +109,52 @@ const LocationLabel = styled.p`
   `}
 `;
 
+const ErrorText = styled.p`
+  position: absolute;
+  top: 103%;
+  left: 0;
+  color: red;
+  font-size: 1.05rem;
+`;
+
 const Navbar = () => {
+  const { fetchWeatherData } = useWeather();
+  const [city, setCity] = useState("");
+  const [error, setError] = useState("");
+  const [isValid, setIsValid] = useState(true); // State to track validity
+
+  const handleFetchWeather = (e) => {
+    e.preventDefault();
+    if (city.trim().length === 0 || city.trim().length === 1) {
+      setError("Please enter a valid city name");
+      setIsValid(false);
+    } else {
+      fetchWeatherData(city);
+      setCity("");
+      setError("");
+      setIsValid(true);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setCity(e.target.value);
+    setError("");
+    setIsValid(true); // Reset validity on input change
+  };
+
   return (
     <Nav>
       <Toggle />
-      <SearchContainer>
+      <SearchContainer onSubmit={handleFetchWeather} isValid={isValid}>
         <SearchIcon />
-        <SearchInput type="text" placeholder="Search for city..." />
-        <SearchButton type="button">Search</SearchButton>
+        <SearchInput
+          type="text"
+          value={city}
+          onChange={handleInputChange}
+          placeholder="Search for city..."
+        />
+        <SearchButton type="submit">Search</SearchButton>
+        {error && <ErrorText>{error}</ErrorText>}
       </SearchContainer>
       <CurrentLocationButton>
         <LocationIcon />
