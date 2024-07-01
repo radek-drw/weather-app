@@ -121,31 +121,27 @@ const Navbar = () => {
   const { fetchWeatherData } = useWeather();
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
-  const [isValid, setIsValid] = useState(true); // State to track validity
 
   const handleFetchWeather = (e) => {
     e.preventDefault();
-    if (city.trim().length === 0 || city.trim().length === 1) {
+    if (city.trim().length < 1) {
       setError("Please enter a valid city name");
-      setIsValid(false);
     } else {
       fetchWeatherData(city);
       setCity("");
       setError("");
-      setIsValid(true);
     }
   };
 
   const handleInputChange = (e) => {
     setCity(e.target.value);
     setError("");
-    setIsValid(true); // Reset validity on input change
   };
 
   return (
     <Nav>
       <Toggle />
-      <SearchContainer onSubmit={handleFetchWeather} isValid={isValid}>
+      <SearchContainer onSubmit={handleFetchWeather}>
         <SearchIcon />
         <SearchInput
           type="text"
