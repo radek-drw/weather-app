@@ -8,7 +8,6 @@ const CityCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 `;
 
 const CityName = styled.h1`
@@ -26,18 +25,13 @@ const CityDate = styled.div`
   color: ${({ theme }) => theme.colors.mutedText};
 `;
 
-const ErrorMessage = styled.p`
-  color: red;
-  font-size: 1.5rem;
-`;
-
 const WeatherCurrentCity = () => {
-  const { weatherData, error } = useWeather();
+  const { weatherData } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
-    if (weatherData && weatherData.timezone !== undefined) {
+    if (weatherData.timezone !== undefined) {
       const fetchTimeData = () => {
         try {
           const now = new Date();
@@ -69,15 +63,9 @@ const WeatherCurrentCity = () => {
 
   return (
     <CityCard>
-      {error ? (
-        <ErrorMessage>{error}</ErrorMessage>
-      ) : (
-        <>
-          <CityName>{weatherData.name}</CityName>
-          <CityTime>{currentTime}</CityTime>
-          <CityDate>{currentDate}</CityDate>
-        </>
-      )}
+      <CityName>{weatherData.name}</CityName>
+      <CityTime>{currentTime}</CityTime>
+      <CityDate>{currentDate}</CityDate>
     </CityCard>
   );
 };
