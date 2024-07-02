@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
+import { FaExclamationTriangle } from "react-icons/fa";
+import { BeatLoader } from "react-spinners"; // Import BeatLoader
 
 const CityCard = styled.div`
   flex-basis: 30%;
@@ -12,7 +14,17 @@ const CityCard = styled.div`
 
 const CityName = styled.h1`
   margin-bottom: 1rem;
-  font-size: 2rem;
+  font-size: ${({ isError }) => (isError ? "1.4rem" : "2rem")};
+  color: ${({ isError }) => (isError ? "orange" : "inherit")};
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ErrorIcon = styled(FaExclamationTriangle)`
+  font-size: 2.6rem;
+  color: orange;
 `;
 
 const CityTime = styled.div`
@@ -26,12 +38,12 @@ const CityDate = styled.div`
 `;
 
 const WeatherCurrentCity = () => {
-  const { weatherData } = useWeather();
+  const { weatherData, loading, error } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
-    if (weatherData.timezone !== undefined) {
+    if (weatherData?.timezone !== undefined) {
       const fetchTimeData = () => {
         try {
           const now = new Date();
@@ -61,11 +73,36 @@ const WeatherCurrentCity = () => {
     }
   }, [weatherData]);
 
+  if (loading) {
+    return (
+      <CityCard>
+        <BeatLoader color="#00aaff" loading={loading} size={15} />
+        <div>Loading weather data...</div>
+      </CityCard>
+    );
+  }
+
+  if (!weatherData) {
+    return (
+      <CityCard>
+        <CityName isError={true}>No weather data available.</CityName>
+        <ErrorIcon />
+      </CityCard>
+    );
+  }
+
   return (
     <CityCard>
-      <CityName>{weatherData.name}</CityName>
-      <CityTime>{currentTime}</CityTime>
-      <CityDate>{currentDate}</CityDate>
+      <CityName isError={error}>{`${error || weatherData.name}, ${
+        weatherData.sys.country
+      }`}</CityName>
+      {error ? <ErrorIcon /> : null}
+      {!error && (
+        <>
+          <CityTime>{currentTime}</CityTime>
+          <CityDate>{currentDate}</CityDate>
+        </>
+      )}
     </CityCard>
   );
 };
