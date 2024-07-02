@@ -93,9 +93,9 @@ const WeatherCurrentCity = () => {
 
   return (
     <CityCard>
-      <CityName isError={error}>{`${error || weatherData.name}, ${
-        weatherData.sys.country
-      }`}</CityName>
+      <CityName isError={error}>
+        {error ? error : `${weatherData.name}, ${weatherData.sys.country}`}
+      </CityName>
       {error ? <ErrorIcon /> : null}
       {!error && (
         <>
