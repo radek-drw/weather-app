@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import media from "../styles/media";
 import { useWeather } from "../WeatherContext";
@@ -23,8 +23,6 @@ const SearchContainer = styled.form`
   border-radius: 5px;
   box-shadow: 0 0 10px ${({ theme }) => theme.colors.searchShadow};
   transition: box-shadow 0.3s ease;
-  border: 1px solid
-    ${({ theme, isValid }) => (isValid ? "transparent" : "#cc0000")};
 
   &:focus-within {
     box-shadow: 0 0 15px ${({ theme }) => theme.colors.searchShadowFocus};
@@ -118,25 +116,49 @@ const ErrorText = styled.p`
 `;
 
 const Navbar = () => {
-  const { fetchWeatherData } = useWeather();
+  const { fetchWeatherData, fetchWeatherByCoordinates, error } = useWeather();
   const [city, setCity] = useState("");
-  const [error, setError] = useState("");
+  const [localError, setLocalError] = useState("");
+  const inputRef = useRef(null);
 
   const handleFetchWeather = (e) => {
     e.preventDefault();
-    if (city.trim().length < 1) {
-      setError("Please enter a valid city name");
+    if (city.trim().length < 2) {
+      setLocalError("Please enter a valid city name");
+      inputRef.current.focus();
     } else {
       fetchWeatherData(city);
       setCity("");
-      setError("");
     }
   };
 
   const handleInputChange = (e) => {
     setCity(e.target.value);
-    setError("");
+    setLocalError("");
   };
+
+  const handleFetchWeatherByLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchWeatherByCoordinates(latitude, longitude);
+        },
+        (err) => {
+          setLocalError("Unable to retrieve your location.");
+        }
+      );
+    } else {
+      setLocalError("Geolocation is not supported by this browser.");
+    }
+  };
+
+  // Focus on the input when there's an error
+  useEffect(() => {
+    if (error) {
+      inputRef.current.focus();
+    }
+  }, [error]);
 
   return (
     <Nav>
@@ -148,11 +170,12 @@ const Navbar = () => {
           value={city}
           onChange={handleInputChange}
           placeholder="Search for city..."
+          ref={inputRef}
         />
         <SearchButton type="submit">Search</SearchButton>
-        {error && <ErrorText>{error}</ErrorText>}
+        {localError && <ErrorText>{localError}</ErrorText>}
       </SearchContainer>
-      <CurrentLocationButton>
+      <CurrentLocationButton onClick={handleFetchWeatherByLocation}>
         <LocationIcon />
         <LocationLabel>Current location</LocationLabel>
       </CurrentLocationButton>
