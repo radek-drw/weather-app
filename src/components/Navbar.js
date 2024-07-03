@@ -116,7 +116,7 @@ const ErrorText = styled.p`
 `;
 
 const Navbar = () => {
-  const { fetchWeatherData, fetchWeatherByCoordinates, error } = useWeather();
+  const { fetchWeatherData, fetchWeatherByCoordinates, error, setError } = useWeather();
   const [city, setCity] = useState("");
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
@@ -152,13 +152,15 @@ const Navbar = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           fetchWeatherByCoordinates(latitude, longitude);
+          setError("");
         },
         (err) => {
-          setLocalError("Unable to retrieve your location.");
+          console.error("Geolocation error:", err);
+          setError("Unable to retrieve your location.");
         }
       );
     } else {
-      setLocalError("Geolocation is not supported by this browser.");
+      setError("Geolocation is not supported by this browser.");
     }
   };
 

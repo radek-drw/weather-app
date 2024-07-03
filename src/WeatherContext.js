@@ -56,8 +56,10 @@ export const WeatherProvider = ({ children }) => {
         (position) => {
           const { latitude, longitude } = position.coords;
           fetchWeatherByCoordinates(latitude, longitude);
+          setError("");
         },
         (err) => {
+          console.error("Geolocation error:", err);
           setError("Unable to retrieve your location.");
         }
       );
@@ -72,6 +74,7 @@ export const WeatherProvider = ({ children }) => {
         weatherData,
         loading,
         error,
+        setError,
         fetchedByCoordinates,
         fetchWeatherData,
         fetchWeatherByCoordinates,
