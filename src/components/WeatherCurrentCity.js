@@ -30,7 +30,7 @@ const ErrorIcon = styled(FaExclamationTriangle)`
 
 const LocationIcon = styled(LuMapPin)`
   margin-left: 8px;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 `;
 
 const CityTime = styled.div`
