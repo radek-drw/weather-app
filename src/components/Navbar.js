@@ -153,14 +153,17 @@ const Navbar = () => {
           const { latitude, longitude } = position.coords;
           fetchWeatherByCoordinates(latitude, longitude);
           setError("");
+          setLocalError("");
         },
         (err) => {
           console.error("Geolocation error:", err);
           setError("Unable to retrieve your location.");
+          setLocalError("");
         }
       );
     } else {
       setError("Geolocation is not supported by this browser.");
+      setLocalError("");
     }
   };
 
