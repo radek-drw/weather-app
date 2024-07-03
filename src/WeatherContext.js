@@ -10,10 +10,12 @@ export const WeatherProvider = ({ children }) => {
   const [weatherData, setWeatherData] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
 
   const fetchWeatherData = async (city) => {
     setLoading(true);
     setError(null);
+    setFetchedByCoordinates(false);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
@@ -35,6 +37,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchWeatherByCoordinates = async (latitude, longitude) => {
     setLoading(true);
     setError(null);
+    setFetchedByCoordinates(true);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
@@ -69,6 +72,7 @@ export const WeatherProvider = ({ children }) => {
         weatherData,
         loading,
         error,
+        fetchedByCoordinates,
         fetchWeatherData,
         fetchWeatherByCoordinates,
       }}

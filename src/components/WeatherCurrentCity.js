@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
 import { FaExclamationTriangle } from "react-icons/fa";
-import { BeatLoader } from "react-spinners"; // Import BeatLoader
+import { LuMapPin } from "react-icons/lu"; // Import LuMapPin
+import { BeatLoader } from "react-spinners";
 
 const CityCard = styled.div`
   flex-basis: 30%;
@@ -27,6 +28,11 @@ const ErrorIcon = styled(FaExclamationTriangle)`
   color: orange;
 `;
 
+const LocationIcon = styled(LuMapPin)`
+  margin-left: 8px;
+  font-size: 1.8rem;
+`;
+
 const CityTime = styled.div`
   margin-bottom: 0.5rem;
   font-size: 4rem;
@@ -38,7 +44,7 @@ const CityDate = styled.div`
 `;
 
 const WeatherCurrentCity = () => {
-  const { weatherData, loading, error } = useWeather();
+  const { weatherData, loading, error, fetchedByCoordinates } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
 
@@ -95,6 +101,7 @@ const WeatherCurrentCity = () => {
     <CityCard>
       <CityName isError={error}>
         {error ? error : `${weatherData.name}, ${weatherData.sys.country}`}
+        {fetchedByCoordinates && !error && <LocationIcon />}
       </CityName>
       {error ? <ErrorIcon /> : null}
       {!error && (
