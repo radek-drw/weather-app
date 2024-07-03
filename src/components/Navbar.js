@@ -123,11 +123,20 @@ const Navbar = () => {
 
   const handleFetchWeather = (e) => {
     e.preventDefault();
-    if (city.trim().length < 2) {
-      setLocalError("Please enter a valid city name");
+    const trimmedCity = city.trim();
+    const cityRegex = /^[a-zA-Z\s-]+$/;
+
+    if (trimmedCity.length < 2) {
+      setLocalError("City name is too short. Please enter a valid city name.");
+      inputRef.current.focus();
+    } else if (trimmedCity.length > 50) {
+      setLocalError("City name is too long. Please enter a valid city name.");
+      inputRef.current.focus();
+    } else if (!cityRegex.test(trimmedCity)) {
+      setLocalError("City name contains invalid characters. Please enter a valid city name.");
       inputRef.current.focus();
     } else {
-      fetchWeatherData(city);
+      fetchWeatherData(trimmedCity);
       setCity("");
     }
   };
