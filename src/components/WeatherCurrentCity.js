@@ -12,7 +12,7 @@ const CityCard = styled.div`
   align-items: center;
 `;
 
-const CityName = styled.h1`
+const CityName = styled.div`
   margin-bottom: 1rem;
   font-size: ${({ isError }) => (isError ? "1.4rem" : "2rem")};
   color: ${({ isError }) => (isError ? "orange" : "inherit")};
