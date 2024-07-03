@@ -3,7 +3,6 @@ import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { LuMapPin } from "react-icons/lu"; // Import LuMapPin
-import { BeatLoader } from "react-spinners";
 
 const CityCard = styled.div`
   flex-basis: 30%;
@@ -44,7 +43,7 @@ const CityDate = styled.div`
 `;
 
 const WeatherCurrentCity = () => {
-  const { weatherData, loading, error, fetchedByCoordinates } = useWeather();
+  const { weatherData, error, fetchedByCoordinates } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
 
@@ -78,15 +77,6 @@ const WeatherCurrentCity = () => {
       fetchTimeData();
     }
   }, [weatherData]);
-
-  if (loading) {
-    return (
-      <CityCard>
-        <BeatLoader color="#00aaff" loading={loading} size={15} />
-        <div>Loading weather data...</div>
-      </CityCard>
-    );
-  }
 
   if (!weatherData) {
     return (
