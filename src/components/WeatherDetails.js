@@ -80,7 +80,7 @@ const SkyCondIcon = styled.div`
   font-size: 10rem;
 `;
 
-const SkyCondition = styled.h3`
+const SkyConditionLabel = styled.h3`
   font-size: 1.6rem;
 `;
 
@@ -198,7 +198,7 @@ const WeatherDetails = () => {
         <SkyCondIcon>
           {WeatherIcon && <WeatherIcon />}
         </SkyCondIcon>
-        <SkyCondition>{weather[0].main}</SkyCondition>
+        <SkyConditionLabel>{weather[0].main}</SkyConditionLabel>
       </Panel>
 
       {/* PANEL RIGHT */}
