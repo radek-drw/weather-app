@@ -1,10 +1,10 @@
 import React from "react";
-
 import styled, { css } from "styled-components";
-
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { FaWind, FaSun } from "react-icons/fa";
-import { PiSunFill } from "react-icons/pi";
+
+import { useWeather } from "../WeatherContext";
+import { weatherIcons } from "../utils/WeatherIcons";
 
 const twilightColors = {
   sunrise: "#ffd700",
@@ -76,9 +76,8 @@ const SunsetIcon = styled(WiSunset)`
   color: ${twilightColors.sunset};
 `;
 
-const SkyCondIcon = styled(PiSunFill)`
-  font-size: 8.6rem;
-  color: ${twilightColors.sunrise};
+const SkyCondIcon = styled.div`
+  font-size: 10rem;
 `;
 
 const SkyCondition = styled.h3`
@@ -134,14 +133,46 @@ const SunIcon = styled(FaSun)`
 `;
 
 const WeatherDetails = () => {
+  const { weatherData, loading, error } = useWeather();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!weatherData) {
+    return <div>No data available</div>;
+  }
+
+  const {
+    main: { temp, feels_like, humidity, pressure },
+    weather,
+    wind: { speed },
+    sys: { sunrise, sunset },
+    timezone,
+    uv, 
+  } = weatherData;
+
+  const weatherIconCode = weather[0].icon; 
+  const WeatherIcon = weatherIcons[weatherIconCode];
+
+  const roundedTemp = Math.round(temp);
+  const roundedFeelsLike = Math.round(feels_like);
+
+  const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const sunsetTime = new Date((sunset + timezone) * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   return (
     <DetailsCard>
       {/* PANEL LEFT */}
       <Panel>
         <div>
-          <CurrentTemp>24&deg;C</CurrentTemp>
+          <CurrentTemp>{roundedTemp}&deg;C</CurrentTemp>
           <FeelsLikeTemp>
-            Feels like: <span>22&deg;C</span>
+            Feels like: <span>{roundedFeelsLike}&deg;C</span>
           </FeelsLikeTemp>
         </div>
         <div>
@@ -149,14 +180,14 @@ const WeatherDetails = () => {
             <SunriseIcon />
             <div>
               <p>Sunrise</p>
-              <div>06:37</div>
+              <div>{sunriseTime}</div>
             </div>
           </SunTwilight>
           <SunTwilight>
             <SunsetIcon />
             <div>
               <p>Sunset</p>
-              <div>21:40</div>
+              <div>{sunsetTime}</div>
             </div>
           </SunTwilight>
         </div>
@@ -164,30 +195,32 @@ const WeatherDetails = () => {
 
       {/* PANEL MIDDLE */}
       <Panel>
-        <SkyCondIcon />
-        <SkyCondition>Sunny</SkyCondition>
+        <SkyCondIcon>
+          {WeatherIcon && <WeatherIcon />}
+        </SkyCondIcon>
+        <SkyCondition>{weather[0].main}</SkyCondition>
       </Panel>
 
       {/* PANEL RIGHT */}
       <Panel>
         <Metric>
           <HumidityIcon />
-          <MetricValue>41%</MetricValue>
+          <MetricValue>{humidity}%</MetricValue>
           <MetricLabel>Humidity</MetricLabel>
         </Metric>
         <Metric>
           <WindIcon />
-          <MetricValue>2km/h</MetricValue>
+          <MetricValue>{speed} km/h</MetricValue>
           <MetricLabel>Wind Speed</MetricLabel>
         </Metric>
         <Metric>
           <BarometerIcon />
-          <MetricValue>997hPa</MetricValue>
+          <MetricValue>{pressure} hPa</MetricValue>
           <MetricLabel>Pressure</MetricLabel>
         </Metric>
         <Metric>
           <SunIcon />
-          <MetricValue>8</MetricValue>
+          <MetricValue>{uv}</MetricValue>
           <MetricLabel>UV</MetricLabel>
         </Metric>
       </Panel>
