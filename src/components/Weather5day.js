@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
-import { CiCloudSun } from "react-icons/ci";
+import { useWeather } from "../WeatherContext";
+import { weatherIcons } from "../utils/weatherIcons"; 
 
 const FiveDaysCard = styled.div`
   flex-basis: 30%;
@@ -21,15 +21,15 @@ const DayContainer = styled.div`
   align-items: center;
 `;
 
-const WeatherIcon = styled(CiCloudSun)`
+const WeatherIcon = styled.img`
   flex-basis: 20%;
-  font-size: 28px;
+  height: 28px;
 `;
 
 const TemperatureValue = styled.div`
   flex-basis: 30%;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 `;
 
 const DateValue = styled.div`
@@ -38,34 +38,49 @@ const DateValue = styled.div`
 `;
 
 const Weather5day = () => {
+  const { forecastData } = useWeather();
+
+  const processForecastData = (data) => {
+    const dailyData = {};
+
+    data.forEach((item) => {
+      const dateTime = new Date(item.dt_txt);
+      const date = dateTime.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+
+      const weatherCode = item.weather[0].icon.replace('n', 'd');
+
+      if (!dailyData[date]) {
+        dailyData[date] = {
+          minTemp: item.main.temp_min,
+          maxTemp: item.main.temp_max,
+          weatherCode: weatherCode,
+        };
+      } else {
+        dailyData[date].minTemp = Math.min(dailyData[date].minTemp, item.main.temp_min);
+        dailyData[date].maxTemp = Math.max(dailyData[date].maxTemp, item.main.temp_max);
+      }
+    });
+
+    return Object.keys(dailyData).map((date) => ({
+      date,
+      ...dailyData[date],
+    }));
+  };
+
+  const daysForecast = processForecastData(forecastData).slice(0, 5);
+
   return (
     <FiveDaysCard>
       <Title>5 Days Forecast</Title>
-      <DayContainer>
-        <WeatherIcon />
-        <TemperatureValue>20&deg;C</TemperatureValue>
-        <DateValue>Friday, 1 Sep</DateValue>
-      </DayContainer>
-      <DayContainer>
-        <WeatherIcon />
-        <TemperatureValue>22&deg;C</TemperatureValue>
-        <DateValue>Saturday, 2 Sep</DateValue>
-      </DayContainer>
-      <DayContainer>
-        <WeatherIcon />
-        <TemperatureValue>27&deg;C</TemperatureValue>
-        <DateValue>Sunday, 3 Sep</DateValue>
-      </DayContainer>
-      <DayContainer>
-        <WeatherIcon />
-        <TemperatureValue>18&deg;C</TemperatureValue>
-        <DateValue>Monday, 4 Sep</DateValue>
-      </DayContainer>
-      <DayContainer>
-        <WeatherIcon />
-        <TemperatureValue>16&deg;C</TemperatureValue>
-        <DateValue>Tuesday, 5 Sep</DateValue>
-      </DayContainer>
+      {daysForecast.map((forecast, index) => (
+        <DayContainer key={index}>
+          <WeatherIcon src={weatherIcons[forecast.weatherCode]} alt="Weather Icon" />
+          <TemperatureValue>
+            {Math.round(forecast.maxTemp)}&deg;C / {Math.round(forecast.minTemp)}&deg;C
+          </TemperatureValue>
+          <DateValue>{forecast.date}</DateValue>
+        </DayContainer>
+      ))}
     </FiveDaysCard>
   );
 };

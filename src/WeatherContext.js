@@ -8,6 +8,7 @@ export const useWeather = () => useContext(WeatherContext);
 
 export const WeatherProvider = ({ children }) => {
   const [weatherData, setWeatherData] = useState();
+  const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
@@ -21,6 +22,7 @@ export const WeatherProvider = ({ children }) => {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
       );
       setWeatherData(response.data);
+      fetchForecastData(city);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setError(
@@ -34,6 +36,17 @@ export const WeatherProvider = ({ children }) => {
     }
   };
 
+  const fetchForecastData = async (city) => {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
+      );
+      setForecastData(response.data.list);
+    } catch (error) {
+      setError("Error fetching forecast data.");
+    }
+  };
+
   const fetchWeatherByCoordinates = async (latitude, longitude) => {
     setLoading(true);
     setError(null);
@@ -43,10 +56,22 @@ export const WeatherProvider = ({ children }) => {
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
       );
       setWeatherData(response.data);
+      fetchForecastByCoordinates(latitude, longitude);
     } catch (error) {
       setError("Error fetching weather data by coordinates.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchForecastByCoordinates = async (latitude, longitude) => {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+      );
+      setForecastData(response.data.list);
+    } catch (error) {
+      setError("Error fetching forecast data by coordinates.");
     }
   };
 
@@ -66,12 +91,14 @@ export const WeatherProvider = ({ children }) => {
     } else {
       setError("Geolocation is not supported by this browser.");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <WeatherContext.Provider
       value={{
         weatherData,
+        forecastData,
         loading,
         error,
         setError,
