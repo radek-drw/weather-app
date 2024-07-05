@@ -3,7 +3,7 @@ import clearNightIcon from './weather_icons/clear_night.svg';
 import fewCloudsDayIcon from './weather_icons/few_clouds_day.svg';
 import fewCloudsNightIcon from './weather_icons/few_clouds_night.svg';
 import scatteredCloudsIcon from './weather_icons/scattered_clouds.svg';
-// import brokenCloudsIcon from './weather_icons/broken_clouds.svg';
+import brokenCloudsIcon from './weather_icons/broken_clouds.svg';
 import showerRainDayIcon from './weather_icons/shower_rain_day.svg';
 import showerRainNightIcon from './weather_icons/shower_rain_night.svg';
 import rainIcon from './weather_icons/rain.svg';
@@ -20,8 +20,8 @@ export const weatherIcons = {
   "02n": fewCloudsNightIcon,
   "03d": scatteredCloudsIcon, 
   "03n": scatteredCloudsIcon, 
-//   "04d": brokenCloudsIcon, // broken clouds day
-//   "04n": brokenCloudsIcon, // broken clouds night
+  "04d": brokenCloudsIcon,
+  "04n": brokenCloudsIcon,
   "09d": showerRainDayIcon,
   "09n": showerRainNightIcon, 
   "10d": rainIcon,

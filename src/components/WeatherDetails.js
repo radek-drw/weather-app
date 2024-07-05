@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
-import { FaWind, FaSun } from "react-icons/fa";
+import { MdOutlineVisibility } from "react-icons/md";
+import { FaWind } from "react-icons/fa";
 
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from '../utils/weatherIcons';
@@ -128,7 +129,7 @@ const BarometerIcon = styled(WiBarometer)`
   font-size: 44px;
 `;
 
-const SunIcon = styled(FaSun)`
+const VisibilityIcon = styled(MdOutlineVisibility)`
   ${MetricIconStyles}
   font-size: 25px;
 `;
@@ -153,12 +154,12 @@ const WeatherDetails = () => {
     weather,
     wind: { speed },
     sys: { sunrise, sunset },
+    visibility,
     timezone,
-    uv, 
   } = weatherData;
 
   const weatherIconCode = weather[0].icon; 
-  const WeatherIconUrl  = weatherIcons[weatherIconCode]; 
+  const WeatherIconUrl = weatherIcons[weatherIconCode]; 
 
   const roundedTemp = Math.round(temp);
   const roundedFeelsLike = Math.round(feels_like);
@@ -199,7 +200,6 @@ const WeatherDetails = () => {
       {/* PANEL MIDDLE */}
       <Panel>
         <SkyCondIcon src={WeatherIconUrl} alt={weather[0].main} />
-        {weatherIconCode}
         <SkyCondition>{weather[0].main}</SkyCondition>
       </Panel>
 
@@ -221,9 +221,9 @@ const WeatherDetails = () => {
           <MetricLabel>Pressure</MetricLabel>
         </Metric>
         <Metric>
-          <SunIcon />
-          <MetricValue>{uv}</MetricValue>
-          <MetricLabel>UV</MetricLabel>
+          <VisibilityIcon />
+          <MetricValue>{visibility / 1000} km</MetricValue>
+          <MetricLabel>Visibility</MetricLabel>
         </Metric>
       </Panel>
     </DetailsCard>
