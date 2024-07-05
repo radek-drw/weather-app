@@ -4,7 +4,7 @@ import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { FaWind, FaSun } from "react-icons/fa";
 
 import { useWeather } from "../WeatherContext";
-import { weatherIcons } from "../utils/WeatherIcons";
+import { weatherIcons } from '../utils/weatherIcons';
 
 const twilightColors = {
   sunrise: "#ffd700",
@@ -76,11 +76,12 @@ const SunsetIcon = styled(WiSunset)`
   color: ${twilightColors.sunset};
 `;
 
-const SkyCondIcon = styled.div`
-  font-size: 10rem;
+const SkyCondIcon = styled.img`
+  width: 100px;
+  height: 100px;
 `;
 
-const SkyConditionLabel = styled.h3`
+const SkyCondition = styled.h3`
   font-size: 1.6rem;
 `;
 
@@ -157,13 +158,15 @@ const WeatherDetails = () => {
   } = weatherData;
 
   const weatherIconCode = weather[0].icon; 
-  const WeatherIcon = weatherIcons[weatherIconCode];
+  const WeatherIconUrl  = weatherIcons[weatherIconCode]; 
 
   const roundedTemp = Math.round(temp);
   const roundedFeelsLike = Math.round(feels_like);
 
-  const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const sunsetTime = new Date((sunset + timezone) * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const options = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' };
+
+  const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString('en-GB', options);
+  const sunsetTime = new Date((sunset + timezone) * 1000).toLocaleTimeString('en-GB', options);
 
   return (
     <DetailsCard>
@@ -195,10 +198,9 @@ const WeatherDetails = () => {
 
       {/* PANEL MIDDLE */}
       <Panel>
-        <SkyCondIcon>
-          {WeatherIcon && <WeatherIcon />}
-        </SkyCondIcon>
-        <SkyConditionLabel>{weather[0].main}</SkyConditionLabel>
+        <SkyCondIcon src={WeatherIconUrl} alt={weather[0].main} />
+        {weatherIconCode}
+        <SkyCondition>{weather[0].main}</SkyCondition>
       </Panel>
 
       {/* PANEL RIGHT */}
