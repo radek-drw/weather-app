@@ -180,6 +180,8 @@ const Navbar = () => {
       <SearchContainer onSubmit={handleFetchWeather}>
         <SearchIcon />
         <SearchInput
+          id="city-search"
+          name="city"
           type="text"
           value={city}
           onChange={handleInputChange}

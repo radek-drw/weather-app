@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useTheme } from "../../ThemeContext";
 import { FaSun, FaMoon } from "react-icons/fa";
 
+// This function ensures that 'isLight' is not passed down to the DOM element
+const shouldForwardProp = (prop) => prop !== 'isLight';
+
 const ToggleContainer = styled.button`
   background: #e3e3e3;
   border: none;
@@ -14,7 +17,7 @@ const ToggleContainer = styled.button`
   outline: none;
 `;
 
-const ToggleButton = styled.div`
+const ToggleButton = styled.div.withConfig({ shouldForwardProp })`
   position: absolute;
   top: 50%;
   left: ${({ isLight }) => (isLight ? "3px" : "calc(100% - 23px)")};

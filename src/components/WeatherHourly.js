@@ -46,6 +46,10 @@ const WindSpeedIndicator = styled(FaLocationArrow)`
 const WeatherHourly = () => {
   const { weatherData, forecastData } = useWeather();
 
+  if (!weatherData || !forecastData) {
+    return null; // or an empty fragment <> </> if you want to return nothing
+  }
+
   const cityTimezoneOffset = weatherData.timezone;
   const localTime = (unixUtcTimestamp) => {
     const dt = new Date(unixUtcTimestamp * 1000);

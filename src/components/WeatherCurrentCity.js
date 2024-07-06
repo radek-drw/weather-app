@@ -12,7 +12,10 @@ const CityCard = styled.div`
   align-items: center;
 `;
 
-const CityName = styled.h1`
+// Filter out isError prop so it's not passed to the DOM element
+const CityName = styled.h1.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isError',
+})`
   margin-bottom: 1rem;
   font-size: ${({ isError }) => (isError ? "1.4rem" : "2rem")};
   color: ${({ isError }) => (isError ? "orange" : "inherit")};
