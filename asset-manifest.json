@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/radek-drw/weather-app.git/static/js/main.730081b0.js",
-    "static/media/snow.svg": "/radek-drw/weather-app.git/static/media/snow.d4bdc3a76222a70ca91ed8166318ce9b.svg",
-    "static/media/shower_rain_day.svg": "/radek-drw/weather-app.git/static/media/shower_rain_day.b2ba259d7881c9cb62c8ca28f97966c3.svg",
-    "static/media/thunderstorm_day.svg": "/radek-drw/weather-app.git/static/media/thunderstorm_day.9268f92252e3bfc0038954447e517550.svg",
-    "static/media/shower_rain_night.svg": "/radek-drw/weather-app.git/static/media/shower_rain_night.f62c0fb5325ee9de9783a28fc5f95265.svg",
-    "static/media/few_clouds_day.svg": "/radek-drw/weather-app.git/static/media/few_clouds_day.2e92f9eb6fae744a5aba7dad1755c58b.svg",
-    "static/media/thunderstorm_night.svg": "/radek-drw/weather-app.git/static/media/thunderstorm_night.2bd32031dd460c1a4e3280645202e561.svg",
-    "static/media/rain.svg": "/radek-drw/weather-app.git/static/media/rain.5b9e26007c618ccc9a23b44b5d0d50f5.svg",
-    "static/media/few_clouds_night.svg": "/radek-drw/weather-app.git/static/media/few_clouds_night.dde309547bea61e5c31791e5b6433726.svg",
-    "static/media/mist.svg": "/radek-drw/weather-app.git/static/media/mist.a99a8b2aec6ef0e56f2397ca4a10a90c.svg",
-    "static/media/scattered_clouds.svg": "/radek-drw/weather-app.git/static/media/scattered_clouds.74865ae969701e0d48010470e805879d.svg",
-    "static/media/broken_clouds.svg": "/radek-drw/weather-app.git/static/media/broken_clouds.971b1abb01ada15daa2539cb74c476ca.svg",
-    "static/media/sunny_day.svg": "/radek-drw/weather-app.git/static/media/sunny_day.9abac4b0500e309b346737f755e40939.svg",
-    "index.html": "/radek-drw/weather-app.git/index.html",
-    "static/media/clear_night.svg": "/radek-drw/weather-app.git/static/media/clear_night.d737d7365e6809abf5a69f8bb2dde7a8.svg",
-    "main.730081b0.js.map": "/radek-drw/weather-app.git/static/js/main.730081b0.js.map"
+    "main.js": "/static/js/main.fde83725.js",
+    "static/media/snow.svg": "/static/media/snow.d4bdc3a76222a70ca91ed8166318ce9b.svg",
+    "static/media/shower_rain_day.svg": "/static/media/shower_rain_day.b2ba259d7881c9cb62c8ca28f97966c3.svg",
+    "static/media/thunderstorm_day.svg": "/static/media/thunderstorm_day.9268f92252e3bfc0038954447e517550.svg",
+    "static/media/shower_rain_night.svg": "/static/media/shower_rain_night.f62c0fb5325ee9de9783a28fc5f95265.svg",
+    "static/media/few_clouds_day.svg": "/static/media/few_clouds_day.2e92f9eb6fae744a5aba7dad1755c58b.svg",
+    "static/media/thunderstorm_night.svg": "/static/media/thunderstorm_night.2bd32031dd460c1a4e3280645202e561.svg",
+    "static/media/rain.svg": "/static/media/rain.5b9e26007c618ccc9a23b44b5d0d50f5.svg",
+    "static/media/few_clouds_night.svg": "/static/media/few_clouds_night.dde309547bea61e5c31791e5b6433726.svg",
+    "static/media/mist.svg": "/static/media/mist.a99a8b2aec6ef0e56f2397ca4a10a90c.svg",
+    "static/media/scattered_clouds.svg": "/static/media/scattered_clouds.74865ae969701e0d48010470e805879d.svg",
+    "static/media/broken_clouds.svg": "/static/media/broken_clouds.971b1abb01ada15daa2539cb74c476ca.svg",
+    "static/media/sunny_day.svg": "/static/media/sunny_day.9abac4b0500e309b346737f755e40939.svg",
+    "index.html": "/index.html",
+    "static/media/clear_night.svg": "/static/media/clear_night.d737d7365e6809abf5a69f8bb2dde7a8.svg",
+    "main.fde83725.js.map": "/static/js/main.fde83725.js.map"
   },
   "entrypoints": [
-    "static/js/main.730081b0.js"
+    "static/js/main.fde83725.js"
   ]
 }
