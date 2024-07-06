@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
 import { FaExclamationTriangle } from "react-icons/fa";
-import { LuMapPin } from "react-icons/lu"; // Import LuMapPin
+import { LuMapPin } from "react-icons/lu";
 
 const CityCard = styled.div`
   flex-basis: 30%;
