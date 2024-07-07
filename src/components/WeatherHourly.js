@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FaLocationArrow } from "react-icons/fa";
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from "../utils/weatherIcons";
+import { IoDocumentOutline } from "react-icons/io5";
 
 const HourlyCard = styled.div`
   flex-basis: 65%;
@@ -44,10 +45,16 @@ const WindSpeedIndicator = styled(FaLocationArrow)`
 `;
 
 const WeatherHourly = () => {
-  const { weatherData, forecastData } = useWeather();
+  const { weatherData, forecastData, error } = useWeather();
 
-  if (!weatherData || !forecastData) {
-    return null;
+  if (error) {
+    return (
+      <HourlyCard>
+        <HourlyContainer>
+          <IoDocumentOutline style={{ fontSize: '4rem' }} />
+        </HourlyContainer>
+      </HourlyCard>
+    );
   }
 
   const cityTimezoneOffset = weatherData.timezone;
