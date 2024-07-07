@@ -5,11 +5,13 @@ export const darkTheme = {
     mutedText: "#ccc",
     hourlyItemBackground: "#1e2128",
     cardShadow: "rgba(0, 0, 0, 0.7)",
-    searchShadow: "rgba(0, 0, 0, 0.30)",
-    searchShadowFocus: "rgba(0, 0, 0, 0.5)",
-    iconColor: "#2a2a2a", // Moon color
-    searchBtnBackground: "#dfdfdf",
-    searchBtnText: "#333",
-    searchBtnHover: "#bfbfbf",
+    search: {
+      shadow: "rgba(0, 0, 0, 0.30)",
+      shadowFocus: "rgba(0, 0, 0, 0.5)",
+      btnBackground: "#dfdfdf",
+      btnText: "#222",
+      btnHover: "#bfbfbf",
+    },
+    toggleThemeBg: "#111",
   },
 };

@@ -5,11 +5,14 @@ export const lightTheme = {
     mutedText: "#555",
     hourlyItemBackground: "#e0e0e0",
     cardShadow: "rgba(0, 0, 0, 0.4)",
-    searchShadow: "rgba(0, 0, 0, 0.15)",
-    searchShadowFocus: "rgba(0, 0, 0, 0.3)",
-    iconColor: "#ffd700", // Sun color
-    searchBtnBackground: "#48484a",
-    searchBtnText: "#fff",
-    searchBtnHover: "#323235",
+    search: {
+      shadow: "rgba(0, 0, 0, 0.15)",
+      shadowFocus: "rgba(0, 0, 0, 0.3)",
+      btnBackground: "#48484a",
+      btnText: "#fff",
+      btnHover: "#323235",
+    },
+    toggleThemeBg: "#48484a",
   },
 };
+
