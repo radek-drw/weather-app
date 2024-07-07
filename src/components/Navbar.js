@@ -166,6 +166,8 @@ const Navbar = () => {
           fetchWeatherByCoordinates(latitude, longitude);
           setError("");
           setLocalError("");
+          setCity("");
+          inputRef.current.focus();
         },
         (err) => {
           console.error("Geolocation error:", err);
