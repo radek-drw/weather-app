@@ -1,8 +1,10 @@
+// Navbar.js
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import media from "../styles/media";
 import { useWeather } from "../WeatherContext";
-import Toggle from "./subcomponent/Toggle";
+import ThemeToggle from "./subcomponent/ThemeToggle";
+import TempUnitToggle from "./subcomponent/TempUnitToggle";
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
 
@@ -188,7 +190,8 @@ const Navbar = () => {
 
   return (
     <Nav>
-      <Toggle />
+      <ThemeToggle/>
+      <TempUnitToggle/>
       <SearchContainer onSubmit={handleFetchWeather}>
         <SearchIcon />
         <SearchInput
