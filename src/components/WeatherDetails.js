@@ -7,8 +7,6 @@ import media from "../styles/media";
 
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from '../utils/weatherIcons';
-import { IoDocumentOutline } from "react-icons/io5";
-
 
 const twilightColors = {
   sunrise: "#ffd700",
@@ -144,16 +142,10 @@ const VisibilityIcon = styled(MdOutlineVisibility)`
 
 
 const WeatherDetails = () => {
-  const { weatherData, error } = useWeather();
+  const { weatherData } = useWeather();
 
-  if (error) {
-    return (
-      <DetailsCard>
-        <Panel>
-          <IoDocumentOutline  style={{ fontSize: '4rem' }} />
-        </Panel>
-      </DetailsCard>
-    );
+  if (!weatherData) {
+    return null
   }
 
   const {

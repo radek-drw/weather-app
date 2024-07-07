@@ -14,6 +14,12 @@ const Main = styled.main`
   justify-content: space-between;
   align-content: space-between;
   height: 420px;
+  margin-top: 20px;
+
+  ${media.mobile`
+    margin-top: 0;
+  `}
+
   > * {
     padding: 15px;
     min-height: 185px;

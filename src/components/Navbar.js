@@ -10,10 +10,8 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   height: 35px;
-  margin-bottom: 20px;
 
   ${media.mobile`
-    margin-bottom: 0;
     height: 28px;
   `}
 `;

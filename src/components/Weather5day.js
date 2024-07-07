@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from "../utils/weatherIcons"; 
-import { IoDocumentOutline } from "react-icons/io5";
 
 const FiveDaysCard = styled.div`
   flex-basis: 30%;
@@ -39,7 +38,7 @@ const DateValue = styled.div`
 `;
 
 const Weather5day = () => {
-  const { forecastData, error } = useWeather();
+  const { forecastData } = useWeather();
 
   const processForecastData = (data) => {
     const dailyData = {};
@@ -69,16 +68,6 @@ const Weather5day = () => {
   };
 
   const daysForecast = processForecastData(forecastData).slice(0, 5);
-
-  if (error) {
-    return (
-      <FiveDaysCard>
-        <DayContainer>
-          <IoDocumentOutline style={{ fontSize: '4rem' }} />
-        </DayContainer>
-      </FiveDaysCard>
-    );
-  }
 
   return (
     <FiveDaysCard>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
-import { FaExclamationTriangle } from "react-icons/fa";
+
 import { LuMapPin } from "react-icons/lu";
 
 const CityCard = styled.div`
@@ -12,22 +12,10 @@ const CityCard = styled.div`
   align-items: center;
 `;
 
-// Filter out isError prop so it's not passed to the DOM element
-const CityName = styled.h1.withConfig({
-  shouldForwardProp: (prop) => prop !== 'isError',
-})`
+const CityName = styled.h1`
   margin-bottom: 1rem;
-  font-size: ${({ isError }) => (isError ? "1.4rem" : "2rem")};
-  color: ${({ isError }) => (isError ? "orange" : "inherit")};
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ErrorIcon = styled(FaExclamationTriangle)`
-  font-size: 2.6rem;
-  color: orange;
+  font-size: 2rem;
+  color: inherit;
 `;
 
 const LocationIcon = styled(LuMapPin)`
@@ -82,27 +70,17 @@ const WeatherCurrentCity = () => {
   }, [weatherData]);
 
   if (!weatherData) {
-    return (
-      <CityCard>
-        <CityName isError={true}>No weather data available.</CityName>
-        <ErrorIcon />
-      </CityCard>
-    );
+    return null;
   }
 
   return (
     <CityCard>
-      <CityName isError={error}>
-        {error ? error : `${weatherData.name}, ${weatherData.sys.country}`}
+      <CityName>
+        {weatherData.name}, {weatherData.sys.country}
         {fetchedByCoordinates && !error && <LocationIcon />}
       </CityName>
-      {error ? <ErrorIcon /> : null}
-      {!error && (
-        <>
-          <CityTime>{currentTime}</CityTime>
-          <CityDate>{currentDate}</CityDate>
-        </>
-      )}
+      <CityTime>{currentTime}</CityTime>
+      <CityDate>{currentDate}</CityDate>
     </CityCard>
   );
 };
