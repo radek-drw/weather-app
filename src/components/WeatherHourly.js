@@ -47,7 +47,7 @@ const WeatherHourly = () => {
   const { weatherData, forecastData } = useWeather();
 
   if (!weatherData || !forecastData) {
-    return null; // or an empty fragment <> </> if you want to return nothing
+    return null;
   }
 
   const cityTimezoneOffset = weatherData.timezone;

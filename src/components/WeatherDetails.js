@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
 import { MdOutlineVisibility } from "react-icons/md";
 import { FaWind } from "react-icons/fa";
+import media from "../styles/media";
 
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from '../utils/weatherIcons';
@@ -80,6 +81,11 @@ const SunsetIcon = styled(WiSunset)`
 const SkyCondIcon = styled.img`
   width: 100px;
   height: 100px;
+  
+  ${media.mobile`
+    width: 75px;
+    height: 75px;
+  `}
 `;
 
 const SkyCondition = styled.h3`
@@ -212,7 +218,7 @@ const WeatherDetails = () => {
         </Metric>
         <Metric>
           <WindIcon />
-          <MetricValue>{speed} km/h</MetricValue>
+          <MetricValue>{Math.round(speed)} km/h</MetricValue>
           <MetricLabel>Wind Speed</MetricLabel>
         </Metric>
         <Metric>

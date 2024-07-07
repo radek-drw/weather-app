@@ -22,7 +22,7 @@ const DayContainer = styled.div`
 `;
 
 const WeatherIcon = styled.img`
-  flex-basis: 20%;
+  flex-basis: 25%;
   height: 28px;
 `;
 
@@ -45,7 +45,7 @@ const Weather5day = () => {
 
     data.forEach((item) => {
       const dateTime = new Date(item.dt_txt);
-      const date = dateTime.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+      const date = dateTime.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
 
       const weatherCode = item.weather[0].icon.replace('n', 'd');
 

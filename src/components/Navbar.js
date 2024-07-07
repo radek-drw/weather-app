@@ -11,6 +11,11 @@ const Nav = styled.nav`
   justify-content: space-between;
   height: 35px;
   margin-bottom: 20px;
+
+  ${media.mobile`
+    margin-bottom: 0;
+    height: 28px;
+  `}
 `;
 
 const SearchContainer = styled.form`
