@@ -14,19 +14,22 @@ const Nav = styled.nav`
 `;
 
 const SearchContainer = styled.form`
+  flex-basis: 70%;
   position: relative;
   display: flex;
   justify-content: space-between;
-  width: 40%;
-  min-width: 100px;
   max-width: 350px;
   border-radius: 5px;
-  box-shadow: 0 0 10px ${({ theme }) => theme.colors.searchShadow};
+  box-shadow: 0 0 10px ${({ theme }) => theme.colors.search.shadow};
   transition: box-shadow 0.3s ease;
 
   &:focus-within {
-    box-shadow: 0 0 15px ${({ theme }) => theme.colors.searchShadowFocus};
+    box-shadow: 0 0 15px ${({ theme }) => theme.colors.search.shadowFocus};
   }
+
+  ${media.mobile`
+      padding: 0.5rem;
+  `}
 `;
 
 const SearchIcon = styled(CiSearch)`
@@ -38,12 +41,12 @@ const SearchIcon = styled(CiSearch)`
 
 const SearchInput = styled.input`
   flex-grow: 1;
-  padding: 0.5rem;
+  padding-left: 0.5rem;
   border: none;
+  font-size: 1.2rem;
   background-color: inherit;
   color: ${({ theme }) => theme.colors.text};
   outline: none;
-  font-size: 1.2rem;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.mutedText};
@@ -51,22 +54,23 @@ const SearchInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  position: absolute;
-  left: 100%;
   height: 100%;
-  top: 0;
-  padding: 0 1.2rem;
-  background-color: ${({ theme }) => theme.colors.searchBtnBackground};
-  color: ${({ theme }) => theme.colors.searchBtnText};
+  flex-basis: 20%;
+  background-color: ${({ theme }) => theme.colors.search.btnBackground};
+  color: ${({ theme }) => theme.colors.search.btnText};
+  font-size: 1.3rem;
   border: none;
   border-radius: 0 5px 5px 0;
-  font-size: 1.3rem;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.searchBtnHover};
+    background-color: ${({ theme }) => theme.colors.search.btnHover};
   }
+
+  ${media.mobile`
+    display: none;
+  `}
 `;
 
 const CurrentLocationButton = styled.button`
@@ -76,10 +80,10 @@ const CurrentLocationButton = styled.button`
   min-height: 25px;
   align-self: center;
   background-color: rgb(0, 128, 0);
+  font-size: 1.2rem;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 1.2rem;
   transition: background-color 0.3s;
 
   &:hover {
@@ -87,16 +91,19 @@ const CurrentLocationButton = styled.button`
   }
 
   ${media.mobile`
-    background-color: transparent;
     position: relative;
-    left: -10%;
+    left: -10px;
+    background-color: transparent;
   `}
 `;
 
 const LocationIcon = styled(LuMapPin)`
   width: 14px;
   height: 14px;
-  color: white;
+
+  ${media.mobile`
+    color:  ${({ theme }) => theme.colors.text};
+  `}
 `;
 
 const LocationLabel = styled.p`
