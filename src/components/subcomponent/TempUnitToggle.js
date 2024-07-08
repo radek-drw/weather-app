@@ -17,11 +17,11 @@ const ToggleButton = styled.button`
 `;
 
 const TempUnitToggle = () => {
-  const { temperatureUnit, toggleTemperatureUnit } = useWeather();
+  const { tempUnit, toggleTempUnit } = useWeather();
   
   return (
-    <ToggleButton onClick={toggleTemperatureUnit}>
-      Switch to {temperatureUnit === 'metric' ? '°F' : '°C'}
+    <ToggleButton onClick={toggleTempUnit}>
+      Switch to {tempUnit === 'metric' ? '°F' : '°C'}
     </ToggleButton>
   );
 };

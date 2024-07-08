@@ -12,6 +12,7 @@ export const WeatherProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
+  const [tempUnit, setTempUnit] = useState("metric");
 
   const fetchWeatherData = async (city) => {
     setLoading(true);
@@ -19,7 +20,7 @@ export const WeatherProvider = ({ children }) => {
     setFetchedByCoordinates(false);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${tempUnit}`
       );
       setWeatherData(response.data);
       fetchForecastData(city);
@@ -39,7 +40,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchForecastData = async (city) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${tempUnit}`
       );
       setForecastData(response.data.list);
     } catch (error) {
@@ -53,7 +54,7 @@ export const WeatherProvider = ({ children }) => {
     setFetchedByCoordinates(true);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}`
       );
       setWeatherData(response.data);
       fetchForecastByCoordinates(latitude, longitude);
@@ -67,7 +68,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchForecastByCoordinates = async (latitude, longitude) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}`
       );
       setForecastData(response.data.list);
     } catch (error) {
@@ -94,6 +95,25 @@ export const WeatherProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const convertTemp = (temp, unit) =>
+    unit === "metric" ? (temp * 9) / 5 + 32 : ((temp - 32) * 5) / 9;
+
+  const toggleTempUnit = () => {
+    setTempUnit((prevState) =>
+      prevState === "metric" ? "imperial" : "metric"
+    );
+
+    const convertedTemp = convertTemp(weatherData.main.temp, tempUnit);
+
+    setWeatherData((prevState) => ({
+      ...prevState,
+      main: {
+        ...prevState.main,
+        temp: convertedTemp,
+      },
+    }));
+  };
+
   return (
     <WeatherContext.Provider
       value={{
@@ -105,6 +125,8 @@ export const WeatherProvider = ({ children }) => {
         fetchedByCoordinates,
         fetchWeatherData,
         fetchWeatherByCoordinates,
+        tempUnit,
+        toggleTempUnit,
       }}
     >
       {children}
