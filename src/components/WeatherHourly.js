@@ -44,7 +44,7 @@ const WindSpeedIndicator = styled(FaLocationArrow)`
 `;
 
 const WeatherHourly = () => {
-  const { weatherData, forecastData } = useWeather();
+  const { weatherData, forecastData, tempUnit } = useWeather();
 
   if (!weatherData || !forecastData) {
     return null
@@ -65,7 +65,7 @@ const WeatherHourly = () => {
           <HourlyItem key={index}>
             <span>{localTime(forecast.dt)}</span>
             <WeatherIcon src={weatherIcons[forecast.weather[0].icon]} alt={forecast.weather[0].description} />
-            <span>{Math.round(forecast.main.temp)}&deg;C</span>
+            <span>{Math.round(forecast.main.temp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</span>
             <WindSpeedIndicator style={{ transform: `rotate(${forecast.wind.deg}deg)` }} />
             <span>{Math.round(forecast.wind.speed)}km/h</span>
           </HourlyItem>

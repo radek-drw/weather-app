@@ -95,23 +95,38 @@ export const WeatherProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const convertTemp = (temp, unit) =>
-    unit === "metric" ? (temp * 9) / 5 + 32 : ((temp - 32) * 5) / 9;
-
   const toggleTempUnit = () => {
-    setTempUnit((prevState) =>
-      prevState === "metric" ? "imperial" : "metric"
-    );
 
-    const convertedTemp = convertTemp(weatherData.main.temp, tempUnit);
+    const newTempUnit = tempUnit === 'metric' ? 'imperial' : 'metric';
+
+    const convertTemperature = (temp) => {
+      return newTempUnit === 'metric'
+        ? ((temp - 32) * 5) / 9 // Fahrenheit to Celsius
+        : (temp * 9) / 5 + 32; // Celsius to Fahrenheit
+    };
 
     setWeatherData((prevState) => ({
       ...prevState,
       main: {
         ...prevState.main,
-        temp: convertedTemp,
+        temp: convertTemperature(prevState.main.temp),
+        feels_like: convertTemperature(prevState.main.feels_like),
       },
     }));
+
+    setForecastData((prevState) =>
+      prevState.map((item) => ({
+        ...item,
+        main: {
+          ...item.main,
+          temp_min: convertTemperature(item.main.temp_min),
+          temp_max: convertTemperature(item.main.temp_max),
+          temp: convertTemperature(item.main.temp),
+        },
+      }))
+    );
+
+    setTempUnit(newTempUnit);
   };
 
   return (

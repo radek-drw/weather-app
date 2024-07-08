@@ -38,7 +38,7 @@ const DateValue = styled.div`
 `;
 
 const Weather5day = () => {
-  const { forecastData } = useWeather();
+  const { forecastData, tempUnit } = useWeather();
 
   const processForecastData = (data) => {
     const dailyData = {};
@@ -76,7 +76,7 @@ const Weather5day = () => {
         <DayContainer key={index}>
           <WeatherIcon src={weatherIcons[forecast.weatherCode]} alt="Weather Icon" />
           <TemperatureValue>
-            {Math.round(forecast.maxTemp)}&deg;C / {Math.round(forecast.minTemp)}&deg;C
+            {Math.round(forecast.maxTemp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'} / {Math.round(forecast.minTemp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'}
           </TemperatureValue>
           <DateValue>{forecast.date}</DateValue>
         </DayContainer>

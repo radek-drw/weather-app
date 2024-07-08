@@ -142,7 +142,7 @@ const VisibilityIcon = styled(MdOutlineVisibility)`
 
 
 const WeatherDetails = () => {
-  const { weatherData } = useWeather();
+  const { weatherData, tempUnit } = useWeather();
 
   if (!weatherData) {
     return null
@@ -173,9 +173,9 @@ const WeatherDetails = () => {
       {/* PANEL LEFT */}
       <Panel>
         <div>
-          <CurrentTemp>{roundedTemp}&deg;C</CurrentTemp>
+          <CurrentTemp>{roundedTemp}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</CurrentTemp>
           <FeelsLikeTemp>
-            Feels like: <span>{roundedFeelsLike}&deg;C</span>
+            Feels like: <span>{roundedFeelsLike}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</span>
           </FeelsLikeTemp>
         </div>
         <div>
