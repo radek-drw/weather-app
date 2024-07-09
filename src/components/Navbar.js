@@ -1,12 +1,15 @@
-// Navbar.js
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import media from "../styles/media";
 import { useWeather } from "../WeatherContext";
 import ThemeToggle from "./subcomponent/ThemeToggle";
 import TempUnitToggle from "./subcomponent/TempUnitToggle";
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
+import CitySuggestions from "./subcomponent/CitySuggestions";
+
+const API_KEY = "0268633fae299db526aed6ff3c00d40d";
 
 const Nav = styled.nav`
   display: flex;
@@ -33,7 +36,7 @@ const SearchContainer = styled.form`
   }
 
   ${media.mobile`
-      padding: 0.5rem;
+    padding: 0.5rem;
   `}
 `;
 
@@ -130,6 +133,7 @@ const ErrorText = styled.p`
 const Navbar = () => {
   const { fetchWeatherData, fetchWeatherByCoordinates, error, setError } = useWeather();
   const [city, setCity] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
 
@@ -150,12 +154,31 @@ const Navbar = () => {
     } else {
       fetchWeatherData(trimmedCity);
       setCity("");
+      setSuggestions([]);
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     setCity(e.target.value);
     setLocalError("");
+    if (e.target.value.length >= 2) {
+      try {
+        const response = await axios.get(
+          `http://api.openweathermap.org/geo/1.0/direct?q=${e.target.value}&limit=5&appid=${API_KEY}`
+        );
+        setSuggestions(response.data);
+      } catch (err) {
+        console.error("Error fetching city suggestions:", err);
+      }
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelectCity = (selectedCity) => {
+    setCity(selectedCity.name);
+    setSuggestions([]);
+    fetchWeatherData(selectedCity.name);
   };
 
   const handleFetchWeatherByLocation = () => {
@@ -190,8 +213,8 @@ const Navbar = () => {
 
   return (
     <Nav>
-      <ThemeToggle/>
-      <TempUnitToggle/>
+      <ThemeToggle />
+      <TempUnitToggle />
       <SearchContainer onSubmit={handleFetchWeather}>
         <SearchIcon />
         <SearchInput
@@ -205,6 +228,9 @@ const Navbar = () => {
         />
         <SearchButton type="submit">Search</SearchButton>
         {localError && <ErrorText>{localError}</ErrorText>}
+        {suggestions.length > 0 && (
+          <CitySuggestions suggestions={suggestions} onSelect={handleSelectCity} />
+        )}
       </SearchContainer>
       <CurrentLocationButton onClick={handleFetchWeatherByLocation}>
         <LocationIcon />
