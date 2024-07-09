@@ -45,7 +45,11 @@ const Weather5day = () => {
 
     data.forEach((item) => {
       const dateTime = new Date(item.dt_txt);
-      const date = dateTime.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
+      const date = dateTime.toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        day: 'numeric', 
+        month: 'short' 
+      });
 
       const weatherCode = item.weather[0].icon.replace('n', 'd');
 
@@ -76,7 +80,8 @@ const Weather5day = () => {
         <DayContainer key={index}>
           <WeatherIcon src={weatherIcons[forecast.weatherCode]} alt="Weather Icon" />
           <TemperatureValue>
-            {Math.round(forecast.maxTemp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'} / {Math.round(forecast.minTemp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'}
+            {Math.round(forecast.maxTemp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'} / 
+            {Math.round(forecast.minTemp)}&deg;{tempUnit === 'metric' ? 'C' : 'F'}
           </TemperatureValue>
           <DateValue>{forecast.date}</DateValue>
         </DayContainer>
