@@ -5,6 +5,7 @@ export const lightTheme = {
     mutedText: "#555",
     hourlyItemBackground: "#e0e0e0",
     cardShadow: "rgba(0, 0, 0, 0.4)",
+    toggleThemeBg: "#48484a",
     search: {
       shadow: "rgba(0, 0, 0, 0.15)",
       shadowFocus: "rgba(0, 0, 0, 0.3)",
@@ -12,7 +13,12 @@ export const lightTheme = {
       btnText: "#fff",
       btnHover: "#323235",
     },
-    toggleThemeBg: "#48484a",
+    suggestionList: {
+      background: "#e0e0e0",
+      itemHover: "#ccc",
+      border: "#666",
+      ItemBorderBottom: "#aaa"
+    },
   },
 };
 
