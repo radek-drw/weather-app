@@ -3,13 +3,13 @@ import styled from "styled-components";
 import axios from "axios";
 import media from "../styles/media";
 import { useWeather } from "../WeatherContext";
-import ThemeToggle from "./subcomponent/ThemeToggle";
-import TempUnitToggle from "./subcomponent/TempUnitToggle";
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
 import CitySuggestions from "./subcomponent/CitySuggestions";
+import ThemeToggle from "./subcomponent/ThemeToggle";
+import TempUnitToggle from "./subcomponent/TempUnitToggle";
 
-const API_KEY = "0268633fae299db526aed6ff3c00d40d";
+const OPENCAGE_API_KEY = "210bac0052c4480c93bccf8067ea5ae0";
 
 const Nav = styled.nav`
   display: flex;
@@ -158,25 +158,29 @@ const Navbar = () => {
     }
   };
 
-  const handleInputChange = async (e) => {
-    setCity(e.target.value);
-    setLocalError("");
-    if (e.target.value.length >= 2) {
-      try {
-        const response = await axios.get(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${e.target.value}&limit=5&appid=${API_KEY}`
-        );
-        setSuggestions(response.data);
-      } catch (err) {
-        console.error("Error fetching city suggestions:", err);
-      }
-    } else {
-      setSuggestions([]);
+ const handleInputChange = async (e) => {
+  setCity(e.target.value);
+  setLocalError("");
+  if (e.target.value.length >= 3) {
+    try {
+      const response = await axios.get(
+        `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(e.target.value)}&key=${OPENCAGE_API_KEY}&language=${navigator.language}`
+      );
+      const suggestions = response.data.results.map(result => ({
+        name: result.formatted,
+        administrative_area: result.components.state || result.components.province || ""
+      }));
+      setSuggestions(suggestions);
+    } catch (err) {
+      console.error("Error fetching city suggestions:", err);
     }
-  };
+  } else {
+    setSuggestions([]);
+  }
+};
 
   const handleSelectCity = (selectedCity) => {
-    setCity(selectedCity.name);
+    setCity(selectedCity.name); // Update the city name display
     setSuggestions([]);
     fetchWeatherData(selectedCity.name);
   };
