@@ -178,8 +178,13 @@ const Navbar = () => {
     setCity(e.target.value);
     setLocalError("");
     if (e.target.value.length >= 3) {
+
       const service = new window.google.maps.places.AutocompleteService();
-      service.getPlacePredictions({ input: e.target.value, types: ["(cities)"] }, (predictions, status) => {
+      
+      service.getPlacePredictions({ 
+        input: e.target.value, 
+        types: ["(cities)"] }, 
+        (predictions, status) => {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
           console.error("Error fetching city suggestions:", status);
           return;
