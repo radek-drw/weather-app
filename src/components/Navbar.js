@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import media from "../styles/media";
 import { useWeather } from "../WeatherContext";
 import { LuMapPin } from "react-icons/lu";
@@ -9,7 +8,7 @@ import CitySuggestions from "./subcomponent/CitySuggestions";
 import ThemeToggle from "./subcomponent/ThemeToggle";
 import TempUnitToggle from "./subcomponent/TempUnitToggle";
 
-const OPENCAGE_API_KEY = "210bac0052c4480c93bccf8067ea5ae0";
+const GOOGLE_API_KEY = "AIzaSyB7o6Su1TX6hUXN-TrtI-wQ9y3UfE5WKUY";
 
 const Nav = styled.nav`
   display: flex;
@@ -137,6 +136,23 @@ const Navbar = () => {
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
 
+  useEffect(() => {
+    // Load the Google Maps JavaScript API
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      console.log("Google Maps API loaded");
+    };
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   const handleFetchWeather = (e) => {
     e.preventDefault();
     const trimmedCity = city.trim();
@@ -158,29 +174,31 @@ const Navbar = () => {
     }
   };
 
- const handleInputChange = async (e) => {
-  setCity(e.target.value);
-  setLocalError("");
-  if (e.target.value.length >= 3) {
-    try {
-      const response = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(e.target.value)}&key=${OPENCAGE_API_KEY}&language=${navigator.language}`
-      );
-      const suggestions = response.data.results.map(result => ({
-        name: result.formatted,
-        administrative_area: result.components.state || result.components.province || ""
-      }));
-      setSuggestions(suggestions);
-    } catch (err) {
-      console.error("Error fetching city suggestions:", err);
+  const handleInputChange = (e) => {
+    setCity(e.target.value);
+    setLocalError("");
+    if (e.target.value.length >= 3) {
+      const service = new window.google.maps.places.AutocompleteService();
+      service.getPlacePredictions({ input: e.target.value, types: ["(cities)"] }, (predictions, status) => {
+        if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
+          console.error("Error fetching city suggestions:", status);
+          return;
+        }
+        const suggestions = predictions.map((prediction) => {
+          const city = prediction.structured_formatting.main_text;
+          const administrative_area = prediction.terms?.[1]?.value || "";
+          const country = prediction.terms?.[2]?.value || "";
+          return { name: city, administrative_area, country };
+        });
+        setSuggestions(suggestions);
+      });
+    } else {
+      setSuggestions([]);
     }
-  } else {
-    setSuggestions([]);
-  }
-};
+  };
 
   const handleSelectCity = (selectedCity) => {
-    setCity(selectedCity.name); // Update the city name display
+    setCity(`${selectedCity.name}, ${selectedCity.administrative_area}, ${selectedCity.country}`);
     setSuggestions([]);
     fetchWeatherData(selectedCity.name);
   };
@@ -208,7 +226,6 @@ const Navbar = () => {
     }
   };
 
-  // Focus on the input when there's an error
   useEffect(() => {
     if (error) {
       inputRef.current.focus();

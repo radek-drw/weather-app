@@ -39,7 +39,7 @@ const CitySuggestions = ({ suggestions, onSelect }) => {
     <SuggestionsContainer>
       {suggestions.map((city, index) => (
         <SuggestionItem key={index} onClick={() => onSelect(city)}>
-          {city.name}
+          {city.name}, {city.administrative_area}, {city.country}
         </SuggestionItem>
       ))}
     </SuggestionsContainer>
