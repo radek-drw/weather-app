@@ -137,7 +137,6 @@ const Navbar = () => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    // Load the Google Maps JavaScript API
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places`;
     script.async = true;
@@ -156,8 +155,8 @@ const Navbar = () => {
   const handleFetchWeather = (e) => {
     e.preventDefault();
     const trimmedCity = city.trim();
-    const cityRegex = /^[a-zA-Z\s-]+$/;
-
+    const cityRegex = /^[a-zA-Z\s-,]+$/;
+  
     if (trimmedCity.length < 2) {
       setLocalError("City name is too short. Please enter a valid city name.");
       inputRef.current.focus();
@@ -172,42 +171,64 @@ const Navbar = () => {
       setCity("");
       setSuggestions([]);
     }
-  };
+  };  
 
   const handleInputChange = (e) => {
     setCity(e.target.value);
     setLocalError("");
     if (e.target.value.length >= 3) {
-
       const service = new window.google.maps.places.AutocompleteService();
-      
-      service.getPlacePredictions({ 
-        input: e.target.value, 
-        types: ["(cities)"] }, 
+      service.getPlacePredictions(
+        { input: e.target.value, types: ["(cities)"] },
         (predictions, status) => {
-        if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
-          console.error("Error fetching city suggestions:", status);
-          return;
+          if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
+            console.error("Error fetching city suggestions:", status);
+            return;
+          }
+          const detailedSuggestions = [];
+          predictions.forEach((prediction) => {
+            const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
+            placesService.getDetails({ placeId: prediction.place_id }, (place, status) => {
+              if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
+                const stateComponent = place.address_components.find(component => component.types.includes('administrative_area_level_1'));
+                const countyComponent = place.address_components.find(component => component.types.includes('administrative_area_level_2'));
+                const countryComponent = place.address_components.find(component => component.types.includes('country'));
+                detailedSuggestions.push({
+                  name: place.name,
+                  state: stateComponent ? stateComponent.long_name : '',
+                  county: countyComponent ? countyComponent.long_name : '',
+                  country: countryComponent ? countryComponent.long_name : ''
+                });
+                setSuggestions([...detailedSuggestions]);
+              }
+            });
+          });
         }
-        const suggestions = predictions.map((prediction) => {
-          const city = prediction.structured_formatting.main_text;
-          const administrative_area = prediction.terms?.[1]?.value || "";
-          const country = prediction.terms?.[2]?.value || "";
-          return { name: city, administrative_area, country };
-        });
-        setSuggestions(suggestions);
-      });
+      );
     } else {
       setSuggestions([]);
     }
   };
 
   const handleSelectCity = (selectedCity) => {
-    setCity(`${selectedCity.name}, ${selectedCity.administrative_area}, ${selectedCity.country}`);
+    const { name, state, county, country } = selectedCity;
+    let locationQuery = `${name}`;
+    
+    if (state) {
+      locationQuery += `,${state}`;
+    } else if (county) {
+      locationQuery += `,${county}`;
+    }
+  
+    if (country) {
+      locationQuery += `,${country}`;
+    }
+  
+    fetchWeatherData(locationQuery);
+    setCity("");
     setSuggestions([]);
-    fetchWeatherData(selectedCity.name);
-  };
-
+  };  
+  
   const handleFetchWeatherByLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

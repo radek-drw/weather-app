@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const SuggestionsContainer = styled.ul`
+const SuggestionsList = styled.ul`
   position: absolute;
   top: 100%;
   left: 0;
@@ -36,13 +36,16 @@ const SuggestionItem = styled.li`
 
 const CitySuggestions = ({ suggestions, onSelect }) => {
   return (
-    <SuggestionsContainer>
-      {suggestions.map((city, index) => (
-        <SuggestionItem key={index} onClick={() => onSelect(city)}>
-          {city.name}, {city.administrative_area}, {city.country}
+    <SuggestionsList>
+      {suggestions.map((suggestion, index) => (
+        <SuggestionItem key={index} onClick={() => onSelect(suggestion)}>
+          {suggestion.name}
+          {suggestion.state && `, ${suggestion.state}`}
+          {suggestion.county && `, ${suggestion.county}`}
+          {`, ${suggestion.country}`}
         </SuggestionItem>
       ))}
-    </SuggestionsContainer>
+    </SuggestionsList>
   );
 };
 
