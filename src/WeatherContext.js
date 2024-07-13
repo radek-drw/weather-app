@@ -13,16 +13,18 @@ export const WeatherProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
   const [tempUnit, setTempUnit] = useState("metric");
-  const [locationQuery, setLocationQuery] = useState(""); // Add locationQuery state
+  const [locationQuery, setLocationQuery] = useState("");
+
+  const userLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
 
   const fetchWeatherData = async (locationQuery) => {
     setLoading(true);
     setError(null);
     setFetchedByCoordinates(false);
-    setLocationQuery(locationQuery); // Update locationQuery state
+    setLocationQuery(locationQuery);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(locationQuery)}&appid=${API_KEY}&units=${tempUnit}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(locationQuery)}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
   
       setWeatherData(response.data);
@@ -37,12 +39,11 @@ export const WeatherProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  
 
   const fetchForecastData = async (city) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=${tempUnit}`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
       setForecastData(response.data.list);
     } catch (error) {
@@ -56,7 +57,7 @@ export const WeatherProvider = ({ children }) => {
     setFetchedByCoordinates(true);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
       setWeatherData(response.data);
       setLocationQuery(`, ${response.data.sys.country}`);
@@ -71,7 +72,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchForecastByCoordinates = async (latitude, longitude) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
       setForecastData(response.data.list);
     } catch (error) {

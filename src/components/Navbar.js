@@ -136,9 +136,11 @@ const Navbar = () => {
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
 
+  const userLanguage = navigator.language || 'en';
+
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places&language=${userLanguage}`;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);
@@ -150,13 +152,14 @@ const Navbar = () => {
     return () => {
       document.head.removeChild(script);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFetchWeather = (e) => {
     e.preventDefault();
     const trimmedCity = city.trim();
     const cityRegex = /^[a-zA-Z\s-,]+$/;
-  
+
     if (trimmedCity.length < 2) {
       setLocalError("City name is too short. Please enter a valid city name.");
       inputRef.current.focus();
@@ -171,7 +174,7 @@ const Navbar = () => {
       setCity("");
       setSuggestions([]);
     }
-  };  
+  };
 
   const handleInputChange = (e) => {
     setCity(e.target.value);
@@ -179,7 +182,7 @@ const Navbar = () => {
     if (e.target.value.length >= 3) {
       const service = new window.google.maps.places.AutocompleteService();
       service.getPlacePredictions(
-        { input: e.target.value, types: ["(cities)"] },
+        { input: e.target.value, types: ["(cities)"], language: userLanguage },
         (predictions, status) => {
           if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
             console.error("Error fetching city suggestions:", status);
@@ -188,7 +191,7 @@ const Navbar = () => {
           const detailedSuggestions = [];
           predictions.forEach((prediction) => {
             const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
-            placesService.getDetails({ placeId: prediction.place_id }, (place, status) => {
+            placesService.getDetails({ placeId: prediction.place_id, language: userLanguage }, (place, status) => {
               if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
                 const countyComponent = place.address_components.find(component => component.types.includes('administrative_area_level_2'));
                 const stateComponent = !countyComponent && place.address_components.find(component => component.types.includes('administrative_area_level_1'));
@@ -209,26 +212,26 @@ const Navbar = () => {
       setSuggestions([]);
     }
   };
-  
+
   const handleSelectCity = (selectedCity) => {
     const { name, state, county, country } = selectedCity;
     let locationQuery = `${name}`;
-    
+
     if (state) {
       locationQuery += `,${state}`;
     } else if (county) {
       locationQuery += `,${county}`;
     }
-  
+
     if (country) {
       locationQuery += `,${country}`;
     }
-  
+
     fetchWeatherData(locationQuery);
     setCity("");
     setSuggestions([]);
-  };  
-  
+  };
+
   const handleFetchWeatherByLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

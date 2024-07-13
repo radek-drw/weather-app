@@ -199,7 +199,7 @@ const WeatherDetails = () => {
       {/* PANEL MIDDLE */}
       <Panel>
         <SkyCondIcon src={WeatherIconUrl} alt={weather[0].main} />
-        <SkyCondition>{weather[0].main}</SkyCondition>
+        <SkyCondition>{weather[0].description}</SkyCondition>
       </Panel>
 
       {/* PANEL RIGHT */}
