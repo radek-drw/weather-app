@@ -13,29 +13,20 @@ export const WeatherProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
   const [tempUnit, setTempUnit] = useState("metric");
+  const [locationQuery, setLocationQuery] = useState(""); // Add locationQuery state
 
   const fetchWeatherData = async (locationQuery) => {
     setLoading(true);
     setError(null);
     setFetchedByCoordinates(false);
+    setLocationQuery(locationQuery); // Update locationQuery state
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(locationQuery)}&limit=1&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(locationQuery)}&appid=${API_KEY}&units=${tempUnit}`
       );
   
-      if (response.data.length === 0) {
-        setError("City not found. Please check the spelling or try another city.");
-        setLoading(false);
-        return;
-      }
-  
-      const { lat, lon } = response.data[0];
-      const weatherResponse = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${tempUnit}`
-      );
-  
-      setWeatherData(weatherResponse.data);
-      fetchForecastData(weatherResponse.data.name);
+      setWeatherData(response.data);
+      fetchForecastData(locationQuery);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setError("City not found. Please check the spelling or try another city.");
@@ -51,7 +42,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchForecastData = async (city) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${tempUnit}`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=${tempUnit}`
       );
       setForecastData(response.data.list);
     } catch (error) {
@@ -153,6 +144,7 @@ export const WeatherProvider = ({ children }) => {
         fetchWeatherByCoordinates,
         tempUnit,
         toggleTempUnit,
+        locationQuery, // Provide locationQuery in context
       }}
     >
       {children}

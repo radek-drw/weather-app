@@ -13,10 +13,16 @@ const CityCard = styled.div`
 `;
 
 const CityName = styled.h1`
-  margin-bottom: 1rem;
+  margin-bottom: .4rem;
   font-size: 2rem;
   color: inherit;
 `;
+
+const CityLocationDetails = styled.div`
+  color: ${({ theme }) => theme.colors.mutedText};
+  font-size: 1rem;
+  margin-bottom: 1rem;
+`
 
 const LocationIcon = styled(LuMapPin)`
   margin-left: 8px;
@@ -34,9 +40,21 @@ const CityDate = styled.div`
 `;
 
 const WeatherCurrentCity = () => {
-  const { weatherData, error, fetchedByCoordinates } = useWeather();
+  const { weatherData, error, fetchedByCoordinates, locationQuery } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [city, setCity] = useState("");
+  const [county, setCounty] = useState("");
+  const [country, setCountry] = useState("");
+
+  useEffect(() => {
+    if (locationQuery) {
+      const [cityName, countyName, countryName] = locationQuery.split(',');
+      setCity(cityName.trim());
+      setCounty(countyName.trim());
+      setCountry(countryName.trim());
+    }
+  }, [locationQuery]);
 
   useEffect(() => {
     if (weatherData?.timezone !== undefined) {
@@ -76,9 +94,13 @@ const WeatherCurrentCity = () => {
   return (
     <CityCard>
       <CityName>
-        {weatherData.name}, {weatherData.sys.country}
+        {city}
         {fetchedByCoordinates && !error && <LocationIcon />}
       </CityName>
+      <CityLocationDetails>
+        {county && ` ${county}`}
+        {country && `, ${country}`}
+      </CityLocationDetails>
       <CityTime>{currentTime}</CityTime>
       <CityDate>{currentDate}</CityDate>
     </CityCard>

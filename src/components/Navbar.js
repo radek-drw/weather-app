@@ -190,8 +190,8 @@ const Navbar = () => {
             const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
             placesService.getDetails({ placeId: prediction.place_id }, (place, status) => {
               if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
-                const stateComponent = place.address_components.find(component => component.types.includes('administrative_area_level_1'));
                 const countyComponent = place.address_components.find(component => component.types.includes('administrative_area_level_2'));
+                const stateComponent = !countyComponent && place.address_components.find(component => component.types.includes('administrative_area_level_1'));
                 const countryComponent = place.address_components.find(component => component.types.includes('country'));
                 detailedSuggestions.push({
                   name: place.name,
@@ -209,7 +209,7 @@ const Navbar = () => {
       setSuggestions([]);
     }
   };
-
+  
   const handleSelectCity = (selectedCity) => {
     const { name, state, county, country } = selectedCity;
     let locationQuery = `${name}`;
