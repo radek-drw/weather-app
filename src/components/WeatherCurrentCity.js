@@ -22,6 +22,7 @@ const CityLocationDetails = styled.div`
   color: ${({ theme }) => theme.colors.mutedText};
   font-size: 1rem;
   margin-bottom: 1rem;
+  text-align: center;
 `
 
 const LocationIcon = styled(LuMapPin)`
