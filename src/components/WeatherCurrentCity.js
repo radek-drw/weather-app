@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
-
 import { LuMapPin } from "react-icons/lu";
 
 const CityCard = styled.div`
@@ -23,7 +22,7 @@ const CityLocationDetails = styled.div`
   font-size: 1rem;
   margin-bottom: 1rem;
   text-align: center;
-`
+`;
 
 const LocationIcon = styled(LuMapPin)`
   margin-left: 8px;
@@ -71,7 +70,7 @@ const WeatherCurrentCity = () => {
             })
           );
           setCurrentDate(
-            localTime.toLocaleDateString("en-GB", {
+            localTime.toLocaleDateString(navigator.language, {
               weekday: "long",
               day: "numeric",
               month: "long",

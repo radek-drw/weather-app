@@ -45,7 +45,7 @@ const Weather5day = () => {
 
     data.forEach((item) => {
       const dateTime = new Date(item.dt_txt);
-      const date = dateTime.toLocaleDateString('en-GB', { 
+      const date = dateTime.toLocaleDateString(navigator.language, { 
         weekday: 'short', 
         day: 'numeric', 
         month: 'short' 
