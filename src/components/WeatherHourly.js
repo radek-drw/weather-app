@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FaLocationArrow } from "react-icons/fa";
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from "../utils/weatherIcons";
+import { useTranslation } from 'react-i18next';
 
 const HourlyCard = styled.div`
   flex-basis: 65%;
@@ -45,6 +46,7 @@ const WindSpeedIndicator = styled(FaLocationArrow)`
 
 const WeatherHourly = () => {
   const { weatherData, forecastData, tempUnit } = useWeather();
+  const { t } = useTranslation();
 
   if (!weatherData || !forecastData) {
     return null
@@ -59,7 +61,7 @@ const WeatherHourly = () => {
 
   return (
     <HourlyCard>
-      <Title>Hourly Forecast</Title>
+      <Title>{t('labels.hourlyForecastTitle')}</Title>
       <HourlyContainer>
         {forecastData.slice(0, 5).map((forecast, index) => (
           <HourlyItem key={index}>

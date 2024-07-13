@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useWeather } from "../WeatherContext";
-import { weatherIcons } from "../utils/weatherIcons"; 
+import { weatherIcons } from "../utils/weatherIcons";
+import { useTranslation } from 'react-i18next';
 
 const FiveDaysCard = styled.div`
   flex-basis: 30%;
@@ -40,6 +41,8 @@ const DateValue = styled.div`
 const Weather5day = () => {
   const { forecastData, tempUnit } = useWeather();
 
+  const { t } = useTranslation();
+
   const processForecastData = (data) => {
     const dailyData = {};
 
@@ -75,7 +78,7 @@ const Weather5day = () => {
 
   return (
     <FiveDaysCard>
-      <Title>5 Days Forecast</Title>
+      <Title>{t('labels.title5DaysForecast')}</Title>
       {daysForecast.map((forecast, index) => (
         <DayContainer key={index}>
           <WeatherIcon src={weatherIcons[forecast.weatherCode]} alt="Weather Icon" />

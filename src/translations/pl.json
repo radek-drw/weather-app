@@ -1,0 +1,30 @@
+{
+    "placeholders": {
+      "input": "Szukaj miasta..."
+    },
+    "labels": {
+      "searchBtn": "Szukaj",
+      "currentLocation": "Aktualna lokalizacja",
+      "feelsLike": "Odczuwalna",
+      "sunrise": "Wschód słońca",
+      "sunset": "Zachód słońca",
+      "humidity": "Wilgotność",
+      "windSpeed": "Prędkość wiatru",
+      "pressure": "Ciśnienie",
+      "visibility": "Widoczność",
+      "title5DaysForecast": "Prognoza na 5 dni",
+      "hourlyForecastTitle": "Prognoza godzinowa"
+    },
+    "errors": {
+      "shortCityName": "Nazwa miasta jest za krótka. Proszę podać prawidłową nazwę miasta.",
+      "longCityName": "Nazwa miasta jest za długa. Proszę podać prawidłową nazwę miasta.",
+      "invalidCityName": "Nazwa miasta zawiera nieprawidłowe znaki. Proszę podać prawidłową nazwę miasta.",
+      "geolocationUnavailable": "Geolokalizacja nie jest obsługiwana przez tę przeglądarkę.",
+      "geolocationFailure": "Nie można określić Twojej lokalizacji.",
+      "cityNotFound": "Nie znaleziono miasta. Sprawdź pisownię lub spróbuj innego miasta.",
+      "fetchForecast": "Błąd podczas pobierania danych prognozy.",
+      "fetchWeatherByCoordinates": "Błąd podczas pobierania danych pogodowych na podstawie współrzędnych.",
+      "fetchForecastByCoordinates": "Błąd podczas pobierania danych prognozy na podstawie współrzędnych."
+    }
+  }
+  

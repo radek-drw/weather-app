@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
 
 const API_KEY = "0268633fae299db526aed6ff3c00d40d";
 
@@ -15,6 +16,7 @@ export const WeatherProvider = ({ children }) => {
   const [tempUnit, setTempUnit] = useState("metric");
   const [locationQuery, setLocationQuery] = useState("");
 
+  const { t } = useTranslation();
   const userLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
 
   const fetchWeatherData = async (locationQuery) => {
@@ -31,7 +33,7 @@ export const WeatherProvider = ({ children }) => {
       fetchForecastData(locationQuery);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setError("City not found. Please check the spelling or try another city.");
+        setError(t('errors.cityNotFound'));
       } else {
         setError(error.message);
       }
@@ -47,7 +49,7 @@ export const WeatherProvider = ({ children }) => {
       );
       setForecastData(response.data.list);
     } catch (error) {
-      setError("Error fetching forecast data.");
+      setError(t('errors.fetchForecast'));
     }
   };
 
@@ -63,7 +65,7 @@ export const WeatherProvider = ({ children }) => {
       setLocationQuery(`, ${response.data.sys.country}`);
       fetchForecastByCoordinates(latitude, longitude);
     } catch (error) {
-      setError("Error fetching weather data by coordinates.");
+      setError(t('errors.fetchWeatherByCoordinates'));
     } finally {
       setLoading(false);
     }
@@ -76,7 +78,7 @@ export const WeatherProvider = ({ children }) => {
       );
       setForecastData(response.data.list);
     } catch (error) {
-      setError("Error fetching forecast data by coordinates.");
+      setError(t('errors.fetchForecastByCoordinates'));
     }
   };
 
@@ -90,11 +92,11 @@ export const WeatherProvider = ({ children }) => {
         },
         (err) => {
           console.error("Geolocation error:", err);
-          setError("Unable to retrieve your location.");
+          setError(t('errors.geolocationFailure'));
         }
       );
     } else {
-      setError("Geolocation is not supported by this browser.");
+      setError(t('errors.geolocationUnavailable'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -146,7 +148,7 @@ export const WeatherProvider = ({ children }) => {
         fetchWeatherByCoordinates,
         tempUnit,
         toggleTempUnit,
-        locationQuery, // Provide locationQuery in context
+        locationQuery,
       }}
     >
       {children}

@@ -7,6 +7,7 @@ import { CiSearch } from "react-icons/ci";
 import CitySuggestions from "./subcomponent/CitySuggestions";
 import ThemeToggle from "./subcomponent/ThemeToggle";
 import TempUnitToggle from "./subcomponent/TempUnitToggle";
+import { useTranslation } from 'react-i18next';
 
 const GOOGLE_API_KEY = "AIzaSyB7o6Su1TX6hUXN-TrtI-wQ9y3UfE5WKUY";
 
@@ -136,6 +137,8 @@ const Navbar = () => {
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
 
+  const { t } = useTranslation();
+
   const userLanguage = navigator.language || 'en';
 
   useEffect(() => {
@@ -161,13 +164,13 @@ const Navbar = () => {
     const cityRegex = /^[a-zA-Z\s-,]+$/;
 
     if (trimmedCity.length < 2) {
-      setLocalError("City name is too short. Please enter a valid city name.");
+      setLocalError(t('errors.shortCityName'));
       inputRef.current.focus();
     } else if (trimmedCity.length > 50) {
-      setLocalError("City name is too long. Please enter a valid city name.");
+      setLocalError(t('errors.longCityName'));
       inputRef.current.focus();
     } else if (!cityRegex.test(trimmedCity)) {
-      setLocalError("City name contains invalid characters. Please enter a valid city name.");
+      setLocalError(t('errors.invalidCityName'));
       inputRef.current.focus();
     } else {
       fetchWeatherData(trimmedCity);
@@ -245,12 +248,12 @@ const Navbar = () => {
         },
         (err) => {
           console.error("Geolocation error:", err);
-          setError("Unable to retrieve your location.");
+          setError(t('errors.geolocationFailure'));
           setLocalError("");
         }
       );
     } else {
-      setError("Geolocation is not supported by this browser.");
+      setError(t('errors.geolocationUnavailable'));
       setLocalError("");
     }
   };
@@ -273,10 +276,10 @@ const Navbar = () => {
           type="text"
           value={city}
           onChange={handleInputChange}
-          placeholder="Search for city..."
+          placeholder={t('placeholders.input')}
           ref={inputRef}
         />
-        <SearchButton type="submit">Search</SearchButton>
+        <SearchButton type="submit">{t('labels.searchBtn')}</SearchButton>
         {localError && <ErrorText>{localError}</ErrorText>}
         {suggestions.length > 0 && (
           <CitySuggestions suggestions={suggestions} onSelect={handleSelectCity} />
@@ -284,7 +287,7 @@ const Navbar = () => {
       </SearchContainer>
       <CurrentLocationButton onClick={handleFetchWeatherByLocation}>
         <LocationIcon />
-        <LocationLabel>Current location</LocationLabel>
+        <LocationLabel>{t('labels.currentLocation')}</LocationLabel>
       </CurrentLocationButton>
     </Nav>
   );

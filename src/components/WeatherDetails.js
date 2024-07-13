@@ -5,6 +5,7 @@ import { MdOutlineVisibility } from "react-icons/md";
 import { FaWind } from "react-icons/fa";
 import media from "../styles/media";
 
+import { useTranslation } from 'react-i18next';
 import { useWeather } from "../WeatherContext";
 import { weatherIcons } from '../utils/weatherIcons';
 
@@ -140,12 +141,12 @@ const VisibilityIcon = styled(MdOutlineVisibility)`
   font-size: 25px;
 `;
 
-
 const WeatherDetails = () => {
+  const { t } = useTranslation();
   const { weatherData, tempUnit } = useWeather();
 
   if (!weatherData) {
-    return null
+    return null;
   }
 
   const {
@@ -157,8 +158,8 @@ const WeatherDetails = () => {
     timezone,
   } = weatherData;
 
-  const weatherIconCode = weather[0].icon; 
-  const WeatherIconUrl = weatherIcons[weatherIconCode]; 
+  const weatherIconCode = weather[0].icon;
+  const WeatherIconUrl = weatherIcons[weatherIconCode];
 
   const roundedTemp = Math.round(temp);
   const roundedFeelsLike = Math.round(feels_like);
@@ -175,21 +176,21 @@ const WeatherDetails = () => {
         <div>
           <CurrentTemp>{roundedTemp}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</CurrentTemp>
           <FeelsLikeTemp>
-            Feels like: <span>{roundedFeelsLike}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</span>
+          {t('labels.feelsLike')}: <span>{roundedFeelsLike}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</span>
           </FeelsLikeTemp>
         </div>
         <div>
           <SunTwilight>
             <SunriseIcon />
             <div>
-              <p>Sunrise</p>
+              <p>{t('labels.sunrise')}</p>
               <div>{sunriseTime}</div>
             </div>
           </SunTwilight>
           <SunTwilight>
             <SunsetIcon />
             <div>
-              <p>Sunset</p>
+              <p>{t('labels.sunset')}</p>
               <div>{sunsetTime}</div>
             </div>
           </SunTwilight>
@@ -207,22 +208,22 @@ const WeatherDetails = () => {
         <Metric>
           <HumidityIcon />
           <MetricValue>{humidity}%</MetricValue>
-          <MetricLabel>Humidity</MetricLabel>
+          <MetricLabel>{t('labels.humidity')}</MetricLabel>
         </Metric>
         <Metric>
           <WindIcon />
           <MetricValue>{Math.round(speed)} km/h</MetricValue>
-          <MetricLabel>Wind Speed</MetricLabel>
+          <MetricLabel>{t('labels.windSpeed')}</MetricLabel>
         </Metric>
         <Metric>
           <BarometerIcon />
           <MetricValue>{pressure} hPa</MetricValue>
-          <MetricLabel>Pressure</MetricLabel>
+          <MetricLabel>{t('labels.pressure')}</MetricLabel>
         </Metric>
         <Metric>
           <VisibilityIcon />
           <MetricValue>{visibility / 1000} km</MetricValue>
-          <MetricLabel>Visibility</MetricLabel>
+          <MetricLabel>{t('labels.visibility')}</MetricLabel>
         </Metric>
       </Panel>
     </DetailsCard>

@@ -1,0 +1,30 @@
+{
+    "placeholders": {
+      "input": "Rechercher une ville..."
+    },
+    "labels": {
+      "searchBtn": "Rechercher",
+      "currentLocation": "Localisation actuelle",
+      "feelsLike": "Ressenti",
+      "sunrise": "Levé du soleil",
+      "sunset": "Couché du soleil",
+      "humidity": "Humidité",
+      "windSpeed": "Vitesse du vent",
+      "pressure": "Pression",
+      "visibility": "Visibilité",
+      "title5DaysForecast": "Prévision sur 5 jours",
+      "hourlyForecastTitle": "Prévision horaire"
+    },
+    "errors": {
+      "shortCityName": "Nom de ville trop court. Veuillez entrer un nom de ville valide.",
+      "longCityName": "Nom de ville trop long. Veuillez entrer un nom de ville valide.",
+      "invalidCityName": "Le nom de ville contient des caractères invalides. Veuillez entrer un nom de ville valide.",
+      "geolocationUnavailable": "La géolocalisation n'est pas supportée par ce navigateur.",
+      "geolocationFailure": "Impossible de récupérer votre localisation.",
+      "cityNotFound": "Ville non trouvée. Veuillez vérifier l'orthographe ou essayer une autre ville.",
+      "fetchForecast": "Erreur lors de la récupération des données de prévision.",
+      "fetchWeatherByCoordinates": "Erreur lors de la récupération des données météorologiques par coordonnées.",
+      "fetchForecastByCoordinates": "Erreur lors de la récupération des données de prévision par coordonnées."
+    }
+  }
+  
