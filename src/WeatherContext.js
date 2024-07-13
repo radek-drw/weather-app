@@ -59,6 +59,7 @@ export const WeatherProvider = ({ children }) => {
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}`
       );
       setWeatherData(response.data);
+      setLocationQuery(`, ${response.data.sys.country}`);
       fetchForecastByCoordinates(latitude, longitude);
     } catch (error) {
       setError("Error fetching weather data by coordinates.");

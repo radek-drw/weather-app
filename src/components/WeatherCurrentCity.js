@@ -43,16 +43,14 @@ const WeatherCurrentCity = () => {
   const { weatherData, error, fetchedByCoordinates, locationQuery } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
-  const [city, setCity] = useState("");
   const [county, setCounty] = useState("");
   const [country, setCountry] = useState("");
 
   useEffect(() => {
     if (locationQuery) {
-      const [cityName, countyName, countryName] = locationQuery.split(',');
-      setCity(cityName.trim());
-      setCounty(countyName.trim());
-      setCountry(countryName.trim());
+      const [, countyName, countryName] = locationQuery.split(',');
+      setCounty(countyName);
+      setCountry(countryName);
     }
   }, [locationQuery]);
 
@@ -94,7 +92,7 @@ const WeatherCurrentCity = () => {
   return (
     <CityCard>
       <CityName>
-        {city}
+        {weatherData.name}
         {fetchedByCoordinates && !error && <LocationIcon />}
       </CityName>
       <CityLocationDetails>
