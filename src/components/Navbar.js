@@ -79,20 +79,32 @@ const Navbar = () => {
             console.error("Error fetching city suggestions:", status);
             return;
           }
-          
-          const suggestions = predictions.map(prediction => prediction.description);
+
+          const suggestions = predictions.map(prediction => ({
+            description: prediction.description,
+            placeId: prediction.place_id
+          }));
           setSuggestions(suggestions);
-          console.log(suggestions)
         }
       );
     } else {
       setSuggestions([]);
     }
   };
-  
 
-  const handleSelectCity = (selectedCity) => {
-    fetchWeatherData(selectedCity);
+  const handleSelectCity = async (selectedCity) => {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ placeId: selectedCity.placeId }, (results, status) => {
+      if (status === "OK" && results[0]) {
+        const cityName = results[0].address_components.find(component => component.types.includes("locality"))?.long_name;
+        const countryName = results[0].address_components.find(component => component.types.includes("country"))?.short_name;
+        const fullCityName = `${cityName}, ${countryName}`;
+        fetchWeatherData(fullCityName);
+      } else {
+        console.error("Geocode error:", status);
+        setError(t('errors.cityNotFound'));
+      }
+    });
     setCity("");
     setSuggestions([]);
   };

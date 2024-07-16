@@ -29,9 +29,18 @@ const SuggestionItem = styled.li`
     border: none;
   }
 
-  &:hover {  
+  &:hover {
     background-color: ${({ theme }) => theme.colors.suggestionList.itemHover};
   }
+`;
+
+const CityName = styled.div`
+  font-weight: bold;
+`;
+
+const LocationDetails = styled.div`
+  font-size: 0.9em;
+  color: ${({ theme }) => theme.colors.mutedText};
 `;
 
 const CitySuggestions = ({ suggestions, onSelect }) => {
@@ -39,7 +48,8 @@ const CitySuggestions = ({ suggestions, onSelect }) => {
     <SuggestionsList>
       {suggestions.map((suggestion, index) => (
         <SuggestionItem key={index} onClick={() => onSelect(suggestion)}>
-          {suggestion}
+          <CityName>{suggestion.description.split(',')[0]}</CityName>
+          <LocationDetails>{suggestion.description.split(',').slice(1).join(',').trim()}</LocationDetails>
         </SuggestionItem>
       ))}
     </SuggestionsList>

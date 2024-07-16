@@ -14,7 +14,6 @@ export const WeatherProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
   const [tempUnit, setTempUnit] = useState("metric");
-  const [locationQuery, setLocationQuery] = useState("");
 
   const { t } = useTranslation();
   const userLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
@@ -23,14 +22,13 @@ export const WeatherProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     setFetchedByCoordinates(false);
-    setLocationQuery(locationQuery);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
-  
+
       setWeatherData(response.data);
-      fetchForecastData(locationQuery);
+      fetchForecastData(city);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setError(t('errors.cityNotFound'));
@@ -62,7 +60,7 @@ export const WeatherProvider = ({ children }) => {
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
       setWeatherData(response.data);
-      setLocationQuery(`, ${response.data.sys.country}`);
+      // const city = `${response.data.name}, ${response.data.sys.country}`;
       fetchForecastByCoordinates(latitude, longitude);
     } catch (error) {
       setError(t('errors.fetchWeatherByCoordinates'));
@@ -102,7 +100,6 @@ export const WeatherProvider = ({ children }) => {
   }, []);
 
   const toggleTempUnit = () => {
-
     const newTempUnit = tempUnit === 'metric' ? 'imperial' : 'metric';
 
     const convertTemperature = (temp) => {
@@ -148,7 +145,6 @@ export const WeatherProvider = ({ children }) => {
         fetchWeatherByCoordinates,
         tempUnit,
         toggleTempUnit,
-        locationQuery,
       }}
     >
       {children}

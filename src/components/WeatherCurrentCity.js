@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
 import { LuMapPin } from "react-icons/lu";
+import axios from "axios";
+
+const GOOGLE_API_KEY = "AIzaSyB7o6Su1TX6hUXN-TrtI-wQ9y3UfE5WKUY";
 
 const CityCard = styled.div`
   flex-basis: 30%;
@@ -12,7 +15,7 @@ const CityCard = styled.div`
 `;
 
 const CityName = styled.h1`
-  margin-bottom: .4rem;
+  margin-bottom: 0.4rem;
   font-size: 2rem;
   color: inherit;
 `;
@@ -40,9 +43,10 @@ const CityDate = styled.div`
 `;
 
 const WeatherCurrentCity = () => {
-  const { weatherData, error, fetchedByCoordinates, locationQuery } = useWeather();
+  const { weatherData, error, fetchedByCoordinates } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [additionalDetails, setAdditionalDetails] = useState({});
 
   useEffect(() => {
     if (weatherData?.timezone !== undefined) {
@@ -75,6 +79,35 @@ const WeatherCurrentCity = () => {
     }
   }, [weatherData]);
 
+  useEffect(() => {
+    if (weatherData) {
+      const fetchAdditionalDetails = async () => {
+        try {
+          const { data } = await axios.get(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${weatherData.coord.lat},${weatherData.coord.lon}&key=${GOOGLE_API_KEY}`
+          );
+          if (data.results && data.results.length > 0) {
+            const addressComponents = data.results[0].address_components;
+            const county = addressComponents.find(component =>
+              component.types.includes("administrative_area_level_2")
+            );
+            const state = addressComponents.find(component =>
+              component.types.includes("administrative_area_level_1")
+            );
+            setAdditionalDetails({
+              county: county ? county.long_name : "",
+              state: state ? state.long_name : "",
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching additional location details:", error);
+        }
+      };
+
+      fetchAdditionalDetails();
+    }
+  }, [weatherData]);
+
   if (!weatherData) {
     return null;
   }
@@ -86,7 +119,9 @@ const WeatherCurrentCity = () => {
         {fetchedByCoordinates && !error && <LocationIcon />}
       </CityName>
       <CityLocationDetails>
-        {locationQuery}
+        {weatherData.name}
+        {additionalDetails.county && `, ${additionalDetails.county}`}
+        {additionalDetails.county && `,`} {weatherData.sys.country}
       </CityLocationDetails>
       <CityTime>{currentTime}</CityTime>
       <CityDate>{currentDate}</CityDate>
