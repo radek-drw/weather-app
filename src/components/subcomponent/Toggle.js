@@ -4,9 +4,9 @@ import media from "../../styles/media";
 
 const TOGGLE_WIDTH = "6rem";
 const TOGGLE_HEIGHT = "2.5rem";
-const TOGGLE_BUTTON_SIZE = "2.3rem";
-const TOGGLE_BUTTON_MOBILE_SIZE = "1.7rem";
-const TOGGLE_BUTTON_PADDING = "0.3rem";
+const TOGGLE_BUTTON_SIZE = "1.8rem";
+const TOGGLE_BUTTON_MOBILE_SIZE = "1.8rem";
+const TOGGLE_BUTTON_PADDING = "0.4rem";
 
 const ToggleContainer = styled.button`
   position: relative;
@@ -17,7 +17,7 @@ const ToggleContainer = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   background-color: ${({ theme }) => theme.colors.toggleThemeBg};
   border-radius: 20px;
   cursor: pointer;
