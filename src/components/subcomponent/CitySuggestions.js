@@ -39,10 +39,7 @@ const CitySuggestions = ({ suggestions, onSelect }) => {
     <SuggestionsList>
       {suggestions.map((suggestion, index) => (
         <SuggestionItem key={index} onClick={() => onSelect(suggestion)}>
-          {suggestion.name}
-          {suggestion.state && `, ${suggestion.state}`}
-          {suggestion.county && `, ${suggestion.county}`}
-          {`, ${suggestion.country}`}
+          {suggestion}
         </SuggestionItem>
       ))}
     </SuggestionsList>

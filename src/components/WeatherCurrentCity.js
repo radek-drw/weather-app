@@ -43,16 +43,6 @@ const WeatherCurrentCity = () => {
   const { weatherData, error, fetchedByCoordinates, locationQuery } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
-  const [county, setCounty] = useState("");
-  const [country, setCountry] = useState("");
-
-  useEffect(() => {
-    if (locationQuery) {
-      const [, countyName, countryName] = locationQuery.split(',');
-      setCounty(countyName);
-      setCountry(countryName);
-    }
-  }, [locationQuery]);
 
   useEffect(() => {
     if (weatherData?.timezone !== undefined) {
@@ -96,8 +86,7 @@ const WeatherCurrentCity = () => {
         {fetchedByCoordinates && !error && <LocationIcon />}
       </CityName>
       <CityLocationDetails>
-        {county && ` ${county}`}
-        {country && `, ${country}`}
+        {locationQuery}
       </CityLocationDetails>
       <CityTime>{currentTime}</CityTime>
       <CityDate>{currentDate}</CityDate>

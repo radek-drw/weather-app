@@ -191,46 +191,20 @@ const Navbar = () => {
             console.error("Error fetching city suggestions:", status);
             return;
           }
-          const detailedSuggestions = [];
-          predictions.forEach((prediction) => {
-            const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
-            placesService.getDetails({ placeId: prediction.place_id, language: userLanguage }, (place, status) => {
-              if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
-                const countyComponent = place.address_components.find(component => component.types.includes('administrative_area_level_2'));
-                const stateComponent = !countyComponent && place.address_components.find(component => component.types.includes('administrative_area_level_1'));
-                const countryComponent = place.address_components.find(component => component.types.includes('country'));
-                detailedSuggestions.push({
-                  name: place.name,
-                  state: stateComponent ? stateComponent.long_name : '',
-                  county: countyComponent ? countyComponent.long_name : '',
-                  country: countryComponent ? countryComponent.long_name : ''
-                });
-                setSuggestions([...detailedSuggestions]);
-              }
-            });
-          });
+          
+          const suggestions = predictions.map(prediction => prediction.description);
+          setSuggestions(suggestions);
+          console.log(suggestions)
         }
       );
     } else {
       setSuggestions([]);
     }
   };
+  
 
   const handleSelectCity = (selectedCity) => {
-    const { name, state, county, country } = selectedCity;
-    let locationQuery = `${name}`;
-
-    if (state) {
-      locationQuery += `,${state}`;
-    } else if (county) {
-      locationQuery += `,${county}`;
-    }
-
-    if (country) {
-      locationQuery += `,${country}`;
-    }
-
-    fetchWeatherData(locationQuery);
+    fetchWeatherData(selectedCity);
     setCity("");
     setSuggestions([]);
   };
