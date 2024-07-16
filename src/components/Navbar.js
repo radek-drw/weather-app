@@ -93,18 +93,28 @@ const Navbar = () => {
   };
 
   const handleSelectCity = async (selectedCity) => {
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ placeId: selectedCity.placeId }, (results, status) => {
-      if (status === "OK" && results[0]) {
-        const cityName = results[0].address_components.find(component => component.types.includes("locality"))?.long_name;
-        const countryName = results[0].address_components.find(component => component.types.includes("country"))?.short_name;
-        const fullCityName = `${cityName}, ${countryName}`;
-        fetchWeatherData(fullCityName);
-      } else {
-        console.error("Geocode error:", status);
-        setError(t('errors.cityNotFound'));
+    const service = new window.google.maps.places.PlacesService(document.createElement('div'));
+    service.getDetails(
+      { placeId: selectedCity.placeId, fields: ['address_components', 'geometry'] },
+      (place, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+          const cityName = place.address_components.find(component => component.types.includes("locality"))?.long_name;
+          const countryName = place.address_components.find(component => component.types.includes("country"))?.short_name;
+          const state = place.address_components.find(component => component.types.includes("administrative_area_level_1"))?.long_name;
+          const county = place.address_components.find(component => component.types.includes("administrative_area_level_2"))?.long_name;
+          const fullCityName = `${cityName}, ${countryName}`;
+          const additionalDetails = { state, county };
+          const coordinates = {
+            lat: place.geometry.location.lat(),
+            lon: place.geometry.location.lng()
+          };
+          fetchWeatherData(fullCityName, additionalDetails, coordinates);
+        } else {
+          console.error("Place details error:", status);
+          setError(t('errors.cityNotFound'));
+        }
       }
-    });
+    );
     setCity("");
     setSuggestions([]);
   };

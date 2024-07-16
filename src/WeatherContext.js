@@ -12,22 +12,26 @@ export const WeatherProvider = ({ children }) => {
   const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [fetchedByCoordinates, setFetchedByCoordinates] = useState(false);
+  const [isCurrentLocation, setIsCurrentLocation] = useState(false);
   const [tempUnit, setTempUnit] = useState("metric");
 
   const { t } = useTranslation();
   const userLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
 
-  const fetchWeatherData = async (city) => {
+  const fetchWeatherData = async (city, additionalDetails = {}, coordinates = null) => {
     setLoading(true);
     setError(null);
-    setFetchedByCoordinates(false);
+    setIsCurrentLocation(false);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
 
-      setWeatherData(response.data);
+      setWeatherData({
+        ...response.data,
+        additionalDetails,
+        coordinates: coordinates || response.data.coord
+      });
       fetchForecastData(city);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -54,13 +58,12 @@ export const WeatherProvider = ({ children }) => {
   const fetchWeatherByCoordinates = async (latitude, longitude) => {
     setLoading(true);
     setError(null);
-    setFetchedByCoordinates(true);
+    setIsCurrentLocation(true);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}&lang=${userLanguage}`
       );
       setWeatherData(response.data);
-      // const city = `${response.data.name}, ${response.data.sys.country}`;
       fetchForecastByCoordinates(latitude, longitude);
     } catch (error) {
       setError(t('errors.fetchWeatherByCoordinates'));
@@ -140,7 +143,7 @@ export const WeatherProvider = ({ children }) => {
         loading,
         error,
         setError,
-        fetchedByCoordinates,
+        isCurrentLocation,
         fetchWeatherData,
         fetchWeatherByCoordinates,
         tempUnit,
