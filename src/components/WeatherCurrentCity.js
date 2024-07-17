@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useWeather } from "../WeatherContext";
 import styled from "styled-components";
 import { LuMapPin } from "react-icons/lu";
+import { useTranslation } from 'react-i18next';
 
 const CityCard = styled.div`
   flex-basis: 30%;
@@ -43,6 +44,7 @@ const WeatherCurrentCity = () => {
   const { weatherData, error, isCurrentLocation } = useWeather();
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     if (weatherData?.timezone !== undefined) {
@@ -54,13 +56,13 @@ const WeatherCurrentCity = () => {
           const localTime = new Date(utcTime + utcOffsetInMs);
 
           setCurrentTime(
-            localTime.toLocaleTimeString([], {
+            localTime.toLocaleTimeString(i18n.language, {
               hour: "2-digit",
               minute: "2-digit",
             })
           );
           setCurrentDate(
-            localTime.toLocaleDateString(navigator.language, {
+            localTime.toLocaleDateString(i18n.language, {
               weekday: "long",
               day: "numeric",
               month: "long",
@@ -73,7 +75,7 @@ const WeatherCurrentCity = () => {
 
       fetchTimeData();
     }
-  }, [weatherData]);
+  }, [weatherData, i18n.language]);
 
   if (!weatherData) {
     return null;

@@ -40,15 +40,14 @@ const DateValue = styled.div`
 
 const Weather5day = () => {
   const { forecastData, tempUnit } = useWeather();
-
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const processForecastData = (data) => {
     const dailyData = {};
 
     data.forEach((item) => {
       const dateTime = new Date(item.dt_txt);
-      const date = dateTime.toLocaleDateString(navigator.language, { 
+      const date = dateTime.toLocaleDateString(i18n.language, { 
         weekday: 'short', 
         day: 'numeric', 
         month: 'short' 

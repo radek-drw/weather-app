@@ -3,6 +3,7 @@ import { useWeather } from "../WeatherContext";
 import CitySuggestions from "./subcomponent/CitySuggestions";
 import ThemeToggle from "./subcomponent/ThemeToggle";
 import TempUnitToggle from "./subcomponent/TempUnitToggle";
+import LanguageSelector from "./subcomponent/LanguageSelector";
 import { useTranslation } from 'react-i18next';
 import {
   Nav,
@@ -25,13 +26,11 @@ const Navbar = () => {
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
 
-  const { t } = useTranslation();
-
-  const userLanguage = navigator.language || 'en';
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places&language=${userLanguage}`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places&language=${i18n.language}`;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);
@@ -43,8 +42,7 @@ const Navbar = () => {
     return () => {
       document.head.removeChild(script);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [i18n.language]);
 
   const handleFetchWeather = (e) => {
     e.preventDefault();
@@ -73,7 +71,7 @@ const Navbar = () => {
     if (e.target.value.length >= 3) {
       const service = new window.google.maps.places.AutocompleteService();
       service.getPlacePredictions(
-        { input: e.target.value, types: ["(cities)"], language: userLanguage },
+        { input: e.target.value, types: ["(cities)"], language: i18n.language },
         (predictions, status) => {
           if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
             console.error("Error fetching city suggestions:", status);
@@ -152,6 +150,7 @@ const Navbar = () => {
     <Nav>
       <ThemeToggle />
       <TempUnitToggle />
+      <LanguageSelector />
       <SearchContainer onSubmit={handleFetchWeather}>
         <SearchIcon />
         <SearchInput

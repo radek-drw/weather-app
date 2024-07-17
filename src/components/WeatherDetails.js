@@ -56,8 +56,10 @@ const FeelsLikeTemp = styled.div`
 
 const SunTwilight = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
+  padding-left: 20px;
   align-items: center;
+  /* background-color: cadetblue; */
 
   &:first-of-type {
     margin-bottom: -5px;
@@ -119,6 +121,7 @@ const MetricLabel = styled.p`
   align-items: flex-end;
   font-size: 0.9rem;
   flex-grow: 1;
+  word-break: break-all;
 `;
 
 const HumidityIcon = styled(WiHumidity)`
