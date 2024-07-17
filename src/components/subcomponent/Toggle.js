@@ -35,7 +35,7 @@ const ToggleContainer = styled.button`
 const ToggleButton = styled.div`
   position: absolute;
   top: 50%;
-  left: ${({ isToggled }) => (isToggled ? `calc(${TOGGLE_WIDTH} - ${TOGGLE_BUTTON_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
+  left: ${({ $isToggled }) => ($isToggled ? `calc(${TOGGLE_WIDTH} - ${TOGGLE_BUTTON_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
   transform: translateY(-50%);
   width: ${TOGGLE_BUTTON_SIZE};
   height: ${TOGGLE_BUTTON_SIZE};
@@ -44,7 +44,7 @@ const ToggleButton = styled.div`
   transition: all 0.3s ease;
 
   ${media.mobile`
-    left: ${({ isToggled }) => (isToggled ? `calc(4.5rem - ${TOGGLE_BUTTON_MOBILE_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
+    left: ${({ $isToggled }) => ($isToggled ? `calc(4.5rem - ${TOGGLE_BUTTON_MOBILE_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
     height: ${TOGGLE_BUTTON_MOBILE_SIZE};
     width: ${TOGGLE_BUTTON_MOBILE_SIZE};
   `}
@@ -52,7 +52,7 @@ const ToggleButton = styled.div`
 
 const Toggle = ({ isToggled, onClick, Icon1, Icon2, ariaLabel }) => (
   <ToggleContainer onClick={onClick} aria-label={ariaLabel}>
-    <ToggleButton isToggled={isToggled} />
+    <ToggleButton $isToggled={isToggled} />
     <Icon1 color="#eee" />
     <Icon2 color="#eee" />
   </ToggleContainer>
