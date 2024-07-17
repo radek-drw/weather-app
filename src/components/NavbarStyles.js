@@ -63,6 +63,7 @@ export const SearchButton = styled.button`
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   transition: background-color 0.3s;
+  padding: 0 1rem;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.search.btnHover};
