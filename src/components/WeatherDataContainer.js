@@ -44,7 +44,8 @@ const ErrorContainer = styled.div`
   font-size: 1.6rem;
   text-align: center;
   color: orange;
-  height: 60vh;
+  height: 100%;
+  flex-basis: 100%;
   padding: 3rem;
   margin-top: 20px;
   border: 1px solid orange;
@@ -55,31 +56,29 @@ const ErrorContainer = styled.div`
 const ErrorIcon = styled(FaExclamationTriangle)`
   font-size: 2.6rem;
   color: orange;
-  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const WeatherDataContainer = () => {
   const { error, loading } = useWeather();
 
-  if (loading) {
-    return <LoadingOverlay />;
-  }
-
-  if (error) {
-    return (
-      <ErrorContainer>
-        {error}
-        <ErrorIcon/>
-      </ErrorContainer>
-    );
-  }
-
   return (
     <Main>
-      <WeatherCurrentCity />
-      <WeatherDetails />
-      <Weather5day />
-      <WeatherHourly />
+      {loading ? (
+        <LoadingOverlay />
+      ) : error ? (
+        <ErrorContainer>
+          <ErrorIcon />
+          {error}
+        </ErrorContainer>
+      ) : (
+        <>
+          <WeatherCurrentCity />
+          <WeatherDetails />
+          <Weather5day />
+          <WeatherHourly />
+        </>
+      )}
     </Main>
   );
 };
