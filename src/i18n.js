@@ -25,13 +25,9 @@ i18n
     },
     fallbackLng: 'en',
     lng: 'en',
-    debug: true,
+    debug: false,
     interpolation: {
       escapeValue: false,
-    },
-    detection: {
-      order: ['querystring', 'navigator', 'htmlTag'],
-      caches: ['localStorage', 'cookie'],
     },
   });
 
