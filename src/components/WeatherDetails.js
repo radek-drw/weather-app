@@ -56,10 +56,8 @@ const FeelsLikeTemp = styled.div`
 
 const SunTwilight = styled.div`
   display: flex;
-  /* justify-content: center; */
   padding-left: 20px;
   align-items: center;
-  /* background-color: cadetblue; */
 
   &:first-of-type {
     margin-bottom: -5px;
@@ -68,6 +66,10 @@ const SunTwilight = styled.div`
   div {
     text-align: left;
     margin-left: 4px;
+
+    P{
+      word-break: break-all;
+    }
   }
 `;
 
@@ -187,14 +189,14 @@ const WeatherDetails = () => {
             <SunriseIcon />
             <div>
               <p>{t('labels.sunrise')}</p>
-              <div>{sunriseTime}</div>
+              <span>{sunriseTime}</span>
             </div>
           </SunTwilight>
           <SunTwilight>
             <SunsetIcon />
             <div>
               <p>{t('labels.sunset')}</p>
-              <div>{sunsetTime}</div>
+              <span>{sunsetTime}</span>
             </div>
           </SunTwilight>
         </div>
