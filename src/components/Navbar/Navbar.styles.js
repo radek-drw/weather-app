@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import media from "../styles/media";
+import media from "../../styles/media";
 import { LuMapPin } from "react-icons/lu";
 import { CiSearch } from "react-icons/ci";
 

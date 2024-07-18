@@ -1,44 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useWeather } from "../WeatherContext";
-import styled from "styled-components";
-import { LuMapPin } from "react-icons/lu";
+import { useWeather } from "../../WeatherContext";
 import { useTranslation } from 'react-i18next';
-
-const CityCard = styled.div`
-  flex-basis: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CityName = styled.h1`
-  margin-bottom: 0.4rem;
-  font-size: 2rem;
-  color: inherit;
-`;
-
-const CityLocationDetails = styled.div`
-  color: ${({ theme }) => theme.colors.mutedText};
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-`;
-
-const LocationIcon = styled(LuMapPin)`
-  margin-left: 8px;
-  font-size: 1.6rem;
-`;
-
-const CityTime = styled.div`
-  margin-bottom: 0.5rem;
-  font-size: 4rem;
-  color: #00aaff; /* Light blue color for time */
-`;
-
-const CityDate = styled.div`
-  color: ${({ theme }) => theme.colors.mutedText};
-`;
+import {
+  CityCard,
+  CityName,
+  CityLocationDetails,
+  LocationIcon,
+  CityTime,
+  CityDate
+} from './WeatherCurrentCity.styles';
 
 const WeatherCurrentCity = () => {
   const { weatherData, error, isCurrentLocation } = useWeather();

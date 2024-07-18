@@ -1,48 +1,16 @@
 import React from "react";
-import styled from "styled-components";
-import { FaLocationArrow } from "react-icons/fa";
-import { useWeather } from "../WeatherContext";
-import { weatherIcons } from "../utils/weatherIcons";
+import { useWeather } from "../../WeatherContext";
+import { weatherIcons } from "../../assets/weatherIcons";
 import { useTranslation } from 'react-i18next';
 
-const HourlyCard = styled.div`
-  flex-basis: 65%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled.h3`
-  margin-bottom: 15px;
-  text-align: center;
-  font-size: 1.6rem;
-`;
-
-const HourlyContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-`;
-
-const HourlyItem = styled.div`
-  flex-basis: 18%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0.5rem;
-  background-color: ${({ theme }) => theme.colors.hourlyItemBackground};
-  border-radius: 15px;
-`;
-
-const WeatherIcon = styled.img`
-  width: 34px;
-  height: 34px;
-`;
-
-const WindSpeedIndicator = styled(FaLocationArrow)`
-  font-size: 15px;
-  color: #00aaff;
-`;
+import {
+  HourlyCard,
+  Title,
+  HourlyContainer,
+  HourlyItem,
+  WeatherIcon,
+  WindSpeedIndicator
+} from './WeatherHourly.styles';
 
 const WeatherHourly = () => {
   const { weatherData, forecastData, tempUnit } = useWeather();

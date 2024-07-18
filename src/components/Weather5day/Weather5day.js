@@ -1,42 +1,15 @@
 import React from "react";
-import styled from "styled-components";
-import { useWeather } from "../WeatherContext";
-import { weatherIcons } from "../utils/weatherIcons";
+import { useWeather } from "../../WeatherContext";
+import { weatherIcons } from "../../assets/weatherIcons";
 import { useTranslation } from 'react-i18next';
-
-const FiveDaysCard = styled.div`
-  flex-basis: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const Title = styled.h3`
-  margin-bottom: 10px;
-  text-align: center;
-  font-size: 1.6rem;
-`;
-
-const DayContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const WeatherIcon = styled.img`
-  flex-basis: 25%;
-  height: 28px;
-`;
-
-const TemperatureValue = styled.div`
-  flex-basis: 30%;
-  text-align: center;
-  font-size: 1.1rem;
-`;
-
-const DateValue = styled.div`
-  flex-grow: 1;
-  text-align: center;
-`;
+import {
+  FiveDaysCard,
+  Title,
+  DayContainer,
+  WeatherIcon,
+  TemperatureValue,
+  DateValue
+} from './Weather5day.styles';
 
 const Weather5day = () => {
   const { forecastData, tempUnit } = useWeather();

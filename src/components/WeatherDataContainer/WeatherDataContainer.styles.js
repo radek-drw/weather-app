@@ -1,15 +1,8 @@
-import React from "react";
 import styled from "styled-components";
-import media from "../styles/media";
-import { useWeather } from "../WeatherContext";
-import WeatherCurrentCity from "./WeatherCurrentCity";
-import WeatherDetails from "./WeatherDetails";
-import Weather5day from "./Weather5day";
-import WeatherHourly from "./WeatherHourly";
-import LoadingOverlay from "./subcomponent/LoadingOverlay";
+import media from "../../styles/media";
 import { FaExclamationTriangle } from "react-icons/fa";
 
-const Main = styled.main`
+export const Main = styled.main`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -36,7 +29,7 @@ const Main = styled.main`
   }
 `;
 
-const ErrorContainer = styled.div`
+export const ErrorContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,34 +46,8 @@ const ErrorContainer = styled.div`
   background-color: rgba(255, 165, 0, 0.1);
 `;
 
-const ErrorIcon = styled(FaExclamationTriangle)`
+export const ErrorIcon = styled(FaExclamationTriangle)`
   font-size: 2.6rem;
   color: orange;
   margin-bottom: 10px;
 `;
-
-const WeatherDataContainer = () => {
-  const { error, loading } = useWeather();
-
-  return (
-    <Main>
-      {loading ? (
-        <LoadingOverlay />
-      ) : error ? (
-        <ErrorContainer>
-          <ErrorIcon />
-          {error}
-        </ErrorContainer>
-      ) : (
-        <>
-          <WeatherCurrentCity />
-          <WeatherDetails />
-          <Weather5day />
-          <WeatherHourly />
-        </>
-      )}
-    </Main>
-  );
-};
-
-export default WeatherDataContainer;

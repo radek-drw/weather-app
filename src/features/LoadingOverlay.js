@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useWeather } from "../../WeatherContext";
+import { useWeather } from "../WeatherContext";
 import { BeatLoader } from "react-spinners";
 
 const Overlay = styled.div`

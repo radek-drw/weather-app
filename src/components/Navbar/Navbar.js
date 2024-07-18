@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useWeather } from "../WeatherContext";
-import CitySuggestions from "./subcomponent/CitySuggestions";
-import ThemeToggle from "./subcomponent/ThemeToggle";
-import TempUnitToggle from "./subcomponent/TempUnitToggle";
-import LanguageSelector from "./subcomponent/LanguageSelector";
+import { useWeather } from "../../WeatherContext";
+import CitySuggestions from "../../features/CitySuggestions";
+import { TempUnitToggle, ThemeToggle } from '../../features/Toggle';
+import LanguageSelector from "../../features/LanguageSelector";
 import { useTranslation } from 'react-i18next';
 import {
   Nav,
@@ -15,7 +14,7 @@ import {
   LocationIcon,
   LocationLabel,
   ErrorText
-} from "./NavbarStyles";
+} from "./Navbar.styles";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 

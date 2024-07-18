@@ -8,10 +8,10 @@ import {
 import { WeatherProvider } from "./WeatherContext";
 import { lightTheme } from "./styles/themes/lightTheme";
 import { darkTheme } from "./styles/themes/darkTheme";
-import { GlobalStyle } from "./styles/GlobalStyle";
+import { GlobalStyles } from "./styles/GlobalStyles";
 import media from "./styles/media";
-import Navbar from "./components/Navbar";
-import WeatherDataContainer from "./components/WeatherDataContainer";
+import Navbar from "./components/Navbar/Navbar";
+import WeatherDataContainer from "./components/WeatherDataContainer/WeatherDataContainer";
 
 
 const AppContainer = styled.div`
@@ -30,7 +30,7 @@ const ThemedApp = () => {
   return (
     <ThemeProvider theme={currentTheme}>
       <WeatherProvider>
-        <GlobalStyle />
+        <GlobalStyles />
         <AppContent />
       </WeatherProvider>
     </ThemeProvider>
