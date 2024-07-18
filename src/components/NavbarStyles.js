@@ -41,7 +41,7 @@ export const SearchIcon = styled(CiSearch)`
 
 export const SearchInput = styled.input`
   flex-grow: 1;
-  padding-left: 0.5rem;
+  padding: 0 0.5rem;
   border: none;
   font-size: 1.2rem;
   background-color: inherit;
