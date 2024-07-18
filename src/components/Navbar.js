@@ -17,7 +17,7 @@ import {
   ErrorText
 } from "./NavbarStyles";
 
-const GOOGLE_API_KEY = "AIzaSyB7o6Su1TX6hUXN-TrtI-wQ9y3UfE5WKUY";
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 const Navbar = () => {
   const { fetchWeatherData, fetchWeatherByCoordinates, error, setError } = useWeather();
@@ -30,7 +30,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places&language=${i18n.language}`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=${i18n.language}`;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);

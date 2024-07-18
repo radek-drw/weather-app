@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 
-const API_KEY = "0268633fae299db526aed6ff3c00d40d";
+const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 
 const WeatherContext = createContext();
 export const useWeather = () => useContext(WeatherContext);
@@ -23,7 +23,7 @@ export const WeatherProvider = ({ children }) => {
     setIsCurrentLocation(false);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${tempUnit}&lang=${i18n.language}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${tempUnit}&lang=${i18n.language}`
       );
 
       setWeatherData({
@@ -46,7 +46,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchForecastData = async (city) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${tempUnit}&lang=${i18n.language}`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${tempUnit}&lang=${i18n.language}`
       );
       setForecastData(response.data.list);
     } catch (error) {
@@ -60,7 +60,7 @@ export const WeatherProvider = ({ children }) => {
     setIsCurrentLocation(true);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}&lang=${i18n.language}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${tempUnit}&lang=${i18n.language}`
       );
       setWeatherData(response.data);
       fetchForecastByCoordinates(latitude, longitude);
@@ -74,7 +74,7 @@ export const WeatherProvider = ({ children }) => {
   const fetchForecastByCoordinates = async (latitude, longitude) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=${tempUnit}&lang=${i18n.language}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${tempUnit}&lang=${i18n.language}`
       );
       setForecastData(response.data.list);
     } catch (error) {
