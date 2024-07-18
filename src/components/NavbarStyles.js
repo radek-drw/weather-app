@@ -121,4 +121,8 @@ export const ErrorText = styled.p`
   left: 0;
   color: red;
   font-size: 1.05rem;
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid red;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
 `;
