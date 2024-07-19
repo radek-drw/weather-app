@@ -8,7 +8,7 @@ const TOGGLE_BUTTON_SIZE = "1.8rem";
 const TOGGLE_BUTTON_MOBILE_SIZE = "1.8rem";
 const TOGGLE_BUTTON_PADDING = "0.4rem";
 
-const ToggleContainer = styled.button`
+const ToggleContainer = styled.div`
   position: relative;
   width: ${TOGGLE_WIDTH};
   height: ${TOGGLE_HEIGHT};
@@ -32,7 +32,7 @@ const ToggleContainer = styled.button`
   `}
 `;
 
-const ToggleButton = styled.div`
+const ToggleButton = styled.span`
   position: absolute;
   top: 50%;
   left: ${({ $isToggled }) => ($isToggled ? `calc(${TOGGLE_WIDTH} - ${TOGGLE_BUTTON_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
