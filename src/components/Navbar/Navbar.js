@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useWeather } from "../../WeatherContext";
 import CitySuggestions from "../../features/CitySuggestions";
 import { TempUnitToggle, ThemeToggle } from '../../features/Toggle';
@@ -24,6 +24,8 @@ const Navbar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [localError, setLocalError] = useState("");
   const inputRef = useRef(null);
+  const autocompleteService = useRef(null);
+  const placesService = useRef(null);
 
   const { t, i18n } = useTranslation();
 
@@ -36,6 +38,8 @@ const Navbar = () => {
 
     script.onload = () => {
       console.log("Google Maps API loaded");
+      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+      placesService.current = new window.google.maps.places.PlacesService(document.createElement('div'));
     };
 
     return () => {
@@ -43,80 +47,78 @@ const Navbar = () => {
     };
   }, [i18n.language]);
 
-  const handleFetchWeather = (e) => {
+  const handleFetchWeather = useCallback((e) => {
     e.preventDefault();
     const trimmedCity = city.trim();
     const cityRegex = /^[a-zA-Z\s-,]+$/;
 
     if (trimmedCity.length < 2) {
       setLocalError(t('errors.shortCityName'));
-      inputRef.current.focus();
     } else if (trimmedCity.length > 50) {
       setLocalError(t('errors.longCityName'));
-      inputRef.current.focus();
     } else if (!cityRegex.test(trimmedCity)) {
       setLocalError(t('errors.invalidCityName'));
-      inputRef.current.focus();
     } else {
       fetchWeatherData(trimmedCity);
       setCity("");
       setSuggestions([]);
+      return;
     }
-  };
+    inputRef.current.focus();
+  }, [city, fetchWeatherData, t]);
 
-  const handleInputChange = (e) => {
-    setCity(e.target.value);
+  const handleInputChange = useCallback((e) => {
+    const value = e.target.value;
+    setCity(value);
     setLocalError("");
-    if (e.target.value.length >= 3) {
-      const service = new window.google.maps.places.AutocompleteService();
-      service.getPlacePredictions(
-        { input: e.target.value, types: ["(cities)"], language: i18n.language },
+    if (value.length >= 3 && autocompleteService.current) {
+      autocompleteService.current.getPlacePredictions(
+        { input: value, types: ["(cities)"], language: i18n.language },
         (predictions, status) => {
           if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
             console.error("Error fetching city suggestions:", status);
             return;
           }
-
-          const suggestions = predictions.map(prediction => ({
+          setSuggestions(predictions.map(prediction => ({
             description: prediction.description,
             placeId: prediction.place_id
-          }));
-          setSuggestions(suggestions);
+          })));
         }
       );
     } else {
       setSuggestions([]);
     }
-  };
+  }, [i18n.language]);
 
-  const handleSelectCity = async (selectedCity) => {
-    const service = new window.google.maps.places.PlacesService(document.createElement('div'));
-    service.getDetails(
-      { placeId: selectedCity.placeId, fields: ['address_components', 'geometry'] },
-      (place, status) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-          const cityName = place.address_components.find(component => component.types.includes("locality"))?.long_name;
-          const countryName = place.address_components.find(component => component.types.includes("country"))?.short_name;
-          const state = place.address_components.find(component => component.types.includes("administrative_area_level_1"))?.long_name;
-          const county = place.address_components.find(component => component.types.includes("administrative_area_level_2"))?.long_name;
-          const fullCityName = `${cityName}, ${countryName}`;
-          const additionalDetails = { state, county };
-          const coordinates = {
-            lat: place.geometry.location.lat(),
-            lon: place.geometry.location.lng()
-          };
-          fetchWeatherData(fullCityName, additionalDetails, coordinates);
-        } else {
-          console.error("Place details error:", status);
-          setError(t('errors.cityNotFound'));
+  const handleSelectCity = useCallback((selectedCity) => {
+    if (placesService.current) {
+      placesService.current.getDetails(
+        { placeId: selectedCity.placeId, fields: ['address_components', 'geometry'] },
+        (place, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            const cityName = place.address_components.find(component => component.types.includes("locality"))?.long_name;
+            const countryName = place.address_components.find(component => component.types.includes("country"))?.short_name;
+            const state = place.address_components.find(component => component.types.includes("administrative_area_level_1"))?.long_name;
+            const county = place.address_components.find(component => component.types.includes("administrative_area_level_2"))?.long_name;
+            const fullCityName = `${cityName}, ${countryName}`;
+            const additionalDetails = { state, county };
+            const coordinates = {
+              lat: place.geometry.location.lat(),
+              lon: place.geometry.location.lng()
+            };
+            fetchWeatherData(fullCityName, additionalDetails, coordinates);
+          } else {
+            console.error("Place details error:", status);
+            setError(t('errors.cityNotFound'));
+          }
         }
-      }
-    );
+      );
+    }
     setCity("");
     setSuggestions([]);
-  };
+  }, [fetchWeatherData, setError, t]);
 
-  const handleFetchWeatherByLocation = () => {
+  const handleFetchWeatherByLocation = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -137,7 +139,7 @@ const Navbar = () => {
       setError(t('errors.geolocationUnavailable'));
       setLocalError("");
     }
-  };
+  }, [fetchWeatherByCoordinates, setError, t]);
 
   useEffect(() => {
     if (error) {
