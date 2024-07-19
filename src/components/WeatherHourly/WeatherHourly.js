@@ -12,7 +12,6 @@ import {
   WindSpeedIndicator
 } from './WeatherHourly.styles';
 
-// Utility function to convert Unix UTC timestamp to local time
 const toLocalTime = (unixUtcTimestamp, timezoneOffset) => {
   const date = new Date(unixUtcTimestamp * 1000);
   date.setUTCSeconds(date.getUTCSeconds() + timezoneOffset);
@@ -29,7 +28,6 @@ const WeatherHourly = () => {
 
   const { timezone: cityTimezoneOffset } = weatherData;
 
-  // Slice the forecast data and map it to hourly items
   const hourlyForecasts = forecastData.slice(0, 5).map((forecast, index) => {
     const { dt, weather, main, wind } = forecast;
     const time = toLocalTime(dt, cityTimezoneOffset);
