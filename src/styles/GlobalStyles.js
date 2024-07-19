@@ -3,7 +3,7 @@ import media from "./media";
 
 export const GlobalStyles = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 
   *,
   *::before,
@@ -15,9 +15,10 @@ export const GlobalStyles = createGlobalStyle`
 
   html {
     font-size: 10px;
+
     ${media.mobile`
-    font-size: 9px;
-  `}
+      font-size: 9px;
+    `}
   }
 
   body {
@@ -30,25 +31,22 @@ export const GlobalStyles = createGlobalStyle`
     font-family: "Montserrat", sans-serif;
 
     ${media.mobile`
-    display: block;
-  `}
+      display: block;
+    `}
   }
 
-  input {
+  input,
+  button {
     font-family: inherit;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    font-weight: normal;
-  }
-
-  p {
+  h1, h2, h3, h4, h5, h6,
+  p,
+  ul, ol {
     margin: 0;
   }
 
   ul, ol {
-    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -65,7 +63,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   button {
-    font-family: inherit;
     cursor: pointer;
   }
 `;
+
