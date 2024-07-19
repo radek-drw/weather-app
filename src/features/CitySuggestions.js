@@ -44,14 +44,31 @@ const LocationDetails = styled.div`
 `;
 
 const CitySuggestions = ({ suggestions, onSelect }) => {
+
+  const handleSelect = (suggestion) => {
+    onSelect(suggestion);
+  };
+
   return (
-    <SuggestionsList>
-      {suggestions.map((suggestion, index) => (
-        <SuggestionItem key={index} onClick={() => onSelect(suggestion)}>
-          <CityName>{suggestion.description.split(',')[0]}</CityName>
-          <LocationDetails>{suggestion.description.split(',').slice(1).join(',').trim()}</LocationDetails>
-        </SuggestionItem>
-      ))}
+    <SuggestionsList role="listbox">
+      {suggestions.map((suggestion) => {
+        const key = suggestion.id || suggestion.description;
+
+        const [cityName, ...detailsArray] = suggestion.description.split(',');
+        const locationDetails = detailsArray.join(',').trim();
+
+        return (
+          <SuggestionItem
+            key={key}
+            onClick={() => handleSelect(suggestion)}
+            role="option"
+            aria-selected="false"
+          >
+            <CityName>{cityName}</CityName>
+            <LocationDetails>{locationDetails}</LocationDetails>
+          </SuggestionItem>
+        );
+      })}
     </SuggestionsList>
   );
 };
