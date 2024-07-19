@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import {
-  ThemeProvider as ThemeContextProvider,
-  useTheme,
-} from "./ThemeContext";
+import { ThemeProvider as ThemeContextProvider, useTheme } from "./ThemeContext";
 import { WeatherProvider } from "./WeatherContext";
 import { lightTheme } from "./styles/themes/lightTheme";
 import { darkTheme } from "./styles/themes/darkTheme";
@@ -12,7 +9,6 @@ import { GlobalStyles } from "./styles/GlobalStyles";
 import media from "./styles/media";
 import Navbar from "./components/Navbar/Navbar";
 import WeatherDataContainer from "./components/WeatherDataContainer/WeatherDataContainer";
-
 
 const AppContainer = styled.div`
   width: 70vw;
@@ -31,19 +27,12 @@ const ThemedApp = () => {
     <ThemeProvider theme={currentTheme}>
       <WeatherProvider>
         <GlobalStyles />
-        <AppContent />
+        <AppContainer>
+          <Navbar />
+          <WeatherDataContainer />
+        </AppContainer>
       </WeatherProvider>
     </ThemeProvider>
-  );
-};
-
-const AppContent = () => {
-
-  return (
-    <AppContainer>
-      <Navbar />
-      <WeatherDataContainer />
-    </AppContainer>
   );
 };
 
