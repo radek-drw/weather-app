@@ -1,30 +1,29 @@
 {
-    "placeholders": {
-      "input": "Rechercher une ville..."
-    },
-    "labels": {
-      "searchBtn": "Rechercher",
-      "currentLocation": "Localisation actuelle",
-      "feelsLike": "Ressenti",
-      "sunrise": "Levé du soleil",
-      "sunset": "Couché du soleil",
-      "humidity": "Humidité",
-      "windSpeed": "Vitesse du vent",
-      "pressure": "Pression",
-      "visibility": "Visibilité",
-      "title5DaysForecast": "Prévision sur 5 jours",
-      "hourlyForecastTitle": "Prévision horaire"
-    },
-    "errors": {
-      "shortCityName": "Nom de ville trop court. Veuillez entrer un nom de ville valide.",
-      "longCityName": "Nom de ville trop long. Veuillez entrer un nom de ville valide.",
-      "invalidCityName": "Le nom de ville contient des caractères invalides. Veuillez entrer un nom de ville valide.",
-      "geolocationUnavailable": "La géolocalisation n'est pas supportée par ce navigateur.",
-      "geolocationFailure": "Impossible de récupérer votre localisation.",
-      "cityNotFound": "Ville non trouvée. Veuillez vérifier l'orthographe ou essayer une autre ville.",
-      "fetchForecast": "Erreur lors de la récupération des données de prévision.",
-      "fetchWeatherByCoordinates": "Erreur lors de la récupération des données météorologiques par coordonnées.",
-      "fetchForecastByCoordinates": "Erreur lors de la récupération des données de prévision par coordonnées."
-    }
+  "placeholders": {
+    "input": "Buscar ciudad..."
+  },
+  "labels": {
+    "searchBtn": "Buscar",
+    "currentLocation": "Ubicación actual",
+    "feelsLike": "Sensación térmica",
+    "sunrise": "Amanecer",
+    "sunset": "Atardecer",
+    "humidity": "Humedad",
+    "windSpeed": "Velocidad del viento",
+    "pressure": "Presión",
+    "visibility": "Visibilidad",
+    "title5DaysForecast": "Pronóstico de 5 días",
+    "hourlyForecastTitle": "Pronóstico por hora"
+  },
+  "errors": {
+    "shortCityName": "El nombre de la ciudad es demasiado corto. Por favor, ingrese un nombre de ciudad válido.",
+    "longCityName": "El nombre de la ciudad es demasiado largo. Por favor, ingrese un nombre de ciudad válido.",
+    "invalidCityName": "El nombre de la ciudad contiene caracteres no válidos. Por favor, ingrese un nombre de ciudad válido.",
+    "geolocationUnavailable": "La geolocalización no es compatible con este navegador.",
+    "geolocationFailure": "No se puede obtener su ubicación.",
+    "cityNotFound": "Ciudad no encontrada. Por favor, verifique la ortografía o intente con otra ciudad.",
+    "fetchForecast": "Error al obtener los datos del pronóstico.",
+    "fetchWeatherByCoordinates": "Error al obtener los datos del clima por coordenadas.",
+    "fetchForecastByCoordinates": "Error al obtener los datos del pronóstico por coordenadas."
   }
-  
+}
