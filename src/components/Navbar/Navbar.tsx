@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, FormEvent, ChangeEvent } from "react";
 import { useWeather } from "../../WeatherContext";
 import CitySuggestions from "../../features/CitySuggestions";
 import { TempUnitToggle, ThemeToggle } from '../../features/Toggle';
@@ -16,16 +16,31 @@ import {
   ErrorText
 } from "./Navbar.styles";
 
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY as string;
 
-const Navbar = () => {
+interface Suggestion {
+  description: string;
+  placeId: string;
+}
+
+interface Coordinates {
+  lat: number;
+  lon: number;
+}
+
+interface AdditionalDetails {
+  state?: string;
+  county?: string;
+}
+
+const Navbar: React.FC = () => {
   const { fetchWeatherData, fetchWeatherByCoordinates, error, setError } = useWeather();
-  const [city, setCity] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [localError, setLocalError] = useState("");
-  const inputRef = useRef(null);
-  const autocompleteService = useRef(null);
-  const placesService = useRef(null);
+  const [city, setCity] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [localError, setLocalError] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const autocompleteService = useRef<google.maps.places.AutocompleteService | null>(null);
+  const placesService = useRef<google.maps.places.PlacesService | null>(null);
 
   const { t, i18n } = useTranslation();
 
@@ -47,7 +62,7 @@ const Navbar = () => {
     };
   }, [i18n.language]);
 
-  const handleFetchWeather = useCallback((e) => {
+  const handleFetchWeather = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmedCity = city.trim();
     const cityRegex = /^[a-zA-Z\s-,]+$/;
@@ -64,18 +79,18 @@ const Navbar = () => {
       setSuggestions([]);
       return;
     }
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, [city, fetchWeatherData, t]);
 
-  const handleInputChange = useCallback((e) => {
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCity(value);
     setLocalError("");
     if (value.length >= 3 && autocompleteService.current) {
       autocompleteService.current.getPlacePredictions(
         { input: value, types: ["(cities)"], language: i18n.language },
-        (predictions, status) => {
-          if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
+        (predictions: google.maps.places.AutocompletePrediction[] | null, status: google.maps.places.PlacesServiceStatus) => {
+          if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions) {
             console.error("Error fetching city suggestions:", status);
             return;
           }
@@ -90,21 +105,21 @@ const Navbar = () => {
     }
   }, [i18n.language]);
 
-  const handleSelectCity = useCallback((selectedCity) => {
+  const handleSelectCity = useCallback((selectedCity: Suggestion) => {
     if (placesService.current) {
       placesService.current.getDetails(
         { placeId: selectedCity.placeId, fields: ['address_components', 'geometry'] },
-        (place, status) => {
-          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            const cityName = place.address_components.find(component => component.types.includes("locality"))?.long_name;
-            const countryName = place.address_components.find(component => component.types.includes("country"))?.short_name;
-            const state = place.address_components.find(component => component.types.includes("administrative_area_level_1"))?.long_name;
-            const county = place.address_components.find(component => component.types.includes("administrative_area_level_2"))?.long_name;
+        (place: google.maps.places.PlaceResult | null, status: google.maps.places.PlacesServiceStatus) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+            const cityName = place.address_components?.find(component => component.types.includes("locality"))?.long_name;
+            const countryName = place.address_components?.find(component => component.types.includes("country"))?.short_name;
+            const state = place.address_components?.find(component => component.types.includes("administrative_area_level_1"))?.long_name;
+            const county = place.address_components?.find(component => component.types.includes("administrative_area_level_2"))?.long_name;
             const fullCityName = `${cityName}, ${countryName}`;
-            const additionalDetails = { state, county };
-            const coordinates = {
-              lat: place.geometry.location.lat(),
-              lon: place.geometry.location.lng()
+            const additionalDetails: AdditionalDetails = { state, county };
+            const coordinates: Coordinates = {
+              lat: place.geometry?.location?.lat() || 0,
+              lon: place.geometry?.location?.lng() || 0
             };
             fetchWeatherData(fullCityName, additionalDetails, coordinates);
           } else {
@@ -121,15 +136,15 @@ const Navbar = () => {
   const handleFetchWeatherByLocation = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        (position: GeolocationPosition) => {
           const { latitude, longitude } = position.coords;
           fetchWeatherByCoordinates(latitude, longitude);
           setError("");
           setLocalError("");
           setCity("");
-          inputRef.current.focus();
+          inputRef.current?.focus();
         },
-        (err) => {
+        (err: GeolocationPositionError) => {
           console.error("Geolocation error:", err);
           setError(t('errors.geolocationFailure'));
           setLocalError("");
@@ -143,7 +158,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (error) {
-      inputRef.current.focus();
+      inputRef.current?.focus();
     }
   }, [error]);
 
