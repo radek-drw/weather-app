@@ -13,6 +13,7 @@ export const CityName = styled.h1`
   margin-bottom: 0.4rem;
   font-size: 2rem;
   color: inherit;
+  text-align: center;
 `;
 
 export const CityLocationDetails = styled.div`
