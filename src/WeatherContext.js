@@ -2,147 +2,153 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 
-const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 
 const WeatherContext = createContext();
-
 export const useWeather = () => useContext(WeatherContext);
 
 export const WeatherProvider = ({ children }) => {
-  const [state, setState] = useState({
-    weatherData: null,
-    forecastData: [],
-    loading: false,
-    error: null,
-    isCurrentLocation: false,
-    tempUnit: "metric"
-  });
+  const [weatherData, setWeatherData] = useState();
+  const [forecastData, setForecastData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isCurrentLocation, setIsCurrentLocation] = useState(false);
+  const [tempUnit, setTempUnit] = useState("metric");
 
   const { t, i18n } = useTranslation();
 
-  const setStateField = (field, value) => {
-    setState(prevState => ({ ...prevState, [field]: value }));
-  };
-
-  const fetchData = async (endpoint, params) => {
-    const url = `${BASE_URL}/${endpoint}`;
-    const response = await axios.get(url, { params: { ...params, appid: API_KEY, units: state.tempUnit, lang: i18n.language } });
-    return response.data;
+  const fetchFromApi = async (endpoint, params) => {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/${endpoint}`,
+        { params: { ...params, appid: apiKey, units: tempUnit, lang: i18n.language } }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        throw new Error(t('errors.cityNotFound'));
+      } else {
+        throw new Error(error.message);
+      }
+    }
   };
 
   const fetchWeatherData = async (city, additionalDetails = {}, coordinates = null) => {
-    setStateField('loading', true);
-    setStateField('error', null);
-    setStateField('isCurrentLocation', false);
-
+    setLoading(true);
+    setError(null);
+    setIsCurrentLocation(false);
     try {
-      const weatherData = await fetchData('weather', { q: city });
-      setStateField('weatherData', {
-        ...weatherData,
+      const data = await fetchFromApi('weather', { q: city });
+      setWeatherData({
+        ...data,
         additionalDetails,
-        coordinates: coordinates || weatherData.coord
+        coordinates: coordinates || data.coord
       });
-      await fetchForecastData(city);
+      fetchForecastData(city);
     } catch (error) {
-      handleError(error, 'cityNotFound');
+      setError(error.message);
     } finally {
-      setStateField('loading', false);
+      setLoading(false);
     }
   };
 
   const fetchForecastData = async (city) => {
     try {
-      const forecastData = await fetchData('forecast', { q: city });
-      setStateField('forecastData', forecastData.list);
+      const data = await fetchFromApi('forecast', { q: city });
+      setForecastData(data.list);
     } catch (error) {
-      handleError(error, 'fetchForecast');
+      setError(t('errors.fetchForecast'));
     }
   };
 
   const fetchWeatherByCoordinates = async (latitude, longitude) => {
-    setStateField('loading', true);
-    setStateField('error', null);
-    setStateField('isCurrentLocation', true);
-
+    setLoading(true);
+    setError(null);
+    setIsCurrentLocation(true);
     try {
-      const weatherData = await fetchData('weather', { lat: latitude, lon: longitude });
-      setStateField('weatherData', weatherData);
-      await fetchForecastByCoordinates(latitude, longitude);
+      const data = await fetchFromApi('weather', { lat: latitude, lon: longitude });
+      setWeatherData(data);
+      fetchForecastByCoordinates(latitude, longitude);
     } catch (error) {
-      handleError(error, 'fetchWeatherByCoordinates');
+      setError(t('errors.fetchWeatherByCoordinates'));
     } finally {
-      setStateField('loading', false);
+      setLoading(false);
     }
   };
 
   const fetchForecastByCoordinates = async (latitude, longitude) => {
     try {
-      const forecastData = await fetchData('forecast', { lat: latitude, lon: longitude });
-      setStateField('forecastData', forecastData.list);
+      const data = await fetchFromApi('forecast', { lat: latitude, lon: longitude });
+      setForecastData(data.list);
     } catch (error) {
-      handleError(error, 'fetchForecastByCoordinates');
+      setError(t('errors.fetchForecastByCoordinates'));
     }
-  };
-
-  const handleError = (error, errorKey) => {
-    const errorMessage = error.response?.status === 404 ? t(`errors.${errorKey}`) : error.message;
-    setStateField('error', errorMessage);
   };
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
+        (position) => {
+          const { latitude, longitude } = position.coords;
           fetchWeatherByCoordinates(latitude, longitude);
-          setStateField('error', '');
+          setError("");
         },
         (err) => {
           console.error("Geolocation error:", err);
-          setStateField('error', t('errors.geolocationFailure'));
+          setError(t('errors.geolocationFailure'));
         }
       );
     } else {
-      setStateField('error', t('errors.geolocationUnavailable'));
+      setError(t('errors.geolocationUnavailable'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleTempUnit = () => {
-    const newTempUnit = state.tempUnit === 'metric' ? 'imperial' : 'metric';
-    const convertTemp = (temp) => newTempUnit === 'metric' ? (temp - 32) * 5 / 9 : temp * 9 / 5 + 32;
+    const newTempUnit = tempUnit === 'metric' ? 'imperial' : 'metric';
 
-    setStateField('tempUnit', newTempUnit);
-    
-    if (state.weatherData) {
-      setStateField('weatherData', {
-        ...state.weatherData,
-        main: {
-          ...state.weatherData.main,
-          temp: convertTemp(state.weatherData.main.temp),
-          feels_like: convertTemp(state.weatherData.main.feels_like),
-        },
-      });
-    }
+    const convertTemperature = (temp) => {
+      return newTempUnit === 'metric'
+        ? ((temp - 32) * 5) / 9 // Fahrenheit to Celsius
+        : (temp * 9) / 5 + 32; // Celsius to Fahrenheit
+    };
 
-    setStateField('forecastData', state.forecastData.map(item => ({
-      ...item,
+    setWeatherData((prevState) => ({
+      ...prevState,
       main: {
-        ...item.main,
-        temp_min: convertTemp(item.main.temp_min),
-        temp_max: convertTemp(item.main.temp_max),
-        temp: convertTemp(item.main.temp),
+        ...prevState.main,
+        temp: convertTemperature(prevState.main.temp),
+        feels_like: convertTemperature(prevState.main.feels_like),
       },
-    })));
+    }));
+
+    setForecastData((prevState) =>
+      prevState.map((item) => ({
+        ...item,
+        main: {
+          ...item.main,
+          temp_min: convertTemperature(item.main.temp_min),
+          temp_max: convertTemperature(item.main.temp_max),
+          temp: convertTemperature(item.main.temp),
+        },
+      }))
+    );
+
+    setTempUnit(newTempUnit);
   };
 
   return (
     <WeatherContext.Provider
       value={{
-        ...state,
-        setError: (error) => setStateField('error', error),
+        weatherData,
+        forecastData,
+        loading,
+        error,
+        setError,
+        isCurrentLocation,
         fetchWeatherData,
         fetchWeatherByCoordinates,
+        tempUnit,
         toggleTempUnit,
       }}
     >
