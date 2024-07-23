@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { ThemeProvider as ThemeContextProvider, useTheme } from "./ThemeContext";
 import { WeatherProvider } from "./WeatherContext";
 import { lightTheme } from "./styles/themes/lightTheme";
@@ -19,12 +18,12 @@ const AppContainer = styled.div`
   `}
 `;
 
-const ThemedApp = () => {
+const ThemedApp: React.FC = () => {
   const { theme } = useTheme();
   const currentTheme = theme === "dark" ? darkTheme : lightTheme;
 
   return (
-    <ThemeProvider theme={currentTheme}>
+    <StyledThemeProvider theme={currentTheme}>
       <WeatherProvider>
         <GlobalStyles />
         <AppContainer>
@@ -32,11 +31,11 @@ const ThemedApp = () => {
           <WeatherDataContainer />
         </AppContainer>
       </WeatherProvider>
-    </ThemeProvider>
+    </StyledThemeProvider>
   );
 };
 
-const App = () => (
+const App: React.FC = () => (
   <ThemeContextProvider>
     <ThemedApp />
   </ThemeContextProvider>
