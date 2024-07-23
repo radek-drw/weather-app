@@ -1,4 +1,6 @@
-export const lightTheme = {
+import { Theme } from './types';
+
+export const lightTheme: Theme = {
   colors: {
     background: "#f0f0f0",
     text: "#333",
@@ -17,8 +19,7 @@ export const lightTheme = {
       background: "#e0e0e0",
       itemHover: "#ccc",
       border: "#666",
-      ItemBorderBottom: "#aaa"
+      itemBorderBottom: "#aaa"
     },
   },
 };
-

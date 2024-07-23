@@ -1,4 +1,6 @@
-export const darkTheme = {
+import { Theme } from './types';
+
+export const darkTheme: Theme = {
   colors: {
     background: "#282c34",
     text: "#fff",
@@ -17,7 +19,7 @@ export const darkTheme = {
       background: "#20242b",
       itemHover: "#282c34",
       border: "#666",
-      ItemBorderBottom: "#444"
+      itemBorderBottom: "#444"
     },
   },
 };
