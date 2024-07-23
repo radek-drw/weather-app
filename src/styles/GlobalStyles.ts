@@ -1,8 +1,14 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, DefaultTheme } from "styled-components";
 import media from "./media";
 
-export const GlobalStyles = createGlobalStyle`
+interface ThemeInterface extends DefaultTheme {
+  colors: {
+    background: string;
+    text: string;
+  };
+}
 
+export const GlobalStyles = createGlobalStyle<{ theme: ThemeInterface }>`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 
   *,
@@ -66,4 +72,3 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 `;
-
