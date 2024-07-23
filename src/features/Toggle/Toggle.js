@@ -4,9 +4,13 @@ import media from "../../styles/media";
 
 const TOGGLE_WIDTH = "6rem";
 const TOGGLE_HEIGHT = "2.5rem";
+const TOGGLE_WIDTH_MOBILE = "3.6rem";
+const TOGGLE_HEIGHT_MOBILE = "2rem";
 const TOGGLE_BUTTON_SIZE = "1.8rem";
-const TOGGLE_BUTTON_MOBILE_SIZE = "1.8rem";
+const TOGGLE_BUTTON_MOBILE_SIZE = "1.4rem";
 const TOGGLE_BUTTON_PADDING = "0.4rem";
+const ICON_SIZE = "1.5rem";
+const ICON_SIZE_MOBILE = "1.1rem";
 
 const ToggleContainer = styled.div`
   position: relative;
@@ -26,8 +30,8 @@ const ToggleContainer = styled.div`
   transition: background-color 0.3s ease;
 
   ${media.mobile`
-    width: 4.5rem;
-    height: 2.4rem;
+    width: ${TOGGLE_WIDTH_MOBILE};
+    height: ${TOGGLE_HEIGHT_MOBILE};
     font-size: 1.5rem;
   `}
 `;
@@ -44,17 +48,32 @@ const ToggleButton = styled.span`
   transition: all 0.3s ease;
 
   ${media.mobile`
-    left: ${({ $isToggled }) => ($isToggled ? `calc(4.5rem - ${TOGGLE_BUTTON_MOBILE_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
+    left: ${({ $isToggled }) => ($isToggled ? `calc(${TOGGLE_WIDTH_MOBILE} - ${TOGGLE_BUTTON_MOBILE_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
     height: ${TOGGLE_BUTTON_MOBILE_SIZE};
     width: ${TOGGLE_BUTTON_MOBILE_SIZE};
+  `}
+`;
+
+const IconWrapper = styled.div`
+  font-size: ${ICON_SIZE};
+  color: #eee;
+  display: flex;
+  align-items: center;
+
+  ${media.mobile`
+    font-size: ${ICON_SIZE_MOBILE};
   `}
 `;
 
 const Toggle = ({ isToggled, onClick, Icon1, Icon2, ariaLabel }) => (
   <ToggleContainer onClick={onClick} aria-label={ariaLabel}>
     <ToggleButton $isToggled={isToggled} />
-    <Icon1 color="#eee" />
-    <Icon2 color="#eee" />
+    <IconWrapper>
+      <Icon1 />
+    </IconWrapper>
+    <IconWrapper>
+      <Icon2 />
+    </IconWrapper>
   </ToggleContainer>
 );
 

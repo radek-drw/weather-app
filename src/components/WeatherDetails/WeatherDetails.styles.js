@@ -51,7 +51,6 @@ export const FeelsLikeTemp = styled.div`
 
 export const SunTwilight = styled.div`
   display: flex;
-  padding-left: 20px;
   align-items: center;
 
   &:first-of-type {
@@ -59,11 +58,11 @@ export const SunTwilight = styled.div`
   }
 
   div {
-    text-align: left;
+    text-align: center;
     margin-left: 4px;
 
     p {
-      word-break: break-all;
+      word-wrap: break-word
     }
   }
 `;
