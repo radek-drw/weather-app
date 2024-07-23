@@ -8,7 +8,7 @@ interface ThemeInterface extends DefaultTheme {
   };
 }
 
-export const GlobalStyles = createGlobalStyle<{ theme: ThemeInterface }>`
+export const GlobalStyles = createGlobalStyle<{ theme?: ThemeInterface }>`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 
   *,
