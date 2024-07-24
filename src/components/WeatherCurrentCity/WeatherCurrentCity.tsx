@@ -10,11 +10,32 @@ import {
   CityDate
 } from './WeatherCurrentCity.styles';
 
-const WeatherCurrentCity = () => {
-  const { weatherData, error, isCurrentLocation } = useWeather();
+// Define types for weather data and additional details
+interface AdditionalDetails {
+  county?: string;
+  state?: string;
+}
+
+interface WeatherData {
+  name: string;
+  sys: {
+    country: string;
+  };
+  timezone?: number;
+  additionalDetails?: AdditionalDetails;
+}
+
+interface WeatherContextValue {
+  weatherData?: WeatherData;
+  error?: string | null;
+  isCurrentLocation: boolean;
+}
+
+const WeatherCurrentCity: React.FC = () => {
+  const { weatherData, error, isCurrentLocation } = useWeather() as WeatherContextValue;
   const { i18n } = useTranslation();
-  const [currentTime, setCurrentTime] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [currentDate, setCurrentDate] = useState<string>("");
 
   useEffect(() => {
     if (weatherData?.timezone !== undefined) {
