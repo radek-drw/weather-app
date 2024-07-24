@@ -4,7 +4,12 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Flag from 'react-world-flags';
 
-const languages = [
+interface Language {
+  code: string;
+  country: string;
+}
+
+const languages: Language[] = [
   { code: 'EN', country: 'GB' },
   { code: 'DE', country: 'DE' },
   { code: 'ES', country: 'ES' },
@@ -90,18 +95,23 @@ const StyledFlag = styled(Flag)`
   margin-right: 10px;
 `;
 
-const LanguageItemComponent = React.memo(({ lang, onClick }) => (
+interface LanguageItemComponentProps {
+  lang: Language;
+  onClick: (code: string) => void;
+}
+
+const LanguageItemComponent: React.FC<LanguageItemComponentProps> = React.memo(({ lang, onClick }) => (
   <LanguageItem key={lang.code} onClick={() => onClick(lang.code)}>
     <StyledFlag code={lang.country} />
     {lang.code}
   </LanguageItem>
 ));
 
-const LanguageSelector = () => {
+const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const changeLanguage = useCallback((langCode) => {
+  const changeLanguage = useCallback((langCode: string) => {
     i18n.changeLanguage(langCode.toLowerCase());
     setIsOpen(false);
   }, [i18n]);
