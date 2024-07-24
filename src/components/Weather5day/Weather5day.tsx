@@ -1,6 +1,6 @@
 import React from "react";
 import { useWeather } from "../../WeatherContext";
-import { weatherIcons } from "../../assets/weatherIcons";
+import { weatherIcons, WeatherIconKey } from "../../assets/weatherIcons";
 import { useTranslation } from 'react-i18next';
 import {
   FiveDaysCard,
@@ -11,7 +11,30 @@ import {
   DateValue
 } from './Weather5day.styles';
 
-const formatDate = (dateString, locale) => {
+type ForecastItem = {
+  dt_txt: string;
+  main: {
+    temp_min: number;
+    temp_max: number;
+  };
+  weather: {
+    icon: string;
+  }[];
+};
+
+type ProcessedForecast = {
+  date: string;
+  minTemp: number;
+  maxTemp: number;
+  weatherCode: string;
+};
+
+type WeatherContextType = {
+  forecastData: ForecastItem[];
+  tempUnit: 'metric' | 'imperial';
+};
+
+const formatDate = (dateString: string, locale: string): string => {
   const dateTime = new Date(dateString);
   return dateTime.toLocaleDateString(locale, { 
     weekday: 'short', 
@@ -20,8 +43,8 @@ const formatDate = (dateString, locale) => {
   });
 };
 
-const processForecastData = (data, locale) => {
-  const dailyData = {};
+const processForecastData = (data: ForecastItem[], locale: string): ProcessedForecast[] => {
+  const dailyData: Record<string, { minTemp: number; maxTemp: number; weatherCode: string }> = {};
 
   data.forEach((item) => {
     const date = formatDate(item.dt_txt, locale);
@@ -45,8 +68,8 @@ const processForecastData = (data, locale) => {
   }));
 };
 
-const Weather5day = () => {
-  const { forecastData, tempUnit } = useWeather();
+const Weather5day: React.FC = () => {
+  const { forecastData, tempUnit } = useWeather() as WeatherContextType;
   const { t, i18n } = useTranslation();
 
   const daysForecast = processForecastData(forecastData, i18n.language).slice(0, 5);
@@ -58,7 +81,7 @@ const Weather5day = () => {
       <Title>{t('labels.title5DaysForecast')}</Title>
       {daysForecast.map((forecast, index) => (
         <DayContainer key={index}>
-          <WeatherIcon src={weatherIcons[forecast.weatherCode]} alt="Weather Icon" />
+          <WeatherIcon src={weatherIcons[forecast.weatherCode as WeatherIconKey]} alt="Weather Icon" />
           <TemperatureValue>
             {Math.round(forecast.maxTemp)}&deg;{tempSuffix} / {Math.round(forecast.minTemp)}&deg;{tempSuffix}
           </TemperatureValue>
