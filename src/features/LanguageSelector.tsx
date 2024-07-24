@@ -74,7 +74,7 @@ const LanguageItem = styled.li`
   padding: 8px 12px;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.text};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.suggestionList.ItemBorderBottom};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.suggestionList.itemBorderBottom};
   list-style-type: none;
   text-align: left;
   display: flex;
