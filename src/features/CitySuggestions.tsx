@@ -43,17 +43,25 @@ const LocationDetails = styled.div`
   color: ${({ theme }) => theme.colors.mutedText};
 `;
 
-const CitySuggestions = ({ suggestions, onSelect }) => {
+interface Suggestion {
+  description: string;
+  placeId: string;
+}
 
-  const handleSelect = (suggestion) => {
+interface CitySuggestionsProps {
+  suggestions: Suggestion[];
+  onSelect: (suggestion: Suggestion) => void;
+}
+
+const CitySuggestions: React.FC<CitySuggestionsProps> = ({ suggestions, onSelect }) => {
+  const handleSelect = (suggestion: Suggestion) => {
     onSelect(suggestion);
   };
 
   return (
     <SuggestionsList role="listbox">
       {suggestions.map((suggestion) => {
-        const key = suggestion.id || suggestion.description;
-
+        const key = suggestion.placeId;
         const [cityName, ...detailsArray] = suggestion.description.split(',');
         const locationDetails = detailsArray.join(',').trim();
 
