@@ -7,8 +7,13 @@ import WeatherHourly from "../WeatherHourly/WeatherHourly";
 import LoadingOverlay from "../../features/LoadingOverlay";
 import { Main, ErrorContainer, ErrorIcon } from "./WeatherDataContainer.styles";
 
-const WeatherDataContainer = () => {
-  const { error, loading } = useWeather();
+interface WeatherContextType {
+  error: string | null;
+  loading: boolean;
+}
+
+const WeatherDataContainer: React.FC = () => {
+  const { error, loading } = useWeather() as WeatherContextType;
 
   return (
     <Main>
