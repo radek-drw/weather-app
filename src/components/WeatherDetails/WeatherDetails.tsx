@@ -22,9 +22,37 @@ import {
   VisibilityIcon
 } from './WeatherDetails.styles';
 
-const WeatherDetails = () => {
+interface WeatherData {
+  main: {
+    temp: number;
+    feels_like: number;
+    humidity: number;
+    pressure: number;
+  };
+  weather: Array<{
+    main: string;
+    description: string;
+    icon: string;
+  }>;
+  wind: {
+    speed: number;
+  };
+  sys: {
+    sunrise: number;
+    sunset: number;
+  };
+  visibility: number;
+  timezone: number;
+}
+
+interface WeatherContextProps {
+  weatherData: WeatherData | undefined;
+  tempUnit: 'metric' | 'imperial';
+}
+
+const WeatherDetails: React.FC = () => {
   const { t } = useTranslation();
-  const { weatherData, tempUnit } = useWeather();
+  const { weatherData, tempUnit } = useWeather() as WeatherContextProps;
 
   if (!weatherData) {
     return null;
@@ -40,12 +68,12 @@ const WeatherDetails = () => {
   } = weatherData;
 
   const weatherIconCode = weather[0].icon;
-  const WeatherIconUrl = weatherIcons[weatherIconCode];
+  const WeatherIconUrl = weatherIcons[weatherIconCode as keyof typeof weatherIcons];
 
   const roundedTemp = Math.round(temp);
   const roundedFeelsLike = Math.round(feels_like);
 
-  const options = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' };
+  const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' };
 
   const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString('en-GB', options);
   const sunsetTime = new Date((sunset + timezone) * 1000).toLocaleTimeString('en-GB', options);
