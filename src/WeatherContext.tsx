@@ -16,6 +16,7 @@ interface WeatherData {
 }
 
 interface ForecastData {
+  dt_txt: string; 
   main: { temp: number; feels_like: number; temp_min: number; temp_max: number };
   weather: { description: string; icon: string }[];
 }
