@@ -2,10 +2,8 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 
-// Define the type for environment variable
 const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY as string;
 
-// Define the shape of the weather data and forecast data
 interface WeatherData {
   coord: { lon: number; lat: number };
   weather: { description: string; icon: string }[];
@@ -34,10 +32,8 @@ interface WeatherContextProps {
   toggleTempUnit: () => void;
 }
 
-// Create the context with a default value of undefined
 const WeatherContext = createContext<WeatherContextProps | undefined>(undefined);
 
-// Custom hook to use the WeatherContext
 export const useWeather = (): WeatherContextProps => {
   const context = useContext(WeatherContext);
   if (!context) {
@@ -46,7 +42,6 @@ export const useWeather = (): WeatherContextProps => {
   return context;
 };
 
-// WeatherProvider component
 interface WeatherProviderProps {
   children: ReactNode;
 }
