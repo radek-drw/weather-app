@@ -18,15 +18,15 @@ const Overlay = styled.div`
   backdrop-filter: blur(3px);
 `;
 
-const LoadingOverlay = () => {
-    const {loading} = useWeather();
+const LoadingOverlay: React.FC = () => {
+    const { loading } = useWeather();
     
     return (
-        loading && (
-        <Overlay>
-            <BeatLoader color="#00aaff" size={20} />
-        </Overlay>
-        )
+        loading ? (
+            <Overlay>
+                <BeatLoader color="#00aaff" size={20} />
+            </Overlay>
+        ) : null
     );
 };
 
