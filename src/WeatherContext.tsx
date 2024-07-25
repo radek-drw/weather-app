@@ -9,14 +9,17 @@ interface WeatherData {
   weather: { description: string; icon: string }[];
   main: { temp: number; feels_like: number; humidity: number };
   wind: { speed: number };
+  timezone: number;
   additionalDetails?: object;
   coordinates?: { lon: number; lat: number };
 }
 
 interface ForecastData {
-  dt_txt: string; 
+  dt: number;
+  dt_txt: string;
   main: { temp: number; feels_like: number; temp_min: number; temp_max: number };
   weather: { description: string; icon: string }[];
+  wind: { speed: number; deg: number };
 }
 
 interface WeatherContextProps {
