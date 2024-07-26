@@ -95,19 +95,17 @@ describe('Navbar Component', () => {
     renderNavbar();
     const currentLocationButton = screen.getByRole('button', { name: 'Current location' });
 
-    // Mock the geolocation API with variable latitude and longitude
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn().mockImplementationOnce((success) => {
         // Generate random coordinates for testing
-        const latitude = 51.5 + Math.random() * 0.1; // A range around 51.5
-        const longitude = -0.13 + Math.random() * 0.1; // A range around -0.13
+        const latitude = 51.5 + Math.random() * 0.1;
+        const longitude = -0.13 + Math.random() * 0.1;
         success({ coords: { latitude, longitude } });
       }),
     };
 
     fireEvent.click(currentLocationButton);
 
-    // Check if the mocked function was called with numbers
     expect(fetchWeatherByCoordinates).toHaveBeenCalledWith(expect.any(Number), expect.any(Number));
   });
 
@@ -117,7 +115,6 @@ describe('Navbar Component', () => {
     renderNavbar();
     const currentLocationButton = screen.getByRole('button', { name: 'Current location' });
 
-    // Mock the geolocation API
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn().mockImplementationOnce((success) => {
         success({ coords: { latitude: 51.5074, longitude: -0.1278 } });
@@ -126,7 +123,6 @@ describe('Navbar Component', () => {
 
     fireEvent.click(currentLocationButton);
 
-    // Capture the arguments passed to fetchWeatherByCoordinates
     const [latitude, longitude] = fetchWeatherByCoordinates.mock.calls[0];
 
     // Check if latitude and longitude are within a realistic range
