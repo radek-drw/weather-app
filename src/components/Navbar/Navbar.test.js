@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
+import { I18nextProvider } from 'react-i18next';
 import Navbar from './Navbar';
 import { WeatherProvider } from '../../WeatherContext';
+import i18n from '../../i18n';
+import translations from '../../translations/en.json';
 
 // Mock theme
 const mockTheme = {
@@ -19,22 +22,6 @@ const mockTheme = {
     toggleThemeBg: '#f0f0f0',
   },
 };
-
-// Mock translations
-const mockTranslations = {
-  'labels.searchBtn': 'Search',
-  'labels.currentLocation': 'Current location',
-  'placeholders.input': 'Enter a city',
-  'errors.shortCityName': 'City name is too short',
-};
-
-// Mock the i18next library
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key) => mockTranslations[key] || key,
-    i18n: { language: 'en' },
-  }),
-}));
 
 // Mock the WeatherContext
 jest.mock('../../WeatherContext', () => {
@@ -60,32 +47,65 @@ jest.mock('../../ThemeContext', () => ({
 
 const renderNavbar = () => {
   return render(
-    <ThemeProvider theme={mockTheme}>
-      <WeatherProvider>
-        <Navbar />
-      </WeatherProvider>
-    </ThemeProvider>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProvider theme={mockTheme}>
+        <WeatherProvider>
+          <Navbar />
+        </WeatherProvider>
+      </ThemeProvider>
+    </I18nextProvider>
   );
+};
+
+const getText = (key) => {
+  const keys = key.split('.');
+  return keys.reduce((obj, k) => obj[k], translations) || key;
 };
 
 describe('Navbar Component', () => {
   test('handles input change', () => {
     renderNavbar();
-    const input = screen.getByPlaceholderText('Enter a city');
-    fireEvent.change(input, { target: { value: 'London' } });
-    expect(input.value).toBe('London');
+    const input = screen.getByPlaceholderText(getText('placeholders.input'));
+    fireEvent.change(input, { target: { value: 'Dublin' } });
+    expect(input.value).toBe('Dublin');
   });
 
   test('displays error for short city name', async () => {
     renderNavbar();
-    const input = screen.getByPlaceholderText('Enter a city');
-    const searchButton = screen.getByRole('button', { name: 'Search' });
+    const input = screen.getByPlaceholderText(getText('placeholders.input'));
+    const searchButton = screen.getByRole('button', { name: getText('labels.searchBtn') });
 
     fireEvent.change(input, { target: { value: 'A' } });
     fireEvent.click(searchButton);
 
     await waitFor(() => {
-      expect(screen.getByText('City name is too short')).toBeInTheDocument();
+      expect(screen.getByText(getText('errors.shortCityName'))).toBeInTheDocument();
+    });
+  });
+
+  test('displays error when city name is too long', async () => {
+    renderNavbar();
+    const input = screen.getByPlaceholderText(getText('placeholders.input'));
+    const searchButton = screen.getByRole('button', { name: getText('labels.searchBtn') });
+
+    fireEvent.change(input, { target: { value: 'A very long city name that exceeds fifty characters' } });
+    fireEvent.click(searchButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(getText('errors.longCityName'))).toBeInTheDocument();
+    });
+  });
+
+  test('displays error when city name contains invalid characters', async () => {
+    renderNavbar();
+    const input = screen.getByPlaceholderText(getText('placeholders.input'));
+    const searchButton = screen.getByRole('button', { name: getText('labels.searchBtn') });
+
+    fireEvent.change(input, { target: { value: 'Dublin-new123!' } });
+    fireEvent.click(searchButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText(getText('errors.invalidCityName'))).toBeInTheDocument();
     });
   });
 
@@ -93,7 +113,7 @@ describe('Navbar Component', () => {
     const { fetchWeatherByCoordinates } = require('../../WeatherContext').useWeather();
 
     renderNavbar();
-    const currentLocationButton = screen.getByRole('button', { name: 'Current location' });
+    const currentLocationButton = screen.getByRole('button', { name: getText('labels.currentLocation') });
 
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn().mockImplementationOnce((success) => {
@@ -113,7 +133,7 @@ describe('Navbar Component', () => {
     const { fetchWeatherByCoordinates } = require('../../WeatherContext').useWeather();
 
     renderNavbar();
-    const currentLocationButton = screen.getByRole('button', { name: 'Current location' });
+    const currentLocationButton = screen.getByRole('button', { name: getText('labels.currentLocation') });
 
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn().mockImplementationOnce((success) => {
