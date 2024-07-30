@@ -19,7 +19,7 @@ interface Theme {
   };
 }
 
-const ToggleContainer = styled.div<{ theme: Theme }>`
+const ToggleContainer = styled.button<{ theme: Theme }>`
   position: relative;
   width: ${TOGGLE_WIDTH};
   height: ${TOGGLE_HEIGHT};
