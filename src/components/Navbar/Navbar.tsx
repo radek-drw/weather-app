@@ -177,14 +177,18 @@ const Navbar: React.FC = () => {
           onChange={handleInputChange}
           placeholder={t('placeholders.input')}
           ref={inputRef}
+          data-testid="city-search"
         />
-        <SearchButton type="submit">{t('labels.searchBtn')}</SearchButton>
+        <SearchButton type="submit" data-testid="search-button">{t('labels.searchBtn')}</SearchButton>
         {localError && <ErrorText>{localError}</ErrorText>}
         {suggestions.length > 0 && (
           <CitySuggestions suggestions={suggestions} onSelect={handleSelectCity} />
         )}
       </SearchContainer>
-      <CurrentLocationButton onClick={handleFetchWeatherByLocation}>
+      <CurrentLocationButton 
+        onClick={handleFetchWeatherByLocation}
+        data-testid="current-location-button"  
+      >
         <LocationIcon />
         <LocationLabel>{t('labels.currentLocation')}</LocationLabel>
       </CurrentLocationButton>
