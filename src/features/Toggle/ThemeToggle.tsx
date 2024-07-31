@@ -20,6 +20,7 @@ const ThemeToggle: React.FC = () => {
       Icon1={FaSun}
       Icon2={FaMoon}
       ariaLabel="Toggle theme"
+      testId="theme-toggle"
     />
   );
 };
