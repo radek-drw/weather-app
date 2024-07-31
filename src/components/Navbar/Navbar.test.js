@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { I18nextProvider } from 'react-i18next';
@@ -70,7 +69,7 @@ describe('Navbar Component', () => {
   // Test for handling input change
   test('handles input change', () => {
     renderNavbar();
-    const input = screen.getByPlaceholderText(getText('placeholders.input'));
+    const input = screen.getByTestId('city-search');
     fireEvent.change(input, { target: { value: 'Dublin' } });
     expect(input.value).toBe('Dublin');
   });
@@ -79,7 +78,7 @@ describe('Navbar Component', () => {
   test('displays error for short city name', async () => {
     renderNavbar();
     const input = screen.getByPlaceholderText(getText('placeholders.input'));
-    const searchButton = screen.getByRole('button', { name: getText('labels.searchBtn') });
+    const searchButton = screen.getByTestId('search-button');
 
     fireEvent.change(input, { target: { value: 'A' } });
     fireEvent.click(searchButton);
@@ -92,8 +91,8 @@ describe('Navbar Component', () => {
   // Test for long city name error
   test('displays error when city name is too long', async () => {
     renderNavbar();
-    const input = screen.getByPlaceholderText(getText('placeholders.input'));
-    const searchButton = screen.getByRole('button', { name: getText('labels.searchBtn') });
+    const input = screen.getByTestId('city-search');
+    const searchButton = screen.getByTestId('search-button');
 
     fireEvent.change(input, { target: { value: 'A very long city name that exceeds fifty characters' } });
     fireEvent.click(searchButton);
@@ -106,8 +105,8 @@ describe('Navbar Component', () => {
   // Test for invalid characters in city name error
   test('displays error when city name contains invalid characters', async () => {
     renderNavbar();
-    const input = screen.getByPlaceholderText(getText('placeholders.input'));
-    const searchButton = screen.getByRole('button', { name: getText('labels.searchBtn') });
+    const input = screen.getByTestId('city-search');
+    const searchButton = screen.getByTestId('search-button');
 
     fireEvent.change(input, { target: { value: 'Dublin-new123!' } });
     fireEvent.click(searchButton);
@@ -122,7 +121,7 @@ describe('Navbar Component', () => {
     const { fetchWeatherByCoordinates } = require('../../WeatherContext').useWeather();
 
     renderNavbar();
-    const currentLocationButton = screen.getByRole('button', { name: getText('labels.currentLocation') });
+    const currentLocationButton = screen.getByTestId('current-location-button');
 
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn().mockImplementationOnce((success) => {
@@ -143,7 +142,7 @@ describe('Navbar Component', () => {
     const { fetchWeatherByCoordinates } = require('../../WeatherContext').useWeather();
 
     renderNavbar();
-    const currentLocationButton = screen.getByRole('button', { name: getText('labels.currentLocation') });
+    const currentLocationButton = screen.getByTestId('current-location-button');
 
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn().mockImplementationOnce((success) => {
@@ -166,7 +165,7 @@ describe('Navbar Component', () => {
   test('toggles theme from light to dark and vice versa', () => {
     const { toggleTheme } = renderNavbar('light');
   
-    const toggleButton = screen.getByRole('button', { name: /toggle theme/i });
+    const toggleButton = screen.getByTestId('theme-toggle');
   
     fireEvent.click(toggleButton);
   
