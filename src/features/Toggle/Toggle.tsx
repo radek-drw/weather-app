@@ -77,10 +77,15 @@ interface ToggleProps {
   Icon1: React.ComponentType;
   Icon2: React.ComponentType;
   ariaLabel: string;
+  testId: string;
 }
 
-const Toggle: React.FC<ToggleProps> = ({ isToggled, onClick, Icon1, Icon2, ariaLabel }) => (
-  <ToggleContainer onClick={onClick} aria-label={ariaLabel}>
+const Toggle: React.FC<ToggleProps> = ({ isToggled, onClick, Icon1, Icon2, ariaLabel, testId }) => (
+  <ToggleContainer 
+      onClick={onClick} 
+      aria-label={ariaLabel}
+      data-testid={testId}
+      >
     <ToggleButton $isToggled={isToggled} />
     <IconWrapper>
       <Icon1 />
