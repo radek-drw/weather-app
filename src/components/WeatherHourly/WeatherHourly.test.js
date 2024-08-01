@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import WeatherHourly from './WeatherHourly';
-import { darkTheme } from '../../styles/themes/darkTheme'; // Adjust the path as necessary
+import { darkTheme } from '../../styles/themes/darkTheme';
 
 jest.mock('../../WeatherContext', () => ({
   useWeather: () => ({
@@ -41,13 +41,25 @@ const renderWithTheme = (ui, theme = darkTheme) => {
 };
 
 describe('WeatherHourly', () => {
-  it('renders without crashing', () => {
+  test('renders without crashing', () => {
     renderWithTheme(<WeatherHourly />);
     expect(screen.getByText('labels.hourlyForecastTitle')).toBeInTheDocument();
   });
 
-  it('displays temperature in correct unit', () => {
+  test('displays temperature in correct unit', () => {
     renderWithTheme(<WeatherHourly />);
     expect(screen.getByText('25°C')).toBeInTheDocument();
+  });
+
+  test('displays weather icon correctly', () => {
+    renderWithTheme(<WeatherHourly />);
+    const weatherIcon = screen.getByAltText('clear sky');
+    expect(weatherIcon).toBeInTheDocument();
+    expect(weatherIcon).toHaveAttribute('src', 'mocked-icon-url');
+  });
+
+  test('displays wind speed correctly', () => {
+    renderWithTheme(<WeatherHourly />);
+    expect(screen.getByText('5km/h')).toBeInTheDocument();
   });
 });
