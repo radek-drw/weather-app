@@ -20,6 +20,7 @@ const TempUnitToggle: React.FC = () => {
       Icon1={RiFahrenheitFill}
       Icon2={RiCelsiusFill}
       ariaLabel="Toggle temperature unit"
+      testId="toggle-component"
     />
   );
 };
