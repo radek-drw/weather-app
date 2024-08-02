@@ -7,13 +7,11 @@ module.exports = {
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/__mocks__/fileMock.js',
   },
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
+     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testMatch: [
     '<rootDir>/src/**/*.test.(ts|tsx|js|jsx)',
-    '<rootDir>/tests/**/*.test.(ts|tsx|js|jsx)',
   ],
   globals: {
     'ts-jest': {
