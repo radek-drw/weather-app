@@ -3,20 +3,20 @@ Welcome to my Weather App project. This React-based application provides real-ti
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- Features
+- [Features](#features)
   - [Current Weather Information](#current-weather-information)
-  - Forecast
+  - [Forecast](#forecast)
   - [Location Search](#location-search)
   - [Theme and Units](#theme-and-units)
   - [Multi-language Support](#multi-language-support)
   - [Responsive Design](#responsive-design)
 - [Technology Stack](#technology-stack)
-- Installation
-- Usage
+- [Installation](#installation)
+- [Usage](#usage)
 - [Error Handling](#error-handling)
-- Contributing
-- License
-- Contact
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Project Overview
 
@@ -98,7 +98,7 @@ This Weather App is designed to provide users with comprehensive weather informa
 
 3. **Set Up Environment Variables**:
 
-   Create a [`.env`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2FMadziunia%20Radunio%2FDesktop%2Fweather-app%2F.env%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "c:\\Users\Madziunia Radunio\Desktop\weather-app.env") file in the root directory and add your API keys:
+   Create a [`.env`] file in the root directory and add your API keys:
 
    ```env
    REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
@@ -119,7 +119,7 @@ This Weather App is designed to provide users with comprehensive weather informa
    npm run build
    ```
 
-   This will create an optimized production build in the [`build`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2FMadziunia%20Radunio%2FDesktop%2Fweather-app%2Fbuild%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "c:\\Users\Madziunia Radunio\Desktop\weather-app\build") folder.
+   This will create an optimized production build in the [`build`] folder.
 
 ## Error Handling
 
