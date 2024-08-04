@@ -2,8 +2,6 @@
 
 Welcome to my Weather App project. This React-based application provides real-time weather information and forecasts with an intuitive user interface. Below you'll find a detailed description of the app's features and how to set it up on your local machine.
 
-![Weather App Screenshot](page_screenshot.png)
-
 ## Table of Contents
 
 - [Project Overview](#project-overview)
@@ -23,6 +21,8 @@ Welcome to my Weather App project. This React-based application provides real-ti
 - [Contact](#contact)
 
 ## Project Overview
+
+![Weather App Screenshot](page_screenshot.png)
 
 This Weather App is designed to provide users with comprehensive weather information for any location worldwide. It combines data from multiple APIs to offer accurate and detailed weather forecasts.
 
