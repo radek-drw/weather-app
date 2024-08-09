@@ -62,7 +62,7 @@ export const SunTwilight = styled.div`
     margin-left: 4px;
 
     p {
-      word-wrap: break-word
+      word-wrap: break-word;
     }
   }
 `;
