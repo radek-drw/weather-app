@@ -1,7 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+
 import { useWeather } from "../../WeatherContext";
+
 import { weatherIcons, WeatherIconKey } from "../../assets/weatherIcons";
-import { useTranslation } from 'react-i18next';
 
 import {
   HourlyCard,
@@ -9,8 +11,8 @@ import {
   HourlyContainer,
   HourlyItem,
   WeatherIcon,
-  WindSpeedIndicator
-} from './WeatherHourly.styles';
+  WindSpeedIndicator,
+} from "./WeatherHourly.styles";
 
 interface WeatherData {
   timezone: number;
@@ -31,10 +33,13 @@ interface ForecastData {
   };
 }
 
-const toLocalTime = (unixUtcTimestamp: number, timezoneOffset: number): string => {
+const toLocalTime = (
+  unixUtcTimestamp: number,
+  timezoneOffset: number
+): string => {
   const date = new Date(unixUtcTimestamp * 1000);
   date.setUTCSeconds(date.getUTCSeconds() + timezoneOffset);
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 };
 
 const WeatherHourly: React.FC = () => {
@@ -47,34 +52,38 @@ const WeatherHourly: React.FC = () => {
 
   const { timezone: cityTimezoneOffset } = weatherData as WeatherData;
 
-  const hourlyForecasts = (forecastData as ForecastData[]).slice(0, 5).map((forecast, index) => {
-    const { dt, weather, main, wind } = forecast;
-    const time = toLocalTime(dt, cityTimezoneOffset);
-    const temperature = Math.round(main.temp);
-    const windSpeed = Math.round(wind.speed);
-    const windDirection = wind.deg;
-    const iconSrc = weatherIcons[weather[0].icon];
-    const iconAlt = weather[0].description;
-    const temperatureUnit = tempUnit === 'metric' ? 'C' : 'F';
-    const windStyle: React.CSSProperties = { transform: `rotate(${windDirection}deg)` };
+  const hourlyForecasts = (forecastData as ForecastData[])
+    .slice(0, 5)
+    .map((forecast, index) => {
+      const { dt, weather, main, wind } = forecast;
+      const time = toLocalTime(dt, cityTimezoneOffset);
+      const temperature = Math.round(main.temp);
+      const windSpeed = Math.round(wind.speed);
+      const windDirection = wind.deg;
+      const iconSrc = weatherIcons[weather[0].icon];
+      const iconAlt = weather[0].description;
+      const temperatureUnit = tempUnit === "metric" ? "C" : "F";
+      const windStyle: React.CSSProperties = {
+        transform: `rotate(${windDirection}deg)`,
+      };
 
-    return (
-      <HourlyItem key={index}>
-        <span>{time}</span>
-        <WeatherIcon src={iconSrc} alt={iconAlt} />
-        <span>{temperature}&deg;{temperatureUnit}</span>
-        <WindSpeedIndicator style={windStyle} />
-        <span>{windSpeed}km/h</span>
-      </HourlyItem>
-    );
-  });
+      return (
+        <HourlyItem key={index}>
+          <span>{time}</span>
+          <WeatherIcon src={iconSrc} alt={iconAlt} />
+          <span>
+            {temperature}&deg;{temperatureUnit}
+          </span>
+          <WindSpeedIndicator style={windStyle} />
+          <span>{windSpeed}km/h</span>
+        </HourlyItem>
+      );
+    });
 
   return (
     <HourlyCard>
-      <Title>{t('labels.hourlyForecastTitle')}</Title>
-      <HourlyContainer>
-        {hourlyForecasts}
-      </HourlyContainer>
+      <Title>{t("labels.hourlyForecastTitle")}</Title>
+      <HourlyContainer>{hourlyForecasts}</HourlyContainer>
     </HourlyCard>
   );
 };

@@ -1,10 +1,18 @@
 import React from "react";
-import styled, { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { ThemeProvider as ThemeContextProvider, useTheme } from "./ThemeContext";
+import styled, {
+  ThemeProvider as StyledThemeProvider,
+} from "styled-components";
+
+import {
+  ThemeProvider as ThemeContextProvider,
+  useTheme,
+} from "./ThemeContext";
 import { WeatherProvider } from "./WeatherContext";
-import { darkTheme, lightTheme } from './styles/themes';
+
+import { darkTheme, lightTheme } from "./styles/themes";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import media from "./styles/media";
+
 import Navbar from "./components/Navbar/Navbar";
 import WeatherDataContainer from "./components/WeatherDataContainer/WeatherDataContainer";
 

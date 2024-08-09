@@ -1,11 +1,15 @@
 import React from "react";
+
 import { useWeather } from "../../WeatherContext";
+
+import Weather5day from "../Weather5day/Weather5day";
 import WeatherCurrentCity from "../WeatherCurrentCity/WeatherCurrentCity";
 import WeatherDetails from "../WeatherDetails/WeatherDetails";
-import Weather5day from "../Weather5day/Weather5day";
 import WeatherHourly from "../WeatherHourly/WeatherHourly";
+
 import LoadingOverlay from "../../features/LoadingOverlay";
-import { Main, ErrorContainer, ErrorIcon } from "./WeatherDataContainer.styles";
+
+import { ErrorContainer, ErrorIcon, Main } from "./WeatherDataContainer.styles";
 
 interface WeatherContextType {
   error: string | null;

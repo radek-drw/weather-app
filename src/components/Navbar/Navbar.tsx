@@ -1,26 +1,29 @@
 import React, {
-  useState,
+  ChangeEvent,
+  FormEvent,
+  useCallback,
   useEffect,
   useRef,
-  useCallback,
-  FormEvent,
-  ChangeEvent,
+  useState,
 } from "react";
+
+import { useTranslation } from "react-i18next";
+
 import { useWeather } from "../../WeatherContext";
 import CitySuggestions from "../../features/CitySuggestions";
 import { TempUnitToggle, ThemeToggle } from "../../features/Toggle";
 import LanguageSelector from "../../features/LanguageSelector";
-import { useTranslation } from "react-i18next";
+
 import {
+  CurrentLocationButton,
+  ErrorText,
+  LocationIcon,
+  LocationLabel,
   Nav,
+  SearchButton,
   SearchContainer,
   SearchIcon,
   SearchInput,
-  SearchButton,
-  CurrentLocationButton,
-  LocationIcon,
-  LocationLabel,
-  ErrorText,
 } from "./Navbar.styles";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY as string;

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import { useWeather } from "../../WeatherContext";
-import { useTranslation } from 'react-i18next';
+
 import {
   CityCard,
-  CityName,
+  CityDate,
   CityLocationDetails,
-  LocationIcon,
+  CityName,
   CityTime,
-  CityDate
-} from './WeatherCurrentCity.styles';
+  LocationIcon,
+} from "./WeatherCurrentCity.styles";
 
-// Define types for weather data and additional details
 interface AdditionalDetails {
   county?: string;
   state?: string;
@@ -32,7 +33,8 @@ interface WeatherContextValue {
 }
 
 const WeatherCurrentCity: React.FC = () => {
-  const { weatherData, error, isCurrentLocation } = useWeather() as WeatherContextValue;
+  const { weatherData, error, isCurrentLocation } =
+    useWeather() as WeatherContextValue;
   const { i18n } = useTranslation();
   const [currentTime, setCurrentTime] = useState<string>("");
   const [currentDate, setCurrentDate] = useState<string>("");

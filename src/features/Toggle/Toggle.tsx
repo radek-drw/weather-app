@@ -1,4 +1,5 @@
 import React from "react";
+
 import styled, { css } from "styled-components";
 import media from "../../styles/media";
 
@@ -43,7 +44,10 @@ const ToggleContainer = styled.button<{ theme: Theme }>`
 const ToggleButton = styled.span<{ $isToggled: boolean }>`
   position: absolute;
   top: 50%;
-  left: ${({ $isToggled }) => ($isToggled ? `calc(${TOGGLE_WIDTH} - ${TOGGLE_BUTTON_SIZE} - ${TOGGLE_BUTTON_PADDING})` : TOGGLE_BUTTON_PADDING)};
+  left: ${({ $isToggled }) =>
+    $isToggled
+      ? `calc(${TOGGLE_WIDTH} - ${TOGGLE_BUTTON_SIZE} - ${TOGGLE_BUTTON_PADDING})`
+      : TOGGLE_BUTTON_PADDING};
   transform: translateY(-50%);
   width: ${TOGGLE_BUTTON_SIZE};
   height: ${TOGGLE_BUTTON_SIZE};
@@ -53,7 +57,11 @@ const ToggleButton = styled.span<{ $isToggled: boolean }>`
 
   ${({ $isToggled }) => css`
     ${media.mobile`
-      left: ${$isToggled ? `calc(100% - ${TOGGLE_BUTTON_SIZE_MOBILE} - ${TOGGLE_BUTTON_PADDING_MOBILE})` : TOGGLE_BUTTON_PADDING_MOBILE};
+      left: ${
+        $isToggled
+          ? `calc(100% - ${TOGGLE_BUTTON_SIZE_MOBILE} - ${TOGGLE_BUTTON_PADDING_MOBILE})`
+          : TOGGLE_BUTTON_PADDING_MOBILE
+      };
       height: ${TOGGLE_BUTTON_SIZE_MOBILE};
       width: ${TOGGLE_BUTTON_SIZE_MOBILE};
     `}
@@ -80,12 +88,19 @@ interface ToggleProps {
   testId: string;
 }
 
-const Toggle: React.FC<ToggleProps> = ({ isToggled, onClick, Icon1, Icon2, ariaLabel, testId }) => (
-  <ToggleContainer 
-      onClick={onClick} 
-      aria-label={ariaLabel}
-      data-testid={testId}
-      >
+const Toggle: React.FC<ToggleProps> = ({
+  isToggled,
+  onClick,
+  Icon1,
+  Icon2,
+  ariaLabel,
+  testId,
+}) => (
+  <ToggleContainer
+    onClick={onClick}
+    aria-label={ariaLabel}
+    data-testid={testId}
+  >
     <ToggleButton $isToggled={isToggled} />
     <IconWrapper>
       <Icon1 />

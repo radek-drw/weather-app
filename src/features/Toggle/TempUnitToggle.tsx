@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useWeather } from '../../WeatherContext';
-import { RiFahrenheitFill, RiCelsiusFill } from 'react-icons/ri';
-import Toggle from './Toggle';
+import React, { useState } from "react";
+import { useWeather } from "../../WeatherContext";
+import { RiFahrenheitFill, RiCelsiusFill } from "react-icons/ri";
+import Toggle from "./Toggle";
 
 const TempUnitToggle: React.FC = () => {
   const { toggleTempUnit } = useWeather();

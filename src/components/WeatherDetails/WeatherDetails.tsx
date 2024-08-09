@@ -1,26 +1,28 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useTranslation } from "react-i18next";
+
 import { useWeather } from "../../WeatherContext";
-import { weatherIcons } from '../../assets/weatherIcons';
+
+import { weatherIcons } from "../../assets/weatherIcons";
 
 import {
-  DetailsCard,
-  Panel,
+  BarometerIcon,
   CurrentTemp,
+  DetailsCard,
   FeelsLikeTemp,
+  HumidityIcon,
+  Metric,
+  MetricLabel,
+  MetricValue,
+  Panel,
+  SkyCondIcon,
+  SkyCondition,
   SunTwilight,
   SunriseIcon,
   SunsetIcon,
-  SkyCondIcon,
-  SkyCondition,
-  Metric,
-  MetricValue,
-  MetricLabel,
-  HumidityIcon,
+  VisibilityIcon,
   WindIcon,
-  BarometerIcon,
-  VisibilityIcon
-} from './WeatherDetails.styles';
+} from "./WeatherDetails.styles";
 
 interface WeatherData {
   main: {
@@ -47,7 +49,7 @@ interface WeatherData {
 
 interface WeatherContextProps {
   weatherData: WeatherData | undefined;
-  tempUnit: 'metric' | 'imperial';
+  tempUnit: "metric" | "imperial";
 }
 
 const WeatherDetails: React.FC = () => {
@@ -68,38 +70,55 @@ const WeatherDetails: React.FC = () => {
   } = weatherData;
 
   const weatherIconCode = weather[0].icon;
-  const WeatherIconUrl = weatherIcons[weatherIconCode as keyof typeof weatherIcons];
+  const WeatherIconUrl =
+    weatherIcons[weatherIconCode as keyof typeof weatherIcons];
 
   const roundedTemp = Math.round(temp);
   const roundedFeelsLike = Math.round(feels_like);
 
-  const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' };
+  const options: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "UTC",
+  };
 
-  const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString('en-GB', options);
-  const sunsetTime = new Date((sunset + timezone) * 1000).toLocaleTimeString('en-GB', options);
+  const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString(
+    "en-GB",
+    options
+  );
+  const sunsetTime = new Date((sunset + timezone) * 1000).toLocaleTimeString(
+    "en-GB",
+    options
+  );
 
   return (
     <DetailsCard>
       {/* PANEL LEFT */}
       <Panel>
         <div>
-          <CurrentTemp>{roundedTemp}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</CurrentTemp>
+          <CurrentTemp>
+            {roundedTemp}&deg;{tempUnit === "metric" ? "C" : "F"}
+          </CurrentTemp>
           <FeelsLikeTemp>
-            {t('labels.feelsLike')}: <span>{roundedFeelsLike}&deg;{tempUnit === 'metric' ? 'C' : 'F'}</span>
+            {t("labels.feelsLike")}:{" "}
+            <span>
+              {roundedFeelsLike}&deg;{tempUnit === "metric" ? "C" : "F"}
+            </span>
           </FeelsLikeTemp>
         </div>
         <div>
           <SunTwilight>
             <SunriseIcon />
             <div>
-              <p>{t('labels.sunrise')}</p>
+              <p>{t("labels.sunrise")}</p>
               <span>{sunriseTime}</span>
             </div>
           </SunTwilight>
           <SunTwilight>
             <SunsetIcon />
             <div>
-              <p>{t('labels.sunset')}</p>
+              <p>{t("labels.sunset")}</p>
               <span>{sunsetTime}</span>
             </div>
           </SunTwilight>
@@ -117,22 +136,22 @@ const WeatherDetails: React.FC = () => {
         <Metric>
           <HumidityIcon />
           <MetricValue>{humidity}%</MetricValue>
-          <MetricLabel>{t('labels.humidity')}</MetricLabel>
+          <MetricLabel>{t("labels.humidity")}</MetricLabel>
         </Metric>
         <Metric>
           <WindIcon />
           <MetricValue>{Math.round(speed)} km/h</MetricValue>
-          <MetricLabel>{t('labels.windSpeed')}</MetricLabel>
+          <MetricLabel>{t("labels.windSpeed")}</MetricLabel>
         </Metric>
         <Metric>
           <BarometerIcon />
           <MetricValue>{pressure} hPa</MetricValue>
-          <MetricLabel>{t('labels.pressure')}</MetricLabel>
+          <MetricLabel>{t("labels.pressure")}</MetricLabel>
         </Metric>
         <Metric>
           <VisibilityIcon />
           <MetricValue>{visibility / 1000} km</MetricValue>
-          <MetricLabel>{t('labels.visibility')}</MetricLabel>
+          <MetricLabel>{t("labels.visibility")}</MetricLabel>
         </Metric>
       </Panel>
     </DetailsCard>
