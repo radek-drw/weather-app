@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
-import { WiSunrise, WiSunset, WiHumidity, WiBarometer } from "react-icons/wi";
-import { MdOutlineVisibility } from "react-icons/md";
+
 import { FaWind } from "react-icons/fa";
+import { MdOutlineVisibility } from "react-icons/md";
+import { WiBarometer, WiHumidity, WiSunrise, WiSunset } from "react-icons/wi";
+
 import media from "../../styles/media";
 
 const twilightColors = {
