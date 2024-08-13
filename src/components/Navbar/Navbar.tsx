@@ -50,12 +50,15 @@ const Navbar: React.FC = () => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [localError, setLocalError] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Refs to hold instances of Google Maps AutocompleteService and PlacesService
   const autocompleteService =
     useRef<google.maps.places.AutocompleteService | null>(null);
   const placesService = useRef<google.maps.places.PlacesService | null>(null);
 
   const { t, i18n } = useTranslation();
 
+  // Load Google Maps API script and set up services
   useEffect(() => {
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=${i18n.language}`;
@@ -63,6 +66,7 @@ const Navbar: React.FC = () => {
     script.defer = true;
     document.head.appendChild(script);
 
+    // Initialize Google Maps services once the script is loaded
     script.onload = () => {
       console.log("Google Maps API loaded");
       autocompleteService.current =
@@ -80,9 +84,11 @@ const Navbar: React.FC = () => {
   const handleFetchWeather = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
       const trimmedCity = city.trim();
       const cityRegex = /^[a-zA-Z\s-,]+$/;
 
+      // Validate city input and set appropriate errors
       if (trimmedCity.length < 2) {
         setLocalError(t("errors.shortCityName"));
       } else if (trimmedCity.length > 50) {
@@ -95,7 +101,7 @@ const Navbar: React.FC = () => {
         setSuggestions([]);
         return;
       }
-      inputRef.current?.focus();
+      inputRef.current?.focus(); // Focus the input field if there's an error
     },
     [city, fetchWeatherData, t]
   );
@@ -105,6 +111,7 @@ const Navbar: React.FC = () => {
       const value = e.target.value;
       setCity(value);
       setLocalError("");
+
       if (value.length >= 3 && autocompleteService.current) {
         autocompleteService.current.getPlacePredictions(
           { input: value, types: ["(cities)"], language: i18n.language },
@@ -119,6 +126,7 @@ const Navbar: React.FC = () => {
               console.error("Error fetching city suggestions:", status);
               return;
             }
+            // Update suggestions state with predictions
             setSuggestions(
               predictions.map((prediction) => ({
                 description: prediction.description,
@@ -134,6 +142,7 @@ const Navbar: React.FC = () => {
     [i18n.language]
   );
 
+  // Handle the selection of a city from the suggestions list
   const handleSelectCity = useCallback(
     (selectedCity: Suggestion) => {
       if (placesService.current) {
@@ -147,6 +156,7 @@ const Navbar: React.FC = () => {
             status: google.maps.places.PlacesServiceStatus
           ) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+              // Extract city name, country, state, and county from place details
               const cityName = place.address_components?.find((component) =>
                 component.types.includes("locality")
               )?.long_name;
@@ -159,12 +169,14 @@ const Navbar: React.FC = () => {
               const county = place.address_components?.find((component) =>
                 component.types.includes("administrative_area_level_2")
               )?.long_name;
+
               const fullCityName = `${cityName}, ${countryName}`;
               const additionalDetails: AdditionalDetails = { state, county };
               const coordinates: Coordinates = {
                 lat: place.geometry?.location?.lat() || 0,
                 lon: place.geometry?.location?.lng() || 0,
               };
+
               fetchWeatherData(fullCityName, additionalDetails, coordinates);
             } else {
               console.error("Place details error:", status);
@@ -202,6 +214,7 @@ const Navbar: React.FC = () => {
     }
   }, [fetchWeatherByCoordinates, setError, t]);
 
+  // Focus the search input field if there's an error
   useEffect(() => {
     if (error) {
       inputRef.current?.focus();
