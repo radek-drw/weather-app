@@ -38,6 +38,7 @@ type WeatherContextType = {
 };
 
 const formatDate = (dateString: string, locale: string): string => {
+  // Convert date string to short date format (e.g., "Mon, 7 Aug")
   const dateTime = new Date(dateString);
   return dateTime.toLocaleDateString(locale, {
     weekday: "short",
@@ -50,6 +51,7 @@ const processForecastData = (
   data: ForecastItem[],
   locale: string
 ): ProcessedForecast[] => {
+  // Object to store aggregated daily forecast data
   const dailyData: Record<
     string,
     { minTemp: number; maxTemp: number; weatherCode: string }
@@ -57,7 +59,7 @@ const processForecastData = (
 
   data.forEach((item) => {
     const date = formatDate(item.dt_txt, locale);
-    const weatherCode = item.weather[0].icon.replace("n", "d");
+    const weatherCode = item.weather[0].icon.replace("n", "d"); // Convert nighttime icons to daytime equivalents
 
     if (!dailyData[date]) {
       dailyData[date] = {
@@ -66,6 +68,7 @@ const processForecastData = (
         weatherCode: weatherCode,
       };
     } else {
+      // Update the existing date entry with min/max temperatures
       dailyData[date].minTemp = Math.min(
         dailyData[date].minTemp,
         item.main.temp_min
@@ -87,6 +90,7 @@ const Weather5day: React.FC = () => {
   const { forecastData, tempUnit } = useWeather() as WeatherContextType;
   const { t, i18n } = useTranslation();
 
+  // Process and slice the forecast data to display only the first 5 days
   const daysForecast = processForecastData(forecastData, i18n.language).slice(
     0,
     5

@@ -83,6 +83,7 @@ const WeatherDetails: React.FC = () => {
     timeZone: "UTC",
   };
 
+  // Convert sunrise and sunset times to localized time strings
   const sunriseTime = new Date((sunrise + timezone) * 1000).toLocaleTimeString(
     "en-GB",
     options
@@ -94,7 +95,7 @@ const WeatherDetails: React.FC = () => {
 
   return (
     <DetailsCard>
-      {/* PANEL LEFT */}
+      {/* PANEL LEFT: Displays temperature, feels-like temperature, and sun timings */}
       <Panel>
         <div>
           <CurrentTemp>
@@ -125,13 +126,13 @@ const WeatherDetails: React.FC = () => {
         </div>
       </Panel>
 
-      {/* PANEL MIDDLE */}
+      {/* PANEL MIDDLE: Displays the current weather condition and icon */}
       <Panel>
         <SkyCondIcon src={WeatherIconUrl} alt={weather[0].main} />
         <SkyCondition>{weather[0].description}</SkyCondition>
       </Panel>
 
-      {/* PANEL RIGHT */}
+      {/* PANEL RIGHT: Displays additional weather metrics (humidity, wind speed, pressure, visibility) */}
       <Panel>
         <Metric>
           <HumidityIcon />

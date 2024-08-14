@@ -16,7 +16,6 @@ interface AdditionalDetails {
   county?: string;
   state?: string;
 }
-
 interface WeatherData {
   name: string;
   sys: {
@@ -47,12 +46,14 @@ const WeatherCurrentCity: React.FC = () => {
       const localTime = new Date(utcTime + utcOffsetInMs);
 
       try {
+        // Set the current time in HH:MM format based on user's language preference
         setCurrentTime(
           localTime.toLocaleTimeString(i18n.language, {
             hour: "2-digit",
             minute: "2-digit",
           })
         );
+        // Set the current date in a readable format based on user's language preference
         setCurrentDate(
           localTime.toLocaleDateString(i18n.language, {
             weekday: "long",
@@ -64,7 +65,7 @@ const WeatherCurrentCity: React.FC = () => {
         console.error("Error calculating local time:", error);
       }
     }
-  }, [weatherData, i18n.language]);
+  }, [weatherData, i18n.language]); // Re-run effect when weatherData or language changes
 
   if (!weatherData) {
     return null;
@@ -77,6 +78,7 @@ const WeatherCurrentCity: React.FC = () => {
     <CityCard>
       <CityName>
         {name}
+        {/* Show location icon if it's the current location and there's no error */}
         {isCurrentLocation && !error && <LocationIcon />}
       </CityName>
       <CityLocationDetails>

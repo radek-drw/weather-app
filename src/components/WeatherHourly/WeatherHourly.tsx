@@ -33,6 +33,7 @@ interface ForecastData {
   };
 }
 
+// Converts a Unix UTC timestamp to a localized time string based on the city's timezone offset
 const toLocalTime = (
   unixUtcTimestamp: number,
   timezoneOffset: number
@@ -53,7 +54,7 @@ const WeatherHourly: React.FC = () => {
   const { timezone: cityTimezoneOffset } = weatherData as WeatherData;
 
   const hourlyForecasts = (forecastData as ForecastData[])
-    .slice(0, 5)
+    .slice(0, 5) // Display only the next 5 hourly forecasts
     .map((forecast, index) => {
       const { dt, weather, main, wind } = forecast;
       const time = toLocalTime(dt, cityTimezoneOffset);

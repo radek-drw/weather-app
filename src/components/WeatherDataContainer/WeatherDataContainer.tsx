@@ -21,14 +21,15 @@ const WeatherDataContainer: React.FC = () => {
 
   return (
     <Main>
-      {loading ? (
+      {loading ? ( // If data is loading, display a loading overlay
         <LoadingOverlay />
-      ) : error ? (
+      ) : error ? ( // If there's an error, display an error message with an icon
         <ErrorContainer>
           <ErrorIcon />
           {error}
         </ErrorContainer>
       ) : (
+        // If data is loaded without error, display weather components
         <>
           <WeatherCurrentCity />
           <WeatherDetails />
