@@ -14,7 +14,6 @@ const SuggestionsList = styled.ul`
   z-index: 1000;
   margin: 0;
   padding: 0;
-  list-style: none;
   box-shadow: 0 0 10px ${({ theme }) => theme.colors.cardShadow};
 `;
 
@@ -23,7 +22,8 @@ const SuggestionItem = styled.li`
   cursor: pointer;
   transition: background-color 0.2s;
   color: ${({ theme }) => theme.colors.text};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.suggestionList.ItemBorderBottom};
+  border-bottom: 1px solid
+    ${({ theme }) => theme.colors.suggestionList.ItemBorderBottom};
 
   &:last-child {
     border: none;
@@ -53,7 +53,10 @@ interface CitySuggestionsProps {
   onSelect: (suggestion: Suggestion) => void;
 }
 
-const CitySuggestions: React.FC<CitySuggestionsProps> = ({ suggestions, onSelect }) => {
+const CitySuggestions: React.FC<CitySuggestionsProps> = ({
+  suggestions,
+  onSelect,
+}) => {
   const handleSelect = (suggestion: Suggestion) => {
     onSelect(suggestion);
   };
@@ -62,8 +65,8 @@ const CitySuggestions: React.FC<CitySuggestionsProps> = ({ suggestions, onSelect
     <SuggestionsList role="listbox">
       {suggestions.map((suggestion) => {
         const key = suggestion.placeId;
-        const [cityName, ...detailsArray] = suggestion.description.split(',');
-        const locationDetails = detailsArray.join(',').trim();
+        const [cityName, ...detailsArray] = suggestion.description.split(",");
+        const locationDetails = detailsArray.join(",").trim();
 
         return (
           <SuggestionItem
