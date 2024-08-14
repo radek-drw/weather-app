@@ -15,9 +15,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/components/WeatherDetails/WeatherDetails.test.tsx"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
