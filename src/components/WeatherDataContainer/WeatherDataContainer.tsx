@@ -31,10 +31,10 @@ const WeatherDataContainer: React.FC = () => {
       ) : (
         // If data is loaded without error, display weather components
         <>
-          <WeatherCurrentCity />
-          <WeatherDetails />
-          <Weather5day />
-          <WeatherHourly />
+          <WeatherCurrentCity data-testid="weather-current-city" />
+          <WeatherDetails data-testid="weather-details" />
+          <Weather5day data-testid="weather-5day" />
+          <WeatherHourly data-testid="weather-hourly" />
         </>
       )}
     </Main>
