@@ -13,7 +13,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/components/WeatherDetails/WeatherDetails.test.js"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/components/WeatherDetails/WeatherDetails.test.tsx"
+  ]
 }
