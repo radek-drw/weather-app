@@ -24,6 +24,7 @@ import {
   SearchContainer,
   SearchIcon,
   SearchInput,
+  SettingsPanel,
 } from "./Navbar.styles";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY as string;
@@ -223,9 +224,11 @@ const Navbar: React.FC = () => {
 
   return (
     <Nav>
-      <ThemeToggle />
-      <TempUnitToggle />
-      <LanguageSelector />
+      <SettingsPanel>
+        <ThemeToggle />
+        <TempUnitToggle />
+        <LanguageSelector />
+      </SettingsPanel>
       <SearchContainer onSubmit={handleFetchWeather}>
         <SearchIcon />
         <SearchInput

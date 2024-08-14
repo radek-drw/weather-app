@@ -10,7 +10,26 @@ export const Nav = styled.nav`
 
   ${media.mobile`
     height: 28px;
+    flex-wrap: wrap;
   `}
+`;
+
+export const SettingsPanel = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 24%;
+
+  ${media.mobile`
+    flex-basis: 100%;
+    justify-content: flex-start;
+    margin-bottom: 18px
+  `}
+
+  & > * {
+    ${media.mobile`
+    margin-right: 5%;
+  `}
+  }
 `;
 
 export const SearchContainer = styled.form`
@@ -29,6 +48,7 @@ export const SearchContainer = styled.form`
 
   ${media.mobile`
     padding: 0.5rem;
+    margin: 0 auto;
   `}
 `;
 
@@ -93,7 +113,7 @@ export const CurrentLocationButton = styled.button`
 
   ${media.mobile`
     position: relative;
-    left: -10px;
+    margin-right: auto;
     background-color: transparent;
   `}
 `;

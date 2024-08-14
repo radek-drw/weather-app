@@ -11,7 +11,7 @@ export const Main = styled.main`
   margin-top: 20px;
 
   ${media.mobile`
-    margin-top: 0;
+    margin-top: 50px;
   `}
 
   > * {
