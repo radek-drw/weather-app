@@ -19,15 +19,13 @@ const Overlay = styled.div`
 `;
 
 const LoadingOverlay: React.FC = () => {
-    const { loading } = useWeather();
-    
-    return (
-        loading ? (
-            <Overlay>
-                <BeatLoader color="#00aaff" size={20} />
-            </Overlay>
-        ) : null
-    );
+  const { loading } = useWeather();
+
+  return loading ? (
+    <Overlay data-testid="loading-overlay">
+      <BeatLoader color="#00aaff" size={20} />
+    </Overlay>
+  ) : null;
 };
 
 export default LoadingOverlay;
