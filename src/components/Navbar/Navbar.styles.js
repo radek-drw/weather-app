@@ -9,7 +9,6 @@ export const Nav = styled.nav`
   height: 35px;
 
   ${media.mobile`
-    height: 28px;
     flex-wrap: wrap;
   `}
 `;
@@ -49,6 +48,8 @@ export const SearchContainer = styled.form`
   ${media.mobile`
     padding: 0.5rem;
     margin: 0 auto;
+    flex-basis: 75%;
+    height: 40px;
   `}
 `;
 
@@ -115,6 +116,11 @@ export const CurrentLocationButton = styled.button`
     position: relative;
     margin-right: auto;
     background-color: transparent;
+
+    &:hover, &:active, &:focus {
+      background-color: transparent;
+      box-shadow: none;
+    }
   `}
 `;
 
@@ -124,6 +130,8 @@ export const LocationIcon = styled(LuMapPin)`
 
   ${media.mobile`
     color:  ${({ theme }) => theme.colors.text};
+    width: 18px;
+    height: 18px;
   `}
 `;
 
