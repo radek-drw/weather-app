@@ -33,10 +33,10 @@ export const SettingsPanel = styled.div`
 `;
 
 export const SearchContainer = styled.form`
-  flex-basis: 70%;
-  position: relative;
   display: flex;
   justify-content: space-between;
+  position: relative;
+  flex-basis: 70%;
   max-width: 350px;
   border-radius: 5px;
   box-shadow: 0 0 10px ${({ theme }) => theme.colors.search.shadow};
@@ -53,8 +53,8 @@ export const SearchContainer = styled.form`
 `;
 
 export const SearchIcon = styled(CiSearch)`
-  align-self: center;
   flex-basis: 10%;
+  align-self: center;
   font-size: 2.2rem;
   color: ${({ theme }) => theme.colors.mutedText};
 `;
@@ -62,10 +62,10 @@ export const SearchIcon = styled(CiSearch)`
 export const SearchInput = styled.input`
   flex-grow: 1;
   padding: 0 0.5rem;
-  border: none;
   font-size: 1.2rem;
   background-color: inherit;
   color: ${({ theme }) => theme.colors.text};
+  border: none;
   outline: none;
 
   &::placeholder {
@@ -76,14 +76,14 @@ export const SearchInput = styled.input`
 export const SearchButton = styled.button`
   height: 100%;
   flex-basis: 20%;
+  font-size: 1.3rem;
+  padding: 0 1rem;
   background-color: ${({ theme }) => theme.colors.search.btnBackground};
   color: ${({ theme }) => theme.colors.search.btnText};
-  font-size: 1.3rem;
   border: none;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   transition: background-color 0.3s;
-  padding: 0 1rem;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.search.btnHover};
@@ -100,8 +100,8 @@ export const CurrentLocationButton = styled.button`
   padding: 0.5rem 1rem;
   min-height: 25px;
   align-self: center;
-  background-color: rgb(0, 128, 0);
   font-size: 1.2rem;
+  background-color: rgb(0, 128, 0);
   color: white;
   border: none;
   border-radius: 5px;
@@ -139,10 +139,10 @@ export const ErrorText = styled.p`
   position: absolute;
   top: 103%;
   left: 0;
-  color: red;
-  font-size: 1.05rem;
-  background-color: rgba(255, 0, 0, 0.1);
-  border: 1px solid red;
   padding: 0.4rem 0.8rem;
+  font-size: 1.05rem;
+  border: 1px solid red;
   border-radius: 3px;
+  color: red;
+  background-color: rgba(255, 0, 0, 0.1);
 `;

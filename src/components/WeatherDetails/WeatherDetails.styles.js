@@ -12,17 +12,17 @@ const twilightColors = {
 };
 
 export const DetailsCard = styled.div`
-  flex-basis: 65%;
   display: flex;
   justify-content: space-between;
+  flex-basis: 65%;
 `;
 
 export const Panel = styled.div`
-  flex-basis: 33%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
+  flex-basis: 33%;
 
   &:nth-child(2) {
     justify-content: space-around;
@@ -40,10 +40,10 @@ export const CurrentTemp = styled.div`
 `;
 
 export const FeelsLikeTemp = styled.div`
-  color: ${({ theme }) => theme.colors.mutedText};
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${({ theme }) => theme.colors.mutedText};
 
   span {
     margin: 5px;
@@ -94,11 +94,11 @@ export const SkyCondition = styled.h3`
 `;
 
 export const Metric = styled.div`
-  flex-basis: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  flex-basis: 50%;
 
   &:nth-child(1),
   &:nth-child(2) {
@@ -117,8 +117,8 @@ export const MetricValue = styled.div`
 export const MetricLabel = styled.p`
   display: flex;
   align-items: flex-end;
-  font-size: 0.9rem;
   flex-grow: 1;
+  font-size: 0.9rem;
   word-break: break-all;
 `;
 

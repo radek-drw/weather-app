@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const FiveDaysCard = styled.div`
-  flex-basis: 30%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-basis: 30%;
 `;
 
 export const Title = styled.h3`

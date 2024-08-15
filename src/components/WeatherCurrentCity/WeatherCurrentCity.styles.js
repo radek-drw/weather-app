@@ -2,25 +2,25 @@ import styled from "styled-components";
 import { LuMapPin } from "react-icons/lu";
 
 export const CityCard = styled.div`
-  flex-basis: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-basis: 30%;
 `;
 
 export const CityName = styled.h1`
   margin-bottom: 0.4rem;
+  text-align: center;
   font-size: 2rem;
   color: inherit;
-  text-align: center;
 `;
 
 export const CityLocationDetails = styled.div`
-  color: ${({ theme }) => theme.colors.mutedText};
-  font-size: 1rem;
   margin-bottom: 1rem;
+  font-size: 1rem;
   text-align: center;
+  color: ${({ theme }) => theme.colors.mutedText};
 `;
 
 export const LocationIcon = styled(LuMapPin)`
