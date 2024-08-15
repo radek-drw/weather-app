@@ -5,14 +5,14 @@ import media from "../../styles/media";
 
 const TOGGLE_WIDTH = "5rem";
 const TOGGLE_HEIGHT = "2.5rem";
-const TOGGLE_WIDTH_MOBILE = "3.6rem";
-const TOGGLE_HEIGHT_MOBILE = "2rem";
+const TOGGLE_WIDTH_MOBILE = "5rem";
+const TOGGLE_HEIGHT_MOBILE = "2.8rem";
 const TOGGLE_BUTTON_SIZE = "1.8rem";
-const TOGGLE_BUTTON_SIZE_MOBILE = "1.4rem";
+const TOGGLE_BUTTON_SIZE_MOBILE = "2rem";
 const TOGGLE_BUTTON_PADDING = "0.4rem";
-const TOGGLE_BUTTON_PADDING_MOBILE = "0.3rem";
+const TOGGLE_BUTTON_PADDING_MOBILE = "0.5rem";
 const ICON_SIZE = "1.5rem";
-const ICON_SIZE_MOBILE = "1.1rem";
+const ICON_SIZE_MOBILE = "1.6rem";
 
 interface Theme {
   colors: {
