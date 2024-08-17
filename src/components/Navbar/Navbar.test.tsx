@@ -65,6 +65,11 @@ const getText = (key: string): string => {
 };
 
 describe("Navbar Component", () => {
+  test("renders Navbar component", () => {
+    renderNavbar();
+    expect(screen.getByTestId("city-search")).toBeInTheDocument();
+  });
+
   test("handles input change", () => {
     renderNavbar();
     const input = screen.getByTestId("city-search") as HTMLInputElement;
@@ -129,5 +134,25 @@ describe("Navbar Component", () => {
     fireEvent.click(toggleButton);
 
     expect(toggleTheme).toHaveBeenCalledTimes(1);
+  });
+
+  test("triggers geolocation fetch on current location button click", () => {
+    renderNavbar();
+    const currentLocationButton = screen.getByTestId("current-location-button");
+    const mockGeolocation = {
+      getCurrentPosition: jest.fn(),
+    };
+    Object.defineProperty(global.navigator, "geolocation", {
+      writable: true,
+      value: mockGeolocation,
+    });
+    fireEvent.click(currentLocationButton);
+    expect(mockGeolocation.getCurrentPosition).toHaveBeenCalled();
+  });
+
+  test("theme toggle button is present", () => {
+    renderNavbar();
+    const toggleButton = screen.getByTestId("theme-toggle");
+    expect(toggleButton).toBeInTheDocument();
   });
 });

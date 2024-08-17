@@ -34,20 +34,20 @@ export const ErrorContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-basis: 100%;
+  height: 100%;
+  padding: 3rem;
+  margin-top: 20px;
   font-size: 1.6rem;
   text-align: center;
   color: orange;
-  height: 100%;
-  flex-basis: 100%;
-  padding: 3rem;
-  margin-top: 20px;
   border: 1px solid orange;
   border-radius: 8px;
   background-color: rgba(255, 165, 0, 0.1);
 `;
 
 export const ErrorIcon = styled(FaExclamationTriangle)`
+  margin-bottom: 10px;
   font-size: 2.6rem;
   color: orange;
-  margin-bottom: 10px;
 `;
