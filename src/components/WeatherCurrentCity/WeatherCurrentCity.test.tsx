@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import WeatherCurrentCity from "./WeatherCurrentCity";
 import { useWeather } from "../../WeatherContext";
 
@@ -37,5 +37,55 @@ describe("WeatherCurrentCity", () => {
 
     const { container } = render(<WeatherCurrentCity />);
     expect(container).toBeEmptyDOMElement();
+  });
+
+  test("renders city name, time, and date when weatherData is available", () => {
+    (useWeather as jest.Mock).mockReturnValue({
+      weatherData: {
+        name: "Dublin",
+        sys: { country: "IE" },
+        timezone: 3600, // UTC+1
+      },
+      error: null,
+      isCurrentLocation: true,
+    });
+
+    expect(screen.getByText("Dublin")).toBeInTheDocument();
+    expect(screen.getByText("12:00")).toBeInTheDocument();
+    expect(screen.getByText("Sunday, 1 October")).toBeInTheDocument();
+  });
+
+  test("does not render LocationIcon when there is an error", () => {
+    (useWeather as jest.Mock).mockReturnValue({
+      weatherData: {
+        name: "Dublin",
+        sys: { country: "IE" },
+        timezone: 3600,
+      },
+      error: "Some error",
+      isCurrentLocation: true,
+    });
+
+    expect(screen.queryByTestId("location-icon")).toBeNull();
+  });
+
+  test("renders additional details when available", () => {
+    (useWeather as jest.Mock).mockReturnValue({
+      weatherData: {
+        name: "Dublin",
+        sys: { country: "IE" },
+        timezone: 3600,
+        additionalDetails: {
+          county: "County Dublin",
+          state: "Ireland",
+        },
+      },
+      error: null,
+      isCurrentLocation: true,
+    });
+
+    expect(
+      screen.getByText("Dublin, County Dublin, Ireland, IE")
+    ).toBeInTheDocument();
   });
 });
