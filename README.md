@@ -20,7 +20,7 @@ Welcome to my Weather App project. This React-based application provides real-ti
 
 ## Project Overview
 
-![Weather App Screenshot](page_screenshot.png)
+![Weather App Screenshot](src/assets/images/page_screenshot.png)
 
 This Weather App is designed to provide users with comprehensive weather information for any location worldwide. It combines data from multiple APIs to offer accurate and detailed weather forecasts.
 
