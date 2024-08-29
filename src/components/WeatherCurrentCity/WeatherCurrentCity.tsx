@@ -76,7 +76,7 @@ const WeatherCurrentCity: React.FC = () => {
 
   return (
     <CityCard>
-      <CityName>
+      <CityName data-testid="city-name">
         {name}
         {/* Show location icon if it's the current location and there's no error */}
         {isCurrentLocation && !error && <LocationIcon />}
@@ -87,8 +87,8 @@ const WeatherCurrentCity: React.FC = () => {
         {state && `, ${state}`}
         {`, ${sys.country}`}
       </CityLocationDetails>
-      <CityTime>{currentTime}</CityTime>
-      <CityDate>{currentDate}</CityDate>
+      <CityTime data-testid="time">{currentTime}</CityTime>
+      <CityDate data-testid="date">{currentDate}</CityDate>
     </CityCard>
   );
 };
