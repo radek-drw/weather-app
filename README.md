@@ -1,3 +1,5 @@
+# React Global Weather App
+
 Welcome to my Weather App project. This React-based application provides real-time weather information and forecasts with an intuitive user interface. Below you'll find a detailed description of the app's features and how to set it up on your local machine.
 
 ## Table of Contents
