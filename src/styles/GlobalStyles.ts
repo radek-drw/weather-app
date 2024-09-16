@@ -52,10 +52,10 @@ export const GlobalStyles = createGlobalStyle<{ theme?: ThemeInterface }>`
   p,
   ul, ol {
     margin: 0;
+    padding: 0;
   }
 
   ul, ol {
-    padding: 0;
     list-style: none;
   }
 
