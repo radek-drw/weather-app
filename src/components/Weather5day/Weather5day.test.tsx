@@ -104,4 +104,45 @@ describe("Weather5day Component", () => {
     const weatherIcons = screen.getAllByAltText("Weather Icon");
     expect(weatherIcons.length).toBe(2);
   });
+
+  test("displays temperatures in Fahrenheit when tempUnit is imperial", () => {
+    // Mock the weather data with Fahrenheit temperature unit
+    const mockImperialWeather = {
+      ...mockUseWeather,
+      tempUnit: "imperial",
+      forecastData: [
+        {
+          dt_txt: "2023-10-01 12:00:00",
+          main: {
+            temp_min: 59, // Fahrenheit equivalent of 15°C
+            temp_max: 68, // Fahrenheit equivalent of 20°C
+          },
+          weather: [
+            {
+              icon: "01d",
+            },
+          ],
+        },
+        {
+          dt_txt: "2023-10-02 12:00:00",
+          main: {
+            temp_min: 62, // Fahrenheit equivalent of 17°C
+            temp_max: 72, // Fahrenheit equivalent of 22°C
+          },
+          weather: [
+            {
+              icon: "02d",
+            },
+          ],
+        },
+      ],
+    };
+
+    (useWeather as jest.Mock).mockReturnValue(mockImperialWeather);
+
+    render(<Weather5day />);
+
+    expect(screen.getByText(/68.*[°℉]F.*\/.*59.*[°℉]F/i)).toBeInTheDocument();
+    expect(screen.getByText(/72.*[°℉]F.*\/.*62.*[°℉]F/i)).toBeInTheDocument();
+  });
 });
