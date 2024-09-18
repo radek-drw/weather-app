@@ -94,4 +94,27 @@ describe("WeatherCurrentCity", () => {
 
     expect(screen.queryByTestId("location-icon")).toBeNull();
   });
+
+  test("renders additional location details when available", () => {
+    (useWeather as jest.Mock).mockReturnValue({
+      weatherData: {
+        name: "Springfield",
+        sys: { country: "US" },
+        timezone: -18000, // UTC-5
+        additionalDetails: {
+          county: "Sangamon",
+          state: "Illinois",
+        },
+      },
+      error: null,
+      isCurrentLocation: false,
+    });
+
+    renderWithTheme(<WeatherCurrentCity />);
+
+    const locationDetails = screen.getByText(
+      "Springfield, Sangamon, Illinois, US"
+    );
+    expect(locationDetails).toBeInTheDocument();
+  });
 });
