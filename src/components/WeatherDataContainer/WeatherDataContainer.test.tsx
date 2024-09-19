@@ -81,4 +81,10 @@ describe("WeatherDataContainer", () => {
     expect(screen.getByTestId("weather-5day")).toBeInTheDocument();
     expect(screen.getByTestId("weather-hourly")).toBeInTheDocument();
   });
+
+  test("does not render loading overlay or error message when data is loaded without error", () => {
+    renderComponent(false, null);
+    expect(screen.queryByTestId("loading-overlay")).not.toBeInTheDocument();
+    expect(screen.queryByText("An error occurred")).not.toBeInTheDocument();
+  });
 });
