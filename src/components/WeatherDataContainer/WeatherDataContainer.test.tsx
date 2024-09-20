@@ -87,4 +87,20 @@ describe("WeatherDataContainer", () => {
     expect(screen.queryByTestId("loading-overlay")).not.toBeInTheDocument();
     expect(screen.queryByText("An error occurred")).not.toBeInTheDocument();
   });
+
+  test("renders only weather components when neither loading nor error state is true", () => {
+    renderComponent(false, null); // no loading and no error
+
+    // Verify that the loading overlay is not rendered
+    expect(screen.queryByTestId("loading-overlay")).not.toBeInTheDocument();
+
+    // Verify that no error message is rendered
+    expect(screen.queryByText("An error occurred")).not.toBeInTheDocument();
+
+    // Ensure weather components are rendered
+    expect(screen.getByTestId("weather-current-city")).toBeInTheDocument();
+    expect(screen.getByTestId("weather-details")).toBeInTheDocument();
+    expect(screen.getByTestId("weather-5day")).toBeInTheDocument();
+    expect(screen.getByTestId("weather-hourly")).toBeInTheDocument();
+  });
 });
