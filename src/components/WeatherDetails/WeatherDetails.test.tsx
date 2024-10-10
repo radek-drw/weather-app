@@ -136,4 +136,11 @@ describe("WeatherDetails", () => {
     expect(screen.getByText("1012 hPa")).toBeInTheDocument();
     expect(screen.getByText("10 km")).toBeInTheDocument();
   });
+
+  test("should display temperature and feels like in Fahrenheit when tempUnit is imperial", () => {
+    renderComponent(mockWeatherData, "imperial");
+
+    expect(screen.getByText("20°F")).toBeInTheDocument();
+    expect(screen.getByText("18°F")).toBeInTheDocument();
+  });
 });
