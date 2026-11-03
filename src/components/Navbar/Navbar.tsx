@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
       autocompleteService.current =
         new window.google.maps.places.AutocompleteService();
       placesService.current = new window.google.maps.places.PlacesService(
-        document.createElement("div")
+        document.createElement("div"),
       );
     };
 
@@ -104,7 +104,7 @@ const Navbar: React.FC = () => {
       }
       inputRef.current?.focus(); // Focus the input field if there's an error
     },
-    [city, fetchWeatherData, t]
+    [city, fetchWeatherData, t],
   );
 
   const handleInputChange = useCallback(
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
           { input: value, types: ["(cities)"], language: i18n.language },
           (
             predictions: google.maps.places.AutocompletePrediction[] | null,
-            status: google.maps.places.PlacesServiceStatus
+            status: google.maps.places.PlacesServiceStatus,
           ) => {
             if (
               status !== google.maps.places.PlacesServiceStatus.OK ||
@@ -132,15 +132,15 @@ const Navbar: React.FC = () => {
               predictions.map((prediction) => ({
                 description: prediction.description,
                 placeId: prediction.place_id,
-              }))
+              })),
             );
-          }
+          },
         );
       } else {
         setSuggestions([]);
       }
     },
-    [i18n.language]
+    [i18n.language],
   );
 
   // Handle the selection of a city from the suggestions list
@@ -154,21 +154,21 @@ const Navbar: React.FC = () => {
           },
           (
             place: google.maps.places.PlaceResult | null,
-            status: google.maps.places.PlacesServiceStatus
+            status: google.maps.places.PlacesServiceStatus,
           ) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && place) {
               // Extract city name, country, state, and county from place details
               const cityName = place.address_components?.find((component) =>
-                component.types.includes("locality")
+                component.types.includes("locality"),
               )?.long_name;
               const countryName = place.address_components?.find((component) =>
-                component.types.includes("country")
+                component.types.includes("country"),
               )?.short_name;
               const state = place.address_components?.find((component) =>
-                component.types.includes("administrative_area_level_1")
+                component.types.includes("administrative_area_level_1"),
               )?.long_name;
               const county = place.address_components?.find((component) =>
-                component.types.includes("administrative_area_level_2")
+                component.types.includes("administrative_area_level_2"),
               )?.long_name;
 
               const fullCityName = `${cityName}, ${countryName}`;
@@ -183,13 +183,13 @@ const Navbar: React.FC = () => {
               console.error("Place details error:", status);
               setError(t("errors.cityNotFound"));
             }
-          }
+          },
         );
       }
       setCity("");
       setSuggestions([]);
     },
-    [fetchWeatherData, setError, t]
+    [fetchWeatherData, setError, t],
   );
 
   const handleFetchWeatherByLocation = useCallback(() => {
@@ -207,7 +207,7 @@ const Navbar: React.FC = () => {
           console.error("Geolocation error:", err);
           setError(t("errors.geolocationFailure"));
           setLocalError("");
-        }
+        },
       );
     } else {
       setError(t("errors.geolocationUnavailable"));
