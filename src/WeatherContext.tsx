@@ -9,6 +9,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY as string;
+const DEFAULT_CITY = "Dublin, ie";
 
 interface WeatherData {
   coord: { lon: number; lat: number };
@@ -43,18 +44,18 @@ interface WeatherContextProps {
   fetchWeatherData: (
     city: string,
     additionalDetails?: object,
-    coordinates?: { lon: number; lat: number } | null
+    coordinates?: { lon: number; lat: number } | null,
   ) => Promise<void>;
   fetchWeatherByCoordinates: (
     latitude: number,
-    longitude: number
+    longitude: number,
   ) => Promise<void>;
   tempUnit: string;
   toggleTempUnit: () => void;
 }
 
 const WeatherContext = createContext<WeatherContextProps | undefined>(
-  undefined
+  undefined,
 );
 
 export const useWeather = (): WeatherContextProps => {
@@ -93,7 +94,7 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
             units: tempUnit,
             lang: i18n.language,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -109,10 +110,15 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
     }
   };
 
+  useEffect(() => {
+    fetchWeatherData(DEFAULT_CITY);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const fetchWeatherData = async (
     city: string,
     additionalDetails: object = {},
-    coordinates: { lon: number; lat: number } | null = null
+    coordinates: { lon: number; lat: number } | null = null,
   ) => {
     setLoading(true);
     setError(null);
@@ -145,7 +151,7 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
 
   const fetchWeatherByCoordinates = async (
     latitude: number,
-    longitude: number
+    longitude: number,
   ) => {
     setLoading(true);
     setError(null);
@@ -166,7 +172,7 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
 
   const fetchForecastByCoordinates = async (
     latitude: number,
-    longitude: number
+    longitude: number,
   ) => {
     try {
       const data: { list: ForecastData[] } = await fetchFromApi("forecast", {
@@ -178,26 +184,6 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
       setError(t("errors.fetchForecastByCoordinates"));
     }
   };
-
-  // Effect hook to fetch weather data for the user's current location on component mount
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          fetchWeatherByCoordinates(latitude, longitude);
-          setError("");
-        },
-        (err) => {
-          console.error("Geolocation error:", err);
-          setError(t("errors.geolocationFailure"));
-        }
-      );
-    } else {
-      setError(t("errors.geolocationUnavailable"));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const toggleTempUnit = () => {
     const newTempUnit = tempUnit === "metric" ? "imperial" : "metric";
@@ -219,7 +205,7 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
               feels_like: convertTemperature(prevState.main.feels_like),
             },
           }
-        : undefined
+        : undefined,
     );
 
     // Update forecast data with converted temperatures
@@ -232,7 +218,7 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({
           temp_max: convertTemperature(item.main.temp_max),
           temp: convertTemperature(item.main.temp),
         },
-      }))
+      })),
     );
 
     setTempUnit(newTempUnit);
