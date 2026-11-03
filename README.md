@@ -4,21 +4,24 @@ Welcome to my Weather App project. This React-based application provides real-ti
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-  - [Current Weather Information](#current-weather-information)
-  - [Forecast](#forecast)
-  - [Location Search](#location-search)
-  - [Theme and Units](#theme-and-units)
-  - [Multi-language Support](#multi-language-support)
-  - [Responsive Design](#responsive-design)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Error Handling](#error-handling)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- [React Global Weather App](#react-global-weather-app)
+  - [Table of Contents](#table-of-contents)
+  - [Project Overview](#project-overview)
+  - [Features](#features)
+    - [Current Weather Information](#current-weather-information)
+    - [Forecast](#forecast)
+    - [Location Search](#location-search)
+    - [Theme and Units](#theme-and-units)
+    - [Multi-language Support](#multi-language-support)
+    - [Responsive Design](#responsive-design)
+  - [Technology Stack](#technology-stack)
+  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Steps](#steps)
+  - [Error Handling](#error-handling)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Contact](#contact)
 
 ## Project Overview
 
@@ -103,7 +106,7 @@ This Weather App is designed to provide users with comprehensive weather informa
    Create a [`.env`] file in the root directory and add your API keys:
 
    ```env
-   REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+   REACT_APP_GOOGLE_API_KEY=your_google_maps_api_key
    REACT_APP_OPENWEATHERMAP_API_KEY=your_openweathermap_api_key
    ```
 
