@@ -1,7 +1,7 @@
 {
   "name": "weather-app",
   "version": "0.1.0",
-  "homepage": "https://github.com/weather-app",
+  "homepage": "https://radek-drw.github.io/weather-app/",
   "private": true,
   "dependencies": {
     "axios": "^1.7.2",
